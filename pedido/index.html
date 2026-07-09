@@ -68,23 +68,25 @@
         </aside>
     </main>
 
-    <div id="modal-pedido" class="modal-overlay">
-        <div class="modal-content">
-            <!-- Header del modal -->
-            <div class="modal-header">
-                <span id="btn-cerrar-modal-pedido" class="close-btn">&times;</span>
+<div id="modal-pedido" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-icon-container">
                 <i class="fa-solid fa-bag-shopping modal-icon"></i>
             </div>
-
-            <h3>¡Pedido Confirmado!</h3>
-
-            <!-- Contenedor donde JS inyectará la lista -->
-            <div id="datos-resumen-pedido"></div>
-
-            <!-- Botón de acción -->
-            <button type="button" class="btn-ir-pagar-modal" id="btn-ir-pagar">Ir a Pagar</button>
+            <span id="btn-cerrar-modal-pedido" class="close-btn">&times;</span>
         </div>
+
+        <h3>¡Pedido Confirmado!</h3>
+        <p class="modal-subtitle">Revisa el resumen de tus platos seleccionados antes de proceder al pago.</p>
+        
+        <div id="datos-resumen-pedido" class="ticket-resumen"></div>
+
+        <button type="button" id="btnCerrar" class="btnCerrar-modal">
+            Ir a Pagar <i class="fa-solid fa-arrow-right"></i>
+        </button>
     </div>
+</div>
 
     <footer class="main-footer">
         <div class="footer-content">
