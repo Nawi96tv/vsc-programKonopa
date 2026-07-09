@@ -31,19 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnFinalizar = document.querySelector('#btn-finalizar');
     let total = 0;
 
-    // ==========================================================
-    // 3. RENDERIZAR PLATOS DE LA CARTA
-    // ==========================================================
+    // RENDERIZAR PLATOS
     if (contenedorCarta) {
         const categorias = [...new Set(productos.map(p => p.categoria))];
-        
         categorias.forEach(cat => {
-            const tituloFormateado = cat.toUpperCase();
-            contenedorCarta.innerHTML += `<h3 class="region-title">${tituloFormateado}</h3>`;
-            
+            contenedorCarta.innerHTML += `<h3 class="region-title">${cat.toUpperCase()}</h3>`;
             const gridDiv = document.createElement('div');
             gridDiv.className = 'dishes-grid';
-
             productos.filter(p => p.categoria === cat).forEach(prod => {
                 gridDiv.innerHTML += `
                     <div class="dish-card">
@@ -52,9 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="price">S/. ${prod.precio}</span>
                         </div>
                         <p class="description">${prod.descripcion}</p>
-                        <button class="btn-add-dish" onclick="agregarItem('${prod.nombre}', ${prod.precio})">
-                            <i class="fa-solid fa-cart-plus"></i> Agregar
-                        </button>
+                        <button class="btn-add-dish" onclick="agregarItem('${prod.nombre}', ${prod.precio})">Agregar</button>
                     </div>
                 `;
             });
@@ -62,19 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================================
-    // 4. LÓGICA DEL CARRITO (Funciones Globales)
-    // ==========================================================
+    // LÓGICA CARRITO
     window.agregarItem = (nombre, precio) => {
         const li = document.createElement('li');
         li.className = 'cart-item';
-        li.innerHTML = `
-            <span>${nombre}</span>
-            <div>
-                <span>S/. ${precio}</span>
-                <button class="btn-remove-item" onclick="quitarItem(this, ${precio})"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-        `;
+        li.innerHTML = `<span>${nombre}</span> <div><span>S/. ${precio}</span> <button class="btn-remove-item" onclick="quitarItem(this, ${precio})">X</button></div>`;
         if (itemsPedido) itemsPedido.appendChild(li);
         total += precio;
         if (totalSpan) totalSpan.textContent = total;
@@ -86,89 +70,41 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalSpan) totalSpan.textContent = Math.max(0, total);
     };
 
-// ==========================================================
-    // 5. MODAL DE PEDIDOS: MOSTRAR TICKET Y GUARDAR EN LOCALSTORAGE
+    // ==========================================================
+    // 5. MODAL (CORREGIDO)
     // ==========================================================
     const modalPedido = document.querySelector('#modal-pedido');
-    const btnCerrarModalPedido = document.querySelector('#btn-cerrar-modal-pedido');
+    const btnCerrar = document.querySelector('#btn-cerrar-modal-pedido');
     const resumenPedidoDiv = document.querySelector('#datos-resumen-pedido');
 
     if (btnFinalizar) {
         btnFinalizar.addEventListener('click', () => {
-            // Validamos que el carrito NO esté vacío
             if (total > 0) {
+                // Generar Ticket
                 const items = document.querySelectorAll('#items-pedido .cart-item');
-                let resumenHTML = '<ul style="list-style: none; padding: 0; margin: 0; color: #333; font-size: 0.95rem;">';
-                const itemsParaGuardar = []; 
-                
-                // Recorrer carrito
+                let resumenHTML = '<ul>';
                 items.forEach(item => {
-                    const nombrePlato = item.querySelector('span').textContent;
-                    const precioPlato = item.querySelector('div span').textContent;
-                    
-                    resumenHTML += `
-                        <li style="margin-bottom: 8px; display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 5px;">
-                            <strong>${nombrePlato}</strong> <span>${precioPlato}</span>
-                        </li>`;
-                    
-                    itemsParaGuardar.push({ nombre: nombrePlato, precio: precioPlato });
+                    resumenHTML += `<li>${item.querySelector('span').textContent} - ${item.querySelector('div span').textContent}</li>`;
                 });
+                resumenHTML += `</ul><strong>Total: S/. ${total}</strong>`;
                 
-                resumenHTML += `</ul>`;
-                resumenHTML += `
-                    <div style="margin-top: 15px; padding-top: 10px; border-top: 2px dashed #ccc; text-align: right; font-size: 1.1rem; color: #c5a880;">
-                        <strong>Total Pagado: S/. ${total.toFixed(2)}</strong>
-                    </div>`;
-
-                // Crear el objeto del pedido para guardar
-                const nuevoPedido = {
-                    id: 'PED-' + Math.floor(Math.random() * 1000000), 
-                    fecha: new Date().toLocaleDateString('es-PE'),
-                    hora: new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' }),
-                    items: itemsParaGuardar,
-                    total: total.toFixed(2),
-                    estado: 'En preparación'
-                };
-
-                // Guardar en la "base de datos" del navegador
-                const pedidosPrevios = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
-                pedidosPrevios.push(nuevoPedido);
-                localStorage.setItem('konopa_pedidos', JSON.stringify(pedidosPrevios));
-                
-                // Inyectar el HTML y ABRIR MODAL (CORREGIDO)
                 if (resumenPedidoDiv) resumenPedidoDiv.innerHTML = resumenHTML;
+                
+                // ABRIR MODAL USANDO CLASE (CSS)
                 if (modalPedido) {
-                    modalPedido.classList.add('mostrar'); // <--- AHORA SÍ SERÁ VISIBLE
+                    modalPedido.classList.add('mostrar');
                     document.body.style.overflow = 'hidden';
                 }
-
-                // Reiniciar el carrito
-                if (itemsPedido) itemsPedido.innerHTML = '';
-                total = 0;
-                if (totalSpan) totalSpan.textContent = "0";
-
             } else {
-                alert("Tu carrito está vacío. Por favor, selecciona al menos un plato de nuestra carta para continuar.");
+                alert("Carrito vacío");
             }
         });
     }
 
-    // Cerrar Modal con la X o clic fuera (CORREGIDO)
-    if (btnCerrarModalPedido) {
-        btnCerrarModalPedido.addEventListener('click', () => {
-            if (modalPedido) {
-                modalPedido.classList.remove('mostrar'); // <--- OCULTA EL MODAL
-                document.body.style.overflow = 'auto';
-            }
-        });
-    }
-
-    if (modalPedido) {
-        window.addEventListener('click', (e) => {
-            if (e.target === modalPedido) {
-                modalPedido.classList.remove('mostrar'); // <--- OCULTA EL MODAL
-                document.body.style.overflow = 'auto';
-            }
+    if (btnCerrar) {
+        btnCerrar.addEventListener('click', () => {
+            modalPedido.classList.remove('mostrar');
+            document.body.style.overflow = 'auto';
         });
     }
     // ==========================================================

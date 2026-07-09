@@ -70,16 +70,19 @@
 
     <div id="modal-pedido" class="modal-overlay">
         <div class="modal-content">
-            <span id="btn-cerrar-modal-pedido" class="close-btn">&times;</span>
-            <i class="fa-solid fa-bag-shopping modal-icon"></i>
+            <!-- Header del modal -->
+            <div class="modal-header">
+                <span id="btn-cerrar-modal-pedido" class="close-btn">&times;</span>
+                <i class="fa-solid fa-bag-shopping modal-icon"></i>
+            </div>
+
             <h3>¡Pedido Confirmado!</h3>
 
-            <div id="datos-resumen-pedido"
-                style="text-align: left; margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 8px;"></div>
+            <!-- Contenedor donde JS inyectará la lista -->
+            <div id="datos-resumen-pedido"></div>
 
-            <button type="button" class="btn-ir-reservas" id="btn-ir-pagar">
-                Ir a Pagar
-            </button>
+            <!-- Botón de acción -->
+            <button type="button" class="btn-ir-pagar-modal" id="btn-ir-pagar">Ir a Pagar</button>
         </div>
     </div>
 
