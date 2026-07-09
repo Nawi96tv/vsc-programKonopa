@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. MENÚ RESPONSIVO (Navegación Móvil)
     // ==========================================================
     const btnMenu = document.querySelector('#btn-menu');
-    const navMenu = document.querySelector('.nav-menu'); 
-    
+    const navMenu = document.querySelector('.nav-menu');
+
     if (btnMenu && navMenu) {
         btnMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('mostrar'); 
-            btnMenu.classList.toggle('activo'); 
+            navMenu.classList.toggle('mostrar');
+            btnMenu.classList.toggle('activo');
         });
     }
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
-        
+
         // Buscar el menú principal
         const navMenuUl = document.querySelector('.nav-menu ul');
         if (!navMenuUl) return;
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
-            
+
             // Inyectamos el HTML del menú desplegable
             // NOTA: Ajusta los "../perfil/index.html" si estás en la raíz del proyecto a "./perfil/index.html"
             liPadre.innerHTML = `
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('activo'));
                 document.querySelectorAll('.perfil-contenido').forEach(s => s.style.display = 'none');
-                
+
                 link.classList.add('activo');
                 document.getElementById(link.getAttribute('data-target')).style.display = 'block';
             });
@@ -104,66 +104,76 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 4. ACCIONES (Actualizar, Eliminar, Cerrar Sesión)
     // ==========================================================
-    
+
     // Botón Actualizar
-    document.getElementById('btn-actualizar-datos').addEventListener('click', () => {
-        localStorage.setItem('konopa_usuario_nombre', document.getElementById('perfil-nombre').value);
-        localStorage.setItem('konopa_usuario_telefono', document.getElementById('perfil-telefono').value);
-        localStorage.setItem('konopa_usuario_direccion', document.getElementById('perfil-direccion').value);
-        
-        document.getElementById('nombre-perfil-sidebar').textContent = document.getElementById('perfil-nombre').value.split(' ')[0];
-        alert('Datos actualizados.');
-    });
+    const btnActualizar = document.getElementById('btn-actualizar-datos');
+    if (btnActualizar) {
+        btnActualizar.addEventListener('click', () => {
+            localStorage.setItem('konopa_usuario_nombre', document.getElementById('perfil-nombre').value);
+            localStorage.setItem('konopa_usuario_telefono', document.getElementById('perfil-telefono').value);
+            localStorage.setItem('konopa_usuario_direccion', document.getElementById('perfil-direccion').value);
+
+            document.getElementById('nombre-perfil-sidebar').textContent = document.getElementById('perfil-nombre').value.split(' ')[0];
+            alert('Datos actualizados.');
+        });
+    }
 
     // Botón Eliminar
-    document.getElementById('btn-eliminar-cuenta').addEventListener('click', () => {
-        if(confirm('¿Seguro que deseas eliminar tu cuenta?')) {
-            localStorage.clear();
+    const btnEliminar = document.getElementById('btn-eliminar-cuenta');
+    if (btnEliminar) {
+        btnEliminar.addEventListener('click', () => {
+            if (confirm('¿Seguro que deseas eliminar tu cuenta?')) {
+                localStorage.clear();
+                window.location.href = "../index.html";
+            }
+        });
+    }
+
+    // Botón Cerrar Sesión (Protegido por si no existe)
+    const btnCerrarSesionPerfil = document.getElementById('btn-cerrar-sesion-perfil');
+    if (btnCerrarSesionPerfil) {
+        btnCerrarSesionPerfil.addEventListener('click', () => {
+            localStorage.setItem('konopa_logeado', 'false');
             window.location.href = "../index.html";
-        }
-    });
+        });
+    }
 
-    document.getElementById('btn-cerrar-sesion-perfil').addEventListener('click', () => {
-        localStorage.setItem('konopa_logeado', 'false');
-        window.location.href = "../index.html";
-    });
-
-    // Buscamos el contenedor en la página del perfil
+    // ==========================================================
+    // 5. MOSTRAR PEDIDOS GUARDADOS
+    // ==========================================================
     const contenedorPedidos = document.getElementById('lista-mis-pedidos');
-    
-    // Si estamos en la página del perfil y el contenedor existe...
+    const mensajeVacio = document.getElementById('historial-pedidos'); // El div que dice "No tienes pedidos"
+
     if (contenedorPedidos) {
-        // 1. Extraemos los pedidos de la memoria (o un array vacío si no hay nada)
         const misPedidos = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
 
-        // 2. Si no hay pedidos, mostramos un mensaje
         if (misPedidos.length === 0) {
-            contenedorPedidos.innerHTML = '<p style="color: #666;">Aún no tienes pedidos recientes.</p>';
-            return; // Nos detenemos aquí
+            // Si no hay pedidos, nos aseguramos de que el mensaje vacío sea visible
+            if (mensajeVacio) mensajeVacio.style.display = 'block';
+        } else {
+            // Si SÍ hay pedidos, ocultamos el mensaje de "vació"
+            if (mensajeVacio) mensajeVacio.style.display = 'none';
+
+            let htmlPedidos = '';
+
+            misPedidos.reverse().forEach(pedido => {
+                htmlPedidos += `
+                    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
+                            <strong>Código: ${pedido.id}</strong>
+                            <span style="color: #888; font-size: 0.9em;">${pedido.fecha} - ${pedido.hora}</span>
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0 0 10px 0; font-size: 0.9em;">
+                            ${pedido.items.map(item => `<li>• ${item.nombre} <span style="float: right;">${item.precio}</span></li>`).join('')}
+                        </ul>
+                        <div style="text-align: right; color: #c5a880; font-weight: bold; font-size: 1.1em;">
+                            Total: S/. ${pedido.total}
+                        </div>
+                    </div>
+                `;
+            });
+
+            contenedorPedidos.innerHTML = htmlPedidos;
         }
-
-        // 3. Si hay pedidos, armamos el diseño
-        let htmlPedidos = '';
-        
-        // Invertimos la lista para que los más nuevos salgan primero (.reverse)
-        misPedidos.reverse().forEach(pedido => {
-            htmlPedidos += `
-                <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff;">
-                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
-                        <strong>Código: ${pedido.id}</strong>
-                        <span style="color: #888; font-size: 0.9em;">${pedido.fecha} - ${pedido.hora}</span>
-                    </div>
-                    <ul style="list-style: none; padding: 0; margin: 0 0 10px 0; font-size: 0.9em;">
-                        ${pedido.items.map(item => `<li>• ${item.nombre} <span style="float: right;">${item.precio}</span></li>`).join('')}
-                    </ul>
-                    <div style="text-align: right; color: #c5a880; font-weight: bold; font-size: 1.1em;">
-                        Total: S/. ${pedido.total}
-                    </div>
-                </div>
-            `;
-        });
-
-        // 4. Lo inyectamos en la pantalla
-        contenedorPedidos.innerHTML = htmlPedidos;
     }
 });

@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalSpan) totalSpan.textContent = Math.max(0, total);
     };
 
-    // ==========================================================
+// ==========================================================
     // 5. MODAL DE PEDIDOS: MOSTRAR TICKET Y GUARDAR EN LOCALSTORAGE
     // ==========================================================
     const modalPedido = document.querySelector('#modal-pedido');
@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnFinalizar) {
         btnFinalizar.addEventListener('click', () => {
+            // Validamos que el carrito NO esté vacío
             if (total > 0) {
                 const items = document.querySelectorAll('#items-pedido .cart-item');
                 let resumenHTML = '<ul style="list-style: none; padding: 0; margin: 0; color: #333; font-size: 0.95rem;">';
@@ -134,10 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 pedidosPrevios.push(nuevoPedido);
                 localStorage.setItem('konopa_pedidos', JSON.stringify(pedidosPrevios));
                 
-                // Inyectar el HTML y abrir Modal
+                // Inyectar el HTML y ABRIR MODAL (CORREGIDO)
                 if (resumenPedidoDiv) resumenPedidoDiv.innerHTML = resumenHTML;
                 if (modalPedido) {
-                    modalPedido.style.display = 'flex';
+                    modalPedido.classList.add('mostrar'); // <--- AHORA SÍ SERÁ VISIBLE
                     document.body.style.overflow = 'hidden';
                 }
 
@@ -152,11 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cerrar Modal con la X o clic fuera
+    // Cerrar Modal con la X o clic fuera (CORREGIDO)
     if (btnCerrarModalPedido) {
         btnCerrarModalPedido.addEventListener('click', () => {
             if (modalPedido) {
-                modalPedido.style.display = 'none';
+                modalPedido.classList.remove('mostrar'); // <--- OCULTA EL MODAL
                 document.body.style.overflow = 'auto';
             }
         });
@@ -165,12 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalPedido) {
         window.addEventListener('click', (e) => {
             if (e.target === modalPedido) {
-                modalPedido.style.display = 'none';
+                modalPedido.classList.remove('mostrar'); // <--- OCULTA EL MODAL
                 document.body.style.overflow = 'auto';
             }
         });
     }
-
     // ==========================================================
     // 6. FUNCIÓN GLOBAL: SESIÓN ACTIVA (REEMPLAZO DE LOGIN A PERFIL)
     // ==========================================================
@@ -215,6 +215,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.reload(); 
             });
         }
+    }
+
+    // ==========================================================
+    // LÓGICA DEL BOTÓN "IR A PAGAR" (Validación de Sesión)
+    // ==========================================================
+    const btnIrPagar = document.getElementById('btn-ir-pagar');
+    
+    if (btnIrPagar) {
+        btnIrPagar.addEventListener('click', () => {
+            const sesionIniciada = localStorage.getItem('konopa_logeado') === 'true';
+            
+            if (!sesionIniciada) {
+                // Si NO está logueado, lo mandamos al login
+                alert("Para procesar tu pago y confirmar el envío, por favor inicia sesión o regístrate.");
+                window.location.href = '../login/index.html';
+            } else {
+                // Si SÍ está logueado, lo mandamos a la nueva página de pagos
+                window.location.href = '../pago/index.html';
+            }
+        });
     }
 
     verificarSesionActivaGlobal();
