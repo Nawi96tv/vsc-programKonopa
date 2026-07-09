@@ -1,0 +1,228 @@
+/* ====================================================
+   RESET TEMPORAL INTERNO
+   ==================================================== */
+body {
+    background-color: #f4f4f4;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================================
+   HERO SECTION
+   ==================================================== */
+.eventos-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
+        url('img/FONDOEVENTOS.png') no-repeat center center/cover;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 2rem 1.5rem;
+}
+
+.eventos-hero .hero-content {
+    animation: slideInUp 1s ease-out forwards;
+}
+
+.eventos-hero .hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+
+.eventos-hero .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.eventos-hero .hero-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #dddddd;
+    margin-top: 0.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ====================================================
+   CONTENIDO PRINCIPAL
+   ==================================================== */
+.eventos-container {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.eventos-container .intro-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.eventos-container .intro-section h3 {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #121212;
+    margin-bottom: 1rem;
+}
+
+.eventos-container .intro-section p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* ====================================================
+   SLIDER DE EVENTOS (FLEXBOX RESPONSIVO)
+   ==================================================== */
+.slider-container {
+    overflow-x: auto;
+    padding-bottom: 2rem;
+    scrollbar-width: thin;
+    scrollbar-color: #c5a880 #eee;
+}
+
+.slider-track {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 2rem; /* Separación clara y controlada de las cajas */
+    width: 100%;
+}
+
+.slider-track .event-slide {
+    min-width: 350px;
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid #c5a880;
+    transition: transform 0.3s ease;
+}
+
+.slider-track .event-slide:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.slider-track .event-slide .slide-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.slider-track .event-slide .slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.slider-track .event-slide:hover .slide-image img {
+    transform: scale(1.08);
+}
+
+.slider-track .event-slide .slide-info {
+    padding: 2rem;
+}
+
+.slider-track .event-slide .slide-info h4 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #121212;
+    margin-bottom: 0.8rem;
+}
+
+.slider-track .event-slide .slide-info p {
+    font-size: 0.95rem;
+    color: #666;
+    text-align: justify;
+}
+
+/* ====================================================
+   BOTÓN COTIZAR
+   ==================================================== */
+.cta-eventos {
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+
+.cta-eventos .btn-cotizar {
+    display: inline-block;
+    background-color: #121212;
+    color: #ffffff;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid #121212;
+}
+
+.cta-eventos .btn-cotizar:hover {
+    background-color: #c5a880;
+    border-color: #c5a880;
+    color: #121212;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(197, 168, 128, 0.4);
+}
+
+/* ====================================================
+   EVALUACIÓN RESPONSIVA EXCLUSIVA DEL CONTENIDO
+   ==================================================== */
+@media (max-width: 768px) {
+    .eventos-hero {
+        height: 35vh;
+    }
+
+    .eventos-hero .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .eventos-container {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .eventos-container .intro-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .eventos-container .intro-section h3 {
+        font-size: 1.7rem;
+    }
+
+    /* En tablets/móviles permitimos un deslizamiento nativo cómodo */
+    .slider-track .event-slide {
+        min-width: 290px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slider-track {
+        gap: 1.2rem;
+    }
+
+    .slider-track .event-slide .slide-image {
+        height: 180px;
+    }
+    
+    .slider-track .event-slide .slide-info {
+        padding: 1.5rem;
+    }
+}

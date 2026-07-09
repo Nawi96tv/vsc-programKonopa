@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro de Reclamaciones | Restaurante Konopa</title>
+    <link rel="stylesheet" href="../inicio.css">
+    <link rel="stylesheet" href="reclamaciones.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../img/logo-konopa.png" alt="Logo Restaurante Konopa" class="logo-img">
+            </a>
+        </div>
+
+        <button id="btn-menu" class="menu-toggle">
+            <span class="icon-open">&#9776;</span>
+            <span class="icon-close">&times;</span>
+        </button>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../conocenos/index.html">Conócenos</a></li>
+                <li><a href="../ubicacion/index.html">Ubicación y Horarios</a></li>
+                <li><a href="../reservas/index.html">Reservas</a></li>
+                <li><a href="../preguntas/index.html">Preguntas</a></li>
+                <li><a href="../carta/index.html">Carta</a></li>
+                <li><a href="../contacto/index.html">Contacto</a></li>
+                <li><a href="../eventos/index.html">Eventos</a></li>
+                <li><a href="../pedido/index.html">Realizar Pedido</a></li>
+                <li><a href="../login/index.html"><i class="fa-regular fa-circle-user"></i>Login / Registro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="reclamaciones-hero">
+        <div class="hero-content">
+            <h2>Libro de Reclamaciones <span>Conforme al Código de Protección al Consumidor</span></h2>
+            <p>Tu opinión nos ayuda a mejorar continuamente. Registra aquí tu queja o reclamación de manera formal.</p>
+        </div>
+    </section>
+
+    <main class="reclamaciones-container">
+        <div class="reclamaciones-card">
+            <div class="reclamaciones-header">
+                <h3>Hoja de Reclamación Virtual</h3>
+                <p>Por favor, complete todos los campos obligatorios (*) para procesar su requerimiento.</p>
+            </div>
+
+            <form action="index.html" method="get" class="reclamaciones-form">
+                
+                <fieldset class="form-section">
+                    <legend>1. Identificación del Consumidor Reclamante</legend>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rec-nombre">Nombres y Apellidos *</label>
+                            <input type="text" id="rec-nombre" name="rec_nombre" placeholder="Ej. Juan Pérez" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rec-dni">DNI / CE *</label>
+                            <input type="text" id="rec-dni" name="rec_dni" placeholder="8 dígitos" pattern="^[0-9]{8,12}$" maxlength="12" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rec-telefono">Teléfono / Celular *</label>
+                            <input type="text" id="rec-telefono" name="rec_telefono" placeholder="Ej. 987654321" pattern="^9[0-9]{8}$" maxlength="9" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rec-correo">Correo Electrónico *</label>
+                            <input type="email" id="rec-correo" name="rec_correo" placeholder="ejemplo@gmail.com" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rec-domicilio">Domicilio *</label>
+                        <input type="text" id="rec-domicilio" name="rec_domicilio" placeholder="Dirección completa, Distrito y Provincia" required>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                    <legend>2. Identificación del Bien Contratado</legend>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rec-tipo-bien">Tipo de Bien *</label>
+                            <select id="rec-tipo-bien" name="rec_tipo_bien" required>
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option value="producto">Producto (Comida / Bebida)</option>
+                                <option value="servicio">Servicio (Atención / Infraestructura)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rec-monto">Monto Reclamado (S/.) *</label>
+                            <input type="number" id="rec-monto" name="rec_monto" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                    <legend>3. Detalle de la Reclamación y Pedido del Consumidor</legend>
+                    
+                    <div class="form-group radio-group">
+                        <label>Tipo de Reclamación *</label>
+                        <div class="radio-options">
+                            <label class="radio-label">
+                                <input type="radio" name="rec_tipo" value="reclamacion" checked>
+                                <span><strong>Reclamación:</strong> Disconformidad relacionada a los productos o servicios.</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="rec_tipo" value="queja">
+                                <span><strong>Queja:</strong> Disconformidad no relacionada directamente a los productos, sino al malestar o descontento respecto a la atención.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rec-detalle">Detalle de lo sucedido *</label>
+                        <textarea id="rec-detalle" name="rec_detalle" rows="5" placeholder="Describa de forma detallada los hechos ocurridos..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rec-pedido">Pedido u objetivo solicitado *</label>
+                        <textarea id="rec-pedido" name="rec_pedido" rows="4" placeholder="Escriba de forma concreta lo que solicita como solución..." required></textarea>
+                    </div>
+                </fieldset>
+
+                <div class="form-submit">
+                    <button type="submit" class="btn-submit">Enviar Hoja de Reclamación</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo-col">
+                <a href="../index.html">
+                    <img src="../img/logo-konopa.png" alt="Ir al Inicio - Konopa" class="footer-logo">
+                </a>
+            </div>
+            <div class="footer-links-col">
+                <h4>Acerca de Konopa</h4>
+                <ul>
+                    <li><a href="../conocenos/index.html">Nuestra Historia y Raíces</a></li>
+                    <li><a href="../ubicacion/index.html">Horarios y Sedes</a></li>
+                    <li><a href="../contacto/index.html">Ubícanos / Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-info-col">
+                <h4>Más información</h4>
+                <a href="index.html" class="reclamaciones-link">
+                    <img src="../img/LIBRORECLAMCIONES.png" alt="Libro de Reclamaciones" class="reclamaciones-img">
+                    <span>Libro de reclamaciones</span>
+                </a>
+            </div>
+            <div class="footer-social-col">
+                <div class="social-icons">
+                    <a href="https://wa.me/51912092176" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/konopa.peru" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <div class="footer-buttons">
+                    <a href="../reservas/index.html" class="btn-footer">Reservas</a>
+                    <a href="../carta/index.html" class="btn-footer">Carta</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Restaurante Konopa. Sabores tradicionales del Perú. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+<script src="main.js"></script>
+</body>
+
+</html>

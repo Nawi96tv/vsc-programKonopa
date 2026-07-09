@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas | Restaurante Konopa</title>
+    <link rel="stylesheet" href="../inicio.css">
+    <link rel="stylesheet" href="reservas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../img/logo-konopa.png" alt="Logo Restaurante Konopa" class="logo-img">
+            </a>
+        </div>
+
+        <button id="btn-menu" class="menu-toggle">
+            <span class="icon-open">&#9776;</span>
+            <span class="icon-close">&times;</span>
+        </button>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../conocenos/index.html">Conócenos</a></li>
+                <li><a href="../ubicacion/index.html">Ubicación y Horarios</a></li>
+                <li><a href="index.html" class="active">Reservas</a></li>
+                <li><a href="../preguntas/index.html">Preguntas</a></li>
+                <li><a href="../carta/index.html">Carta</a></li>
+                <li><a href="../contacto/index.html">Contacto</a></li>
+                <li><a href="../eventos/index.html">Eventos</a></li>
+                <li><a href="../pedido/index.html">Realizar Pedido</a></li>
+                <li><a href="../login/index.html"><i class="fa-regular fa-circle-user"></i>Login / Registro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="reservas-hero">
+        <div class="hero-content">
+            <h2>Reserva tu Mesa <span>Disfruta la Experiencia Konopa</span></h2>
+            <p>Asegura tu lugar y déjate cautivar por la fusión de sabores e historias de nuestra cocina ancestral.</p>
+        </div>
+    </section>
+
+    <main class="reservas-container">
+        <div class="reservas-card">
+            <div class="reservas-header">
+                <h3>Formulario de Reserva</h3>
+                <p>Completa los datos solicitados. Recibirás una confirmación en tu correo de inmediato.</p>
+            </div>
+
+            <form class="reservas-form">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="res-nombre">Nombres y Apellidos *</label>
+                        <input type="text" id="res-nombre" name="res_nombre" placeholder="Ej. Carlos Mendoza" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-correo">Correo Electrónico *</label>
+                        <input type="email" id="res-correo" name="res_correo" placeholder="ejemplo@gmail.com"
+                            pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="res-telefono">Teléfono / Celular *</label>
+                        <input type="text" id="res-telefono" name="res_telefono" placeholder="Ej. 987654321"
+                            pattern="^9[0-9]{8}$" maxlength="9" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-sede">Selecciona la Sede *</label>
+                        <select id="res-sede" name="res_sede" required>
+                            <option value="" disabled selected>Seleccione una sede...</option>
+                            <option value="lima">Sede Lima - Miraflores</option>
+                            <option value="cusco">Sede Cusco - Centro Histórico</option>
+                            <option value="tarapoto">Sede San Martín - Tarapoto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="res-fecha">Fecha de la Reserva *</label>
+                        <input type="date" id="res-fecha" name="res_fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-hora">Hora de la Reserva *</label>
+                        <select id="res-hora" name="res_hora" required>
+                            <option value="" disabled selected>Seleccione un turno...</option>
+                            <option value="1200">12:00 PM</option>
+                            <option value="1300">01:00 PM</option>
+                            <option value="1400">02:00 PM</option>
+                            <option value="1900">07:00 PM</option>
+                            <option value="2000">08:00 PM</option>
+                            <option value="2100">09:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="res-personas">Número de Personas *</label>
+                        <input type="number" id="res-personas" name="res_personas" min="1" max="12"
+                            placeholder="Máx. 12 personas" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="res-notas">Notas o Requerimientos Especiales</label>
+                    <textarea id="res-notas" name="res_notas" rows="4"
+                        placeholder="Indícanos si celebras alguna ocasión especial, si requieres silla para bebé o posees alguna alergia alimentaria..."></textarea>
+                </div>
+
+                <div class="form-submit">
+                    <button type="button" id="btn-enviar-formulario" class="btn-submit">Confirmar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+<div id="modal-confirmacion" class="modal-overlay">
+    <div class="modal-content">
+        <span id="btn-cerrar-modal" class="close-btn">&times;</span>
+        
+        <i class="fa-solid fa-calendar-check modal-icon"></i>
+        <h3>¡Reserva Confirmada!</h3>
+        
+        <div id="datos-resumen" style="text-align: left; margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 8px;"></div>
+
+        <button type="button" class="btn-ir-reservas" onclick="window.location.href='../perfil/index.html';">
+            Ir a Mis Reservas
+        </button>
+    </div>
+</div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo-col">
+                <a href="../index.html">
+                    <img src="../img/logo-konopa.png" alt="Ir al Inicio - Konopa" class="footer-logo">
+                </a>
+            </div>
+            <div class="footer-links-col">
+                <h4>Acerca de Konopa</h4>
+                <ul>
+                    <li><a href="../conocenos/index.html">Nuestra Historia y Raíces</a></li>
+                    <li><a href="../ubicacion/index.html">Horarios y Sedes</a></li>
+                    <li><a href="../contacto/index.html">Ubícanos / Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-info-col">
+                <h4>Más información</h4>
+                <a href="../reclamaciones/index.html" class="reclamaciones-link">
+                    <img src="../img/LIBRORECLAMCIONES.png" alt="Libro de Reclamaciones" class="reclamaciones-img">
+                    <span>Libro de reclamaciones</span>
+                </a>
+            </div>
+            <div class="footer-social-col">
+                <div class="social-icons">
+                    <a href="https://wa.me/51912092176" target="_blank" title="WhatsApp"><i
+                            class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/konopa.peru" target="_blank" title="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a>
+                </div>
+                <div class="footer-buttons">
+                    <a href="index.html" class="btn-footer">Reservas</a>
+                    <a href="../carta/index.html" class="btn-footer">Carta</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Restaurante Konopa. Sabores tradicionales del Perú. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

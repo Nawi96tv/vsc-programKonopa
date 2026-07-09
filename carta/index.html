@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Carta | Restaurante Konopa</title>
+    <link rel="stylesheet" href="../inicio.css">
+    <link rel="stylesheet" href="carta.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../img/logo-konopa.png" alt="Logo Restaurante Konopa" class="logo-img">
+            </a>
+        </div>
+        
+        <button id="btn-menu" class="menu-toggle">
+            <span class="icon-open">&#9776;</span>
+            <span class="icon-close">&times;</span>
+        </button>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../conocenos/index.html">Conócenos</a></li>
+                <li><a href="../ubicacion/index.html">Ubicación y Horarios</a></li>
+                <li><a href="../reservas/index.html">Reservas</a></li>
+                <li><a href="../preguntas/index.html">Preguntas</a></li>
+                <li><a href="index.html" class="active">Carta</a></li>
+                <li><a href="../contacto/index.html">Contacto</a></li>
+                <li><a href="../eventos/index.html">Eventos</a></li>
+                <li><a href="../pedido/index.html">Realizar Pedido</a></li>
+                <li><a href="../login/index.html"><i class="fa-regular fa-circle-user"></i>Login / Registro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="menu-hero">
+        <div class="hero-content">
+            <h2>Nuestra Carta <span>Sabores Ancestrales</span></h2>
+            <p>Un recorrido gastronómico exclusivo por los ingredientes y fuegos de nuestras regiones.</p>
+        </div>
+    </section>
+
+    <nav class="categories-nav">
+        <a href="#costa" class="cat-circle">La Costa</a>
+        <a href="#sierra" class="cat-circle">La Sierra</a>
+        <a href="#selva" class="cat-circle">La Selva</a>
+        <a href="#brasas" class="cat-circle">Brasas y Rústicos</a>
+        <a href="#oriental" class="cat-circle">Oriental</a>
+        <a href="#fastfood" class="cat-circle">Antojos Urbanos</a>
+        <a href="#postres" class="cat-circle">Postres</a>
+        <a href="#bebidas" class="cat-circle">Bebidas</a>
+    </nav>
+
+    <main class="menu-container">
+
+        <section id="costa" class="menu-region-section">
+            <h3 class="region-title">Mar e Identidad: La Costa</h3>
+            <p class="region-subtitle">Platos frescos marcados por la corriente marina, limones del norte y ajíes aromáticos.</p>
+            <div class="dishes-grid" id="grid-costa"></div>
+        </section>
+
+        <section id="sierra" class="menu-region-section">
+            <h3 class="region-title">Altura y Tradición: La Sierra</h3>
+            <p class="region-subtitle">Sabores profundos que rinden tributo a la Pachamama, hierbas sagradas y tubérculos nativos.</p>
+            <div class="dishes-grid" id="grid-sierra"></div>
+        </section>
+
+        <section id="selva" class="menu-region-section">
+            <h3 class="region-title">Misterio Amazónico: La Selva</h3>
+            <p class="region-subtitle">Aromas indomables, frutas exóticas, carnes ahumadas de forma artesanal and hierbas frescas.</p>
+            <div class="dishes-grid" id="grid-selva"></div>
+        </section>
+
+        <section id="brasas" class="menu-region-section">
+            <h3 class="region-title">Fuego y Leña: Brasas y Carnes Rústicas</h3>
+            <p class="region-subtitle">El secreto mejor guardado de nuestras brasas, hornos de cilindro y cajas chinas.</p>
+            <div class="dishes-grid" id="grid-brasas"></div>
+        </section>
+
+        <section id="oriental" class="menu-region-section">
+            <h3 class="region-title">Fusión Oriental: Comida china</h3>
+            <p class="region-subtitle">Toda la técnica milenaria del chifa tradicional fusionada con el sazón peruano.</p>
+            <div class="dishes-grid" id="grid-oriental"></div>
+        </section>
+
+        <section id="fastfood" class="menu-region-section">
+            <h3 class="region-title">Antojos: Clásicos Urbanos</h3>
+            <p class="region-subtitle">Para los amantes del sabor intenso, combinaciones contundentes y estilo urbano.</p>
+            <div class="dishes-grid" id="grid-fastfood"></div>
+        </section>
+
+        <section id="postres" class="menu-region-section">
+            <h3 class="region-title">Dulce Final: Postres</h3>
+            <p class="region-subtitle">Clásicos de la repostería peruana y delicias para endulzar el paladar.</p>
+            <div class="dishes-grid" id="grid-postres"></div>
+        </section>
+
+        <section id="bebidas" class="menu-region-section">
+            <h3 class="region-title">Brindis y Refrescos: Tragos y Bebidas</h3>
+            <p class="region-subtitle">Néctares tradicionales, cervezas heladas y la mejor coctelería a base de pisco.</p>
+            <div class="dishes-grid" id="grid-bebidas"></div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo-col">
+                <a href="../index.html">
+                    <img src="../img/logo-konopa.png" alt="Ir al Inicio - Konopa" class="footer-logo">
+                </a>
+            </div>
+            <div class="footer-links-col">
+                <h4>Acerca de Konopa</h4>
+                <ul>
+                    <li><a href="../conocenos/index.html">Nuestra Historia y Raíces</a></li>
+                    <li><a href="../ubicacion/index.html">Horarios y Sedes</a></li>
+                    <li><a href="../contacto/index.html">Ubícanos / Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-info-col">
+                <h4>Más información</h4>
+                <a href="../reclamaciones/index.html" class="reclamaciones-link">
+                    <img src="../img/LIBRORECLAMCIONES.png" alt="Libro de Reclamaciones" class="reclamaciones-img">
+                    <span>Libro de reclamaciones</span>
+                </a>
+            </div>
+            <div class="footer-social-col">
+                <div class="social-icons">
+                    <a href="https://wa.me/51912092176" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/konopa.peru" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <div class="footer-buttons">
+                    <a href="../reservas/index.html" class="btn-footer">Reservas</a>
+                    <a href="index.html" class="btn-footer">Carta</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Restaurante Konopa. Sabores tradicionales del Perú. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

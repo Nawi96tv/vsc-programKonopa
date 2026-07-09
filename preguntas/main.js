@@ -1,0 +1,116 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // ==========================================
+    // 1. MENÚ RESPONSIVO 
+    // ==========================================
+    const btnMenu = document.querySelector('#btn-menu');
+    const navMenu = document.querySelector('.nav-menu'); 
+
+    if (btnMenu && navMenu) {
+        btnMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('mostrar'); 
+            btnMenu.classList.toggle('activo'); 
+        });
+    }
+
+    // ==========================================
+    // 2. BASE DE DATOS DE PREGUNTAS FRECUENTES (Arreglos Paralelos)
+    // ==========================================
+    const preguntasArray = [
+        "¿Es necesario realizar una reserva antes de asistir al local?",
+        "¿Cuentan con opciones vegetarianas, veganas o libres de gluten?",
+        "¿Tienen una tolerancia de tiempo para las reservas?",
+        "¿Ofrecen estacionamiento o servicio de valet parking?",
+        "¿Se pueden realizar eventos corporativos o celebraciones privadas?"
+    ];
+
+    const respuestasArray = [
+        "No es estrictamente obligatorio, pero lo <strong>recomendamos encarecidamente</strong>, especialmente para los turnos de cena los fines de semana y días feriados. Contar con una reserva asegura tu mesa de inmediato y nos permite brindarte una atención personalizada desde tu llegada.",
+        "¡Por supuesto! En Konopa celebramos la diversidad. Contamos con versiones adaptadas de platos bandera, como nuestro Solterito de la Sierra, Cebiche de Champiñones y saltados a base de proteínas vegetales. Si tienes alguna alergia severa o eres celíaco, puedes indicarlo en el campo de notas del formulario de reservas.",
+        "Sí, manejamos una tolerancia máxima de <strong>15 minutos</strong> de espera a partir de la hora pactada en tu reserva. Transcurrido ese tiempo, para garantizar el flujo y respeto de los horarios de los demás comensales, la mesa se liberará automáticamente para la lista de espera presencial.",
+        "En nuestra Sede Principal de Lima (Miraflores) contamos con servicio de <strong>Valet Parking gratuito</strong> para todos nuestros clientes titulares. En las sedes de Cusco y Tarapoto, debido al diseño urbanístico histórico y natural, no disponemos de estacionamiento privado, pero contamos con zonas seguras de parqueo vigilado a menos de una cuadra.",
+        "Efectivamente. Ponemos a tu disposición salones temáticos privados y menús de pasos especiales para grupos corporativos, cumpleaños o aniversarios. Para coordinar eventos de más de 12 personas, por favor comunícate directamente con nosotros a través de la pestaña de <strong>Contacto</strong> o déjanos un mensaje detallado."
+    ];
+
+    // ==========================================
+    // 3. INYECCIÓN DINÁMICA AL HTML (Con ciclo for)
+    // ==========================================
+    const contenedorFaq = document.querySelector('#contenedor-preguntas');
+
+    if (contenedorFaq) {
+        // Limpiamos por si acaso
+        contenedorFaq.innerHTML = ''; 
+
+        // Recorremos los arreglos paralelos usando el bucle 'for' y el índice 'i'
+        for (let i = 0; i < preguntasArray.length; i++) {
+            
+            const detailsEstructura = document.createElement('details');
+            detailsEstructura.classList.add('faq-item');
+            
+            // Inyectamos el formato exacto usando el índice [i]
+            detailsEstructura.innerHTML = `
+                <summary>${preguntasArray[i]}</summary>
+                <div class="faq-answer">
+                    <p>${respuestasArray[i]}</p>
+                </div>
+            `;
+            
+            contenedorFaq.appendChild(detailsEstructura);
+        }
+    }
+
+        // ==========================================================
+    // FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
+    // ==========================================================
+    function verificarSesionActivaGlobal() {
+        const sesionIniciada = localStorage.getItem('konopa_logeado');
+        const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
+        
+        // Buscar el menú principal
+        const navMenuUl = document.querySelector('.nav-menu ul');
+        if (!navMenuUl) return;
+
+        // Buscar el enlace de Login
+        const enlaceLogin = Array.from(navMenuUl.querySelectorAll('a')).find(a => a.textContent.includes('Login'));
+
+        if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
+            const liPadre = enlaceLogin.parentElement;
+            liPadre.classList.add('nav-user-item');
+            
+            // Inyectamos el HTML del menú desplegable
+            // NOTA: Ajusta los "../perfil/index.html" si estás en la raíz del proyecto a "./perfil/index.html"
+            liPadre.innerHTML = `
+                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
+                <ul class="dropdown-content" id="user-dropdown">
+                    <li><a href="../perfil/index.html">Mi cuenta</a></li>
+                    <li><a href="../perfil/index.html">Mis pedidos</a></li>
+                    <li><a href="#" id="btn-cerrar-sesion-top">Cerrar sesión</a></li>
+                </ul>
+            `;
+
+            // Lógica para abrir y cerrar el menú al hacer clic en el nombre
+            document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Evita que el clic se propague al documento
+                document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
+            });
+
+            // Lógica para cerrar el menú si haces clic en otra parte de la pantalla
+            document.addEventListener('click', (e) => {
+                const userDropdown = document.getElementById('user-dropdown');
+                if (userDropdown && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('mostrar-dropdown');
+                }
+            });
+
+            // Lógica para Cerrar Sesión desde este menú
+            document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.setItem('konopa_logeado', 'false');
+                window.location.reload(); // Recarga la página para volver a mostrar "Login"
+            });
+        }
+    }
+
+    // Ejecutar la función al cargar la página
+    verificarSesionActivaGlobal();
+});

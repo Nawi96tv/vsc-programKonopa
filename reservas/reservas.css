@@ -1,0 +1,300 @@
+/* ====================================================
+   RESET TEMPORAL INTERNO
+   ==================================================== */
+body {
+    background-color: #f4f4f4;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================================
+   HERO SECTION
+   ==================================================== */
+.reservas-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
+        url('img/FONDORESERVAS.png') no-repeat center center/cover;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 2rem 1.5rem;
+}
+
+.reservas-hero .hero-content {
+    animation: slideInUp 1s ease-out forwards;
+    padding: 0 1rem;
+}
+
+.reservas-hero .hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+
+.reservas-hero .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.reservas-hero .hero-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #dddddd;
+    margin-top: 0.5rem;
+    max-width: 800px;
+}
+
+/* ====================================================
+   CONTAINER PRINCIPAL (TARJETA FORMULARIO)
+   ==================================================== */
+.reservas-container {
+    max-width: 850px;
+    margin: -50px auto 5rem auto;
+    position: relative;
+    z-index: 10;
+    padding: 0 1rem;
+}
+
+.reservas-card {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #c5a880;
+}
+
+.reservas-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 1.5rem;
+}
+
+.reservas-header h3 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #121212;
+    margin-bottom: 0.5rem;
+}
+
+.reservas-header p {
+    font-size: 0.95rem;
+    color: #777;
+}
+
+/* ====================================================
+   ESTILOS DE FORMULARIO, FILAS E INPUTS
+   ==================================================== */
+.reservas-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #b3946b;
+    outline: none;
+    box-shadow: 0 0 8px rgba(197, 168, 128, 0.2);
+}
+
+/* Validación Visual Estándar */
+.form-group input:not(:placeholder-shown):invalid,
+.form-group textarea:not(:placeholder-shown):invalid {
+    border-color: #e74c3c;
+    background-color: #fdf2f2;
+}
+
+.form-group input:not(:placeholder-shown):valid,
+.form-group textarea:not(:placeholder-shown):valid {
+    border-color: #2ecc71;
+    background-color: #f4fbf7;
+}
+
+/* BOTÓN DE ENVÍO */
+.form-submit .btn-submit {
+    width: 100%;
+    background-color: #121212;
+    color: #ffffff;
+    border: 1px solid #121212;
+    padding: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.form-submit .btn-submit:hover {
+    background-color: #c5a880;
+    border-color: #c5a880;
+    color: #121212;
+}
+
+/* ====================================================
+   DISEÑO DE LA VENTANA FLOTANTE (MODAL)
+   ==================================================== */
+.modal-overlay {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 9999; 
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    max-width: 400px;
+    width: 90%;
+    animation: aparecerModal 0.3s ease-out;
+}
+.btn-ir-reservas {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+    margin-top: 30px;
+}
+
+.btn-ir-reservas:hover {
+    background-color: #a88d68; 
+}
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #c5a880; 
+}
+
+.modal-icon {
+    font-size: 50px;
+    color: #c5a880;
+    margin-bottom: 15px;
+}
+
+.modal-content h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+@keyframes aparecerModal {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ====================================================
+   EVALUACIÓN RESPONSIVA (SOLO CONTENIDO INTERNO)
+   ==================================================== */
+@media (max-width: 768px) {
+    .reservas-hero {
+        height: 35vh;
+    }
+
+    .reservas-hero .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .reservas-container {
+        margin-top: 1rem;
+    }
+
+    .reservas-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .reservas-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .reservas-header h3 {
+        font-size: 1.5rem;
+    }
+}

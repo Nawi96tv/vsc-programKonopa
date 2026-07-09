@@ -1,0 +1,222 @@
+/* ====================================================
+   RESET TEMPORAL INTERNO
+   ==================================================== */
+body {
+    background-color: #f4f4f4;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================================
+   HERO SECTION
+   ==================================================== */
+.contact-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
+        url('img/FONDOCONTACTO.png') no-repeat center center/cover;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 2rem 1.5rem;
+}
+
+.contact-hero .hero-content {
+    animation: slideInUp 1s ease-out forwards;
+}
+
+.contact-hero .hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+
+.contact-hero .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.contact-hero .hero-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #dddddd;
+    margin-top: 0.5rem;
+}
+
+/* ====================================================
+   CONTAINER PRINCIPAL (TARJETA DE CONTACTO)
+   ==================================================== */
+.contact-container {
+    max-width: 750px;
+    margin: -50px auto 5rem auto;
+    position: relative;
+    z-index: 10;
+    padding: 0 1rem;
+}
+
+.contact-container .contact-card {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #c5a880;
+}
+
+.contact-container .contact-card .contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 1.5rem;
+}
+
+.contact-container .contact-card .contact-header h3 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #121212;
+    margin-bottom: 0.5rem;
+}
+
+.contact-container .contact-card .contact-header p {
+    font-size: 0.95rem;
+    color: #777;
+}
+
+/* ====================================================
+   BLOQUE DE CANALES (FLEXBOX RESPONSIVO)
+   ==================================================== */
+.channels-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.channels-wrapper .contact-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.channels-wrapper .contact-item:hover {
+    background-color: #f9f9f9;
+    border-color: #eee;
+    transform: translateX(5px);
+}
+
+.channels-wrapper .contact-item:hover .icon-sphere {
+    background-color: #121212;
+    color: #c5a880;
+    transform: scale(1.08);
+}
+
+.channels-wrapper .contact-item .icon-sphere {
+    width: 55px;
+    height: 55px;
+    background-color: rgba(197, 168, 128, 0.12);
+    color: #121212;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.channels-wrapper .contact-item .item-info {
+    flex: 1;
+    min-width: 0; /* Evita que el contenido flex rompa el contenedor */
+}
+
+.channels-wrapper .contact-item .item-info h4 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #121212;
+    margin-bottom: 0.2rem;
+}
+
+.channels-wrapper .contact-item .item-info .detail {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #b3946b;
+    word-wrap: break-word; /* Forza el salto de línea si el correo es muy largo en móvil */
+    word-break: break-all;
+}
+
+.channels-wrapper .contact-item .item-info .detail a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.channels-wrapper .contact-item .item-info .detail a:hover {
+    border-color: #b3946b;
+}
+
+.channels-wrapper .contact-item .item-info .sub-detail {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 0.1rem;
+}
+
+.contact-footer-note {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* ====================================================
+   EVALUACIÓN RESPONSIVA EXCLUSIVA DEL CONTENIDO
+   ==================================================== */
+@media (max-width: 768px) {
+    .contact-hero {
+        height: 35vh;
+    }
+
+    .contact-hero .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .contact-container {
+        margin-top: 1rem;
+    }
+
+    .contact-container .contact-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* En pantallas muy pequeñas, los iconos se alinean arriba del texto */
+    .channels-wrapper .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .channels-wrapper .contact-item .item-info .detail {
+        font-size: 0.95rem;
+    }
+}

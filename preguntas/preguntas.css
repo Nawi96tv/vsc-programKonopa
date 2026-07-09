@@ -1,0 +1,199 @@
+/* ====================================================
+   RESET TEMPORAL INTERNO
+   ==================================================== */
+body {
+    background-color: #f4f4f4;
+}
+
+@keyframes fadeInShort {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================================
+   HERO SECTION FAQ
+   ==================================================== */
+.faq-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
+        url('img/FONDOPREGUNTAS.jpg') no-repeat center center/cover;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 2rem 1.5rem;
+}
+
+.faq-hero .hero-content {
+    animation: fadeInShort 1s ease-out forwards;
+    padding: 0 1rem;
+}
+
+.faq-hero .hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+
+.faq-hero .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.faq-hero .hero-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #dddddd;
+    margin-top: 0.5rem;
+}
+
+/* ====================================================
+   CONTAINER TARJETA FAQ
+   ==================================================== */
+.faq-container {
+    max-width: 850px;
+    margin: -50px auto 5rem auto;
+    position: relative;
+    z-index: 10;
+    padding: 0 1rem;
+}
+
+.faq-container .faq-card {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #c5a880;
+}
+
+/* ====================================================
+   STYLING DEL ACORDEÓN NATIVO
+   ==================================================== */
+.accordion-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faq-item {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    background-color: #fcfcfc;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-item summary {
+    padding: 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #121212;
+    cursor: pointer;
+    outline: none;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.faq-item summary::after {
+    content: '▼';
+    font-size: 0.75rem;
+    color: #b3946b;
+    transition: transform 0.3s ease;
+}
+
+/* Ocultar flecha nativa en navegadores webkit */
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary:hover {
+    background-color: rgba(197, 168, 128, 0.08);
+    color: #b3946b;
+}
+
+/* ESTADO ABIERTO */
+.faq-item[open] {
+    border-color: #c5a880;
+    box-shadow: 0 4px 15px rgba(197, 168, 128, 0.12);
+}
+
+.faq-item[open] summary {
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+}
+
+.faq-item[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.faq-item[open] .faq-answer {
+    animation: fadeInShort 0.4s ease-out forwards;
+}
+
+/* RESPUESTA */
+.faq-item .faq-answer {
+    padding: 1.5rem;
+    background-color: #ffffff;
+}
+
+.faq-item .faq-answer p {
+    font-size: 0.95rem;
+    color: #555;
+    text-align: justify;
+    line-height: 1.7;
+}
+
+.faq-item .faq-answer p strong {
+    color: #121212;
+}
+
+/* ====================================================
+   EVALUACIÓN RESPONSIVA (SOLO CONTENIDO INTERNO)
+   ==================================================== */
+@media (max-width: 768px) {
+    .faq-hero {
+        height: 35vh;
+    }
+
+    .faq-hero .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .faq-container {
+        margin-top: 1rem;
+    }
+
+    .faq-container .faq-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-hero .hero-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .faq-container .faq-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .faq-item summary {
+        font-size: 0.95rem;
+        padding: 1rem;
+    }
+}

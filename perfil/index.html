@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | Restaurante Konopa</title>
+    <link rel="stylesheet" href="../inicio.css">
+    <link rel="stylesheet" href="perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../img/logo-konopa.png" alt="Logo Restaurante Konopa" class="logo-img">
+            </a>
+        </div>
+
+        <button id="btn-menu" class="menu-toggle">
+            <span class="icon-open">&#9776;</span>
+            <span class="icon-close">&times;</span>
+        </button>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../conocenos/index.html">Conócenos</a></li>
+                <li><a href="../ubicacion/index.html">Ubicación y Horarios</a></li>
+                <li><a href="../reservas/index.html">Reservas</a></li>
+                <li><a href="../preguntas/index.html">Preguntas</a></li>
+                <li><a href="../carta/index.html">Carta</a></li>
+                <li><a href="../contacto/index.html">Contacto</a></li>
+                <li><a href="../eventos/index.html">Eventos</a></li>
+                <li><a href="../pedido/index.html">Realizar Pedido</a></li>
+                <li><a href="../login/index.html"><i class="fa-regular fa-circle-user"></i>Login / Registro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="perfil-wrapper">
+
+        <aside class="perfil-sidebar">
+            <div class="perfil-header-box">
+                <div class="avatar-circulo" id="avatar-inicial">U</div>
+                <div class="info-usuario">
+                    <span class="label-perfil">Mi perfil</span>
+                    <h3 id="nombre-perfil-sidebar">Cargando...</h3>
+                </div>
+            </div>
+
+            <ul class="perfil-menu">
+                <li><a href="#" class="menu-link activo" data-target="sec-ajustes"><i class="fa-solid fa-gear"></i>
+                        Ajustes de cuenta</a></li>
+                <li><a href="#" class="menu-link" data-target="sec-pagos"><i class="fa-solid fa-credit-card"></i>
+                        Métodos de pago</a></li>
+                <li><a href="#" class="menu-link" data-target="sec-pedidos"><i
+                            class="fa-solid fa-clock-rotate-left"></i> Últimos pedidos</a></li>
+            </ul>
+        </aside>
+
+        <div class="secciones-contenedor" style="flex: 1;">
+
+            <section id="sec-ajustes" class="perfil-contenido" style="display: block;">
+                <h2>Información de tu cuenta</h2>
+                <hr class="linea-perfil">
+                <form class="form-ajustes-cuenta">
+                    <div class="form-fila">
+                        <div class="form-grupo">
+                            <label>Nombre(s)</label>
+                            <input type="text" id="perfil-nombre">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Celular</label>
+                            <input type="text" id="perfil-telefono">
+                        </div>
+                    </div>
+                    <div class="form-fila">
+                        <div class="form-grupo">
+                            <label>Correo Electrónico (No modificable)</label>
+                            <div class="input-con-icono">
+                                <input type="email" id="perfil-correo" readonly style="background-color: #eee;">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Dirección de Entrega</label>
+                            <input type="text" id="perfil-direccion">
+                        </div>
+                    </div>
+
+                    <div class="perfil-botones">
+                        <button type="button" class="btn-actualizar" id="btn-actualizar-datos">Actualizar datos</button>
+                        <button type="button" class="btn-eliminar-cuenta" id="btn-eliminar-cuenta">Eliminar mi
+                            cuenta</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="sec-pagos" class="perfil-contenido" style="display: none;">
+                <h2>Métodos de pago</h2>
+                <hr class="linea-perfil">
+                <div style="text-align: center; padding: 2rem 0;">
+                    <i class="fa-regular fa-credit-card" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                    <p style="color: #666;">Aún no tienes tarjetas guardadas.</p>
+                    <button class="btn-nueva-direccion" style="margin-top: 1rem; width: auto; padding: 10px 20px;">+
+                        Añadir nueva tarjeta</button>
+                </div>
+            </section>
+
+            <section id="sec-pedidos" class="perfil-contenido" style="display: none;">
+                <div class="seccion-mis-pedidos">
+                    <h3>Mis Últimos Pedidos</h3>
+                    <div id="lista-mis-pedidos"></div>
+                </div>
+                <p class="subtitulo-perfil">Hazle seguimiento al detalle a tus pedidos anteriores y solicita ayuda si
+                    hay algún inconveniente.</p>
+                <hr class="linea-perfil">
+                <div id="historial-pedidos" style="text-align: center; padding: 2rem 0;">
+                    <i class="fa-solid fa-bag-shopping" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                    <p class="mensaje-vacio">No tienes ningún pedido todavía.</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo-col">
+                <a href="../index.html">
+                    <img src="../img/logo-konopa.png" alt="Ir al Inicio - Konopa" class="footer-logo">
+                </a>
+            </div>
+            <div class="footer-links-col">
+                <h4>Acerca de Konopa</h4>
+                <ul>
+                    <li><a href="../conocenos/index.html">Nuestra Historia y Raíces</a></li>
+                    <li><a href="../ubicacion/index.html">Horarios y Sedes</a></li>
+                    <li><a href="../contacto/index.html">Ubícanos / Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-info-col">
+                <h4>Más información</h4>
+                <a href="../reclamaciones/index.html" class="reclamaciones-link">
+                    <img src="../img/LIBRORECLAMCIONES.png" alt="Libro de Reclamaciones" class="reclamaciones-img">
+                    <span>Libro de reclamaciones</span>
+                </a>
+            </div>
+            <div class="footer-social-col">
+                <div class="social-icons">
+                    <a href="https://wa.me/51912092176" target="_blank" title="WhatsApp"><i
+                            class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/konopa.peru" target="_blank" title="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a>
+                </div>
+                <div class="footer-buttons">
+                    <a href="../reservas/index.html" class="btn-footer">Reservas</a>
+                    <a href="../carta/index.html" class="btn-footer">Carta</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Restaurante Konopa. Sabores tradicionales del Perú. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="main.js"></script>
+</body>
+
+</html>

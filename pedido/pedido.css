@@ -1,0 +1,330 @@
+/* ====================================================
+   RESET Y FONDO
+   ==================================================== */
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+/* ====================================================
+   ANIMACIONES Y HERO (Fondo oscuro)
+   ==================================================== */
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+        url('img/FONDOPEDIDO.png') no-repeat center center/cover;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 120px 1.5rem 2rem 1.5rem; 
+}
+
+.menu-hero .hero-content {
+    animation: slideInUp 1s ease-out forwards;
+}
+
+.menu-hero .hero-content h2 {
+    font-size: 2.8rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.menu-hero .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.8rem;
+}
+
+.menu-hero .hero-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #dddddd;
+    margin-top: 1rem;
+}
+
+
+
+/* ====================================================
+   LAYOUT DEL SIMULADOR (CARTA + CARRITO)
+   ==================================================== */
+.pedido-container {
+    max-width: 1200px;
+    /* El margen superior de 4rem empuja todo hacia abajo, fuera del área negra */
+    margin: 4rem auto 5rem auto; 
+    padding: 0 1.5rem;
+}
+
+.pedido-layout {
+    display: grid ; 
+    grid-template-columns: 1.8fr 1.2fr; 
+    gap: 3rem;
+    align-items: start;
+}
+
+/* TÍTULOS DE REGIONES (Letra delgada, grande y elegante) */
+.region-title {
+    font-size: 2.5rem; /* Letra más grande */
+    font-weight: 300; /* Fuente fina/delgada */
+    text-transform: uppercase; /* Fuerza las mayúsculas automáticamente */
+    color: #121212;
+    border-bottom: 2px solid #c5a880;
+    padding-bottom: 0.5rem;
+    margin-top: 0 ; /* Previene empujes hacia el área oscura */
+    margin-bottom: 2rem;
+    letter-spacing: 3px; /* Separa las letras para un toque más premium */
+}
+
+.dishes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+}
+
+/* ====================================================
+   CARDS DE LOS PLATOS
+   ==================================================== */
+.dish-card {
+    background-color: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.dish-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(197, 168, 128, 0.12);
+    border-color: rgba(197, 168, 128, 0.4);
+}
+
+.dish-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Mejor para móviles si el título es largo */
+    margin-bottom: 0.8rem;
+    gap: 10px; /* Asegura espacio entre título y precio */
+}
+
+.dish-header h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #121212;
+    margin: 0;
+}
+
+.dish-header .price {
+    white-space: nowrap; /* EVITA QUE EL PRECIO BAJE DE LÍNEA */
+    flex-shrink: 0; /* EVITA QUE EL PRECIO SE ENCOJA EN CELULARES */
+    font-size: 1rem;
+    font-weight: 600;
+    color: #121212;
+    background-color: rgba(197, 168, 128, 0.15);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.dish-card:hover .dish-header .price {
+    background-color: #121212;
+    color: #c5a880;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+}
+
+.btn-add-dish {
+    align-self: flex-start;
+    background: #121212;
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-add-dish:hover {
+    background: #c5a880;
+    color: #121212;
+}
+
+/* ====================================================
+   TARJETA DEL CARRITO DE COMPRAS
+   ==================================================== */
+.cart-section {
+    position: sticky;
+    top: 100px;
+}
+
+.cart-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid #c5a880;
+}
+
+.cart-card h3 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    color: #121212;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #f4f4f4;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.btn-remove-item {
+    background: transparent;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+.btn-remove-item:hover {
+    background: #e74c3c;
+    color: #ffffff;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+    color: #121212;
+}
+
+.price-total {
+    color: #c5a880;
+    font-weight: 700;
+}
+
+.btn-submit-cart {
+    width: 100%;
+    background: #121212;
+    color: #ffffff;
+    border: none;
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit-cart:hover {
+    background: #c5a880;
+    color: #121212;
+}
+/* ====================================================
+   VENTANA MODAL (Sustituto de alert)
+   ==================================================== */
+.modal-overlay {
+    position: fixed; /* Superpone el contenido sobre toda la página */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Asegura que esté por encima de todo, incluido el menú */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Clase que usaremos en JavaScript para mostrar el modal */
+.modal-overlay.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    border-top: 5px solid #c5a880; /* Detalle dorado Konopa */
+    transform: translateY(-30px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.mostrar .modal-content {
+    transform: translateY(0);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #121212;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    color: #666;
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+/* ====================================================
+   EVALUACIÓN RESPONSIVA
+   ==================================================== */
+@media (max-width: 992px) {
+    .pedido-layout { grid-template-columns: 1fr; }
+    .cart-section { position: static; order: -1; }
+}
+
+@media (max-width: 768px) {
+    .menu-hero { padding-top: 100px; padding-bottom: 4rem; }
+    .menu-hero .hero-content h2 { font-size: 2rem; }
+}

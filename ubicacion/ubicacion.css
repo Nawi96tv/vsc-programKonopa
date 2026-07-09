@@ -1,0 +1,241 @@
+/* ====================================================
+   RESET TEMPORAL INTERNO
+   ==================================================== */
+body {
+    background-color: #ffffff;
+}
+
+@keyframes slideDownIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====================================================
+   HERO SECTION
+   ==================================================== */
+.locations-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+        url('img/FONDOUBI.png') no-repeat center center/cover;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 2rem 1.5rem;
+}
+
+.locations-hero .hero-content {
+    animation: slideDownIn 1s ease-out forwards;
+    padding: 0 1rem;
+}
+
+.locations-hero .hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+
+.locations-hero .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.locations-hero .hero-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #dddddd;
+    margin-top: 0.5rem;
+}
+
+/* ====================================================
+   CONTENIDO PRINCIPAL
+   ==================================================== */
+.locations-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.locations-container .divider {
+    border: 0;
+    height: 1px;
+    background: rgba(197, 168, 128, 0.2);
+    margin: 4rem 0;
+}
+
+/* ====================================================
+   SECCIÓN DE HORARIOS (TABLA)
+   ==================================================== */
+.hours-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hours-section h3 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: #121212;
+}
+
+.hours-section .subtitle {
+    color: #777;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.hours-section .table-wrapper {
+    overflow-x: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border-radius: 4px;
+}
+
+.hours-section table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.hours-section table thead {
+    background-color: #121212;
+}
+
+.hours-section table thead th {
+    color: #ffffff;
+    font-weight: 400;
+    padding: 1.2rem;
+    letter-spacing: 1px;
+    border-bottom: 3px solid #c5a880;
+}
+
+.hours-section table tbody tr {
+    border-bottom: 1px solid #eeeeee;
+    transition: background-color 0.3s ease;
+}
+
+.hours-section table tbody tr:hover {
+    background-color: rgba(197, 168, 128, 0.08);
+}
+
+.hours-section table tbody tr td {
+    padding: 1.2rem;
+    color: #555;
+}
+
+.hours-section table tbody tr td strong {
+    color: #121212;
+    font-weight: 500;
+}
+
+/* ====================================================
+   DISEÑO DE SEDES: FLEXBOX (IMAGEN Y TEXTO)
+   ==================================================== */
+.branches-section h3 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #121212;
+}
+
+.branches-section .branch-card {
+    display: flex;
+    flex-direction: row; 
+    align-items: stretch; 
+    gap: 2.5rem;
+    background: #ffffff;
+    margin-bottom: 3rem;
+    border-radius: 4px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.branches-section .branch-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.branches-section .branch-card .branch-image-wrapper {
+    flex: 0 0 45%; 
+    overflow: hidden;
+    border-radius: 4px 0 0 4px; 
+}
+
+.branches-section .branch-card .branch-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.branches-section .branch-card:hover .branch-image-wrapper img {
+    transform: scale(1.05);
+}
+
+.branches-section .branch-card .branch-info {
+    flex: 1; 
+    padding: 2.5rem 2.5rem 2.5rem 0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.branches-section .branch-card .branch-info h4 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.branches-section .branch-card .branch-info .address {
+    color: #c5a880;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+}
+
+.branches-section .branch-card .branch-info .description {
+    font-size: 0.95rem;
+    color: #666;
+    text-align: justify;
+    line-height: 1.7;
+}
+
+/* ====================================================
+   RESPONSIVE (SEDÉS EN CELULAR Y TABLET)
+   ==================================================== */
+@media (max-width: 768px) {
+    .locations-hero { height: 35vh; }
+    .locations-hero .hero-content h2 { font-size: 2rem; }
+    .locations-container { padding: 2rem 1rem; }
+
+    /* En celular, las cajas cambian a columna */
+    .branches-section .branch-card {
+        flex-direction: column; 
+        gap: 0;
+    }
+
+    .branches-section .branch-card .branch-image-wrapper {
+        flex: 1 1 auto;
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .branches-section .branch-card .branch-image-wrapper img {
+        height: 220px;
+    }
+
+    .branches-section .branch-card .branch-info {
+        padding: 2rem; 
+        width: 100%;
+    }
+}

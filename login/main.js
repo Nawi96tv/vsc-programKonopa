@@ -1,0 +1,142 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ==========================================
+    // 1. MENÚ RESPONSIVO
+    // ==========================================
+    const btnMenu = document.querySelector('#btn-menu');
+    const navMenu = document.querySelector('.nav-menu'); 
+
+    if (btnMenu && navMenu) {
+        btnMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('mostrar'); 
+            btnMenu.classList.toggle('activo'); 
+        });
+    }
+
+    // ==========================================
+    // FUNCIÓN: CREAR EL MENÚ DESPLEGABLE (DROPDOWN)
+    // ==========================================
+    function verificarSesionActiva() {
+        const sesionIniciada = localStorage.getItem('konopa_logeado');
+        const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
+        
+        const enlacesMenu = document.querySelectorAll('.nav-menu a');
+        let enlaceLogin = null;
+
+        enlacesMenu.forEach(enlace => {
+            if (enlace.textContent.includes('Login') || (nombreGuardado && enlace.textContent.includes(nombreGuardado.split(' ')[0]))) {
+                enlaceLogin = enlace;
+            }
+        });
+        
+        if (sesionIniciada === 'true' && enlaceLogin && nombreGuardado) {
+            const primerNombre = nombreGuardado;
+            const liPadre = enlaceLogin.parentElement;
+            
+            liPadre.classList.add('nav-user-item');
+            liPadre.innerHTML = `
+                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${primerNombre} ▾</a>
+                <ul class="dropdown-content" id="user-dropdown">
+                    <li><a href="../perfil/index.html">Mi cuenta</a></li>
+                    <li><a href="../perfil/index.html">Mis pedidos</a></li>
+                    <li><a href="#" id="btn-cerrar-sesion">Cerrar sesión</a></li>
+                </ul>
+            `;
+
+            const btnUserToggle = document.getElementById('btn-user-toggle');
+            const userDropdown = document.getElementById('user-dropdown');
+            
+            btnUserToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                userDropdown.classList.toggle('mostrar-dropdown');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!liPadre.contains(e.target)) {
+                    userDropdown.classList.remove('mostrar-dropdown');
+                }
+            });
+
+            const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
+            btnCerrarSesion.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.setItem('konopa_logeado', 'false');
+                alert('Has cerrado sesión exitosamente. ¡Vuelve pronto!');
+                window.location.reload();
+            });
+        }
+    }
+
+    verificarSesionActiva();
+
+    // ==========================================
+    // 2. VALIDACIÓN DE LOGIN AL ESTILO JOSE
+    // ==========================================
+    const btnLogin = document.querySelector('#btn-login');
+    const inputUsuario = document.querySelector('#input-usuario');
+    const inputClave = document.querySelector('#input-clave');
+
+    if (btnLogin && inputUsuario && inputClave) {
+        btnLogin.addEventListener('click', (evento) => {
+            evento.preventDefault(); 
+
+            if (inputUsuario.value === '' || inputClave.value === '') {
+                alert('Por favor, completa correctamente ambos campos para ingresar.');
+            } else {
+                const correoRegistrado = localStorage.getItem('konopa_usuario_correo');
+                const claveRegistrada = localStorage.getItem('konopa_usuario_clave');
+
+                if (inputUsuario.value === correoRegistrado && inputClave.value === claveRegistrada) {
+                    localStorage.setItem('konopa_logeado', 'true');
+                    alert('¡Ingreso exitoso!');
+                    verificarSesionActiva();
+                } else {
+                    alert('El correo o la contraseña no coinciden con ninguna cuenta registrada.');
+                }
+            }
+        });
+    }
+
+    // ==========================================
+    // 3. VALIDACIÓN DE REGISTRO AL ESTILO JOSE (MODIFICADO CON DIRECCIÓN)
+    // ==========================================
+    const btnRegistro = document.querySelector('#btn-registro');
+    const inputRegNombre = document.querySelector('#reg-nombre');
+    const inputRegTelefono = document.querySelector('#reg-telefono');
+    const inputRegCorreo = document.querySelector('#reg-correo');
+    const inputRegClave = document.querySelector('#reg-password');
+    const inputRegDireccion = document.querySelector('#reg-direccion');
+
+    if (btnRegistro && inputRegNombre && inputRegTelefono && inputRegCorreo && inputRegClave && inputRegDireccion) {
+        btnRegistro.addEventListener('click', (evento) => {
+            evento.preventDefault(); 
+
+            // Verificamos si falta ALGÚN campo incluyendo la dirección
+            if (inputRegNombre.value === '' || inputRegTelefono.value === '' || 
+                inputRegCorreo.value === '' || inputRegClave.value === '' || inputRegDireccion.value === '') {
+                
+                alert('Por favor, completa todos los campos correctamente (incluyendo tu dirección) para registrarte en Konopa.');
+            
+            } else {
+                // GUARDAMOS TODOS LOS DATOS EN EL NAVEGADOR
+                localStorage.setItem('konopa_usuario_nombre', inputRegNombre.value);
+                localStorage.setItem('konopa_usuario_telefono', inputRegTelefono.value);
+                localStorage.setItem('konopa_usuario_correo', inputRegCorreo.value);
+                localStorage.setItem('konopa_usuario_clave', inputRegClave.value);
+                // NUEVO: Guardamos la dirección
+                localStorage.setItem('konopa_usuario_direccion', inputRegDireccion.value);
+                
+                localStorage.setItem('konopa_logeado', 'false');
+
+                alert(`¡Registro exitoso! Bienvenido a la familia Konopa, ${inputRegNombre.value}. Ya puedes iniciar sesión.`);
+                
+                // Limpiamos todos los campos
+                inputRegNombre.value = '';
+                inputRegTelefono.value = '';
+                inputRegCorreo.value = '';
+                inputRegClave.value = '';
+                inputRegDireccion.value = ''; // Limpiamos dirección
+            }
+        });
+    }
+});

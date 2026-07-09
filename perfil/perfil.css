@@ -1,0 +1,260 @@
+/* Contenedor Principal */
+.perfil-wrapper {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+/* Sidebar (Adaptado al estilo de la tarjeta de reclamaciones) */
+.perfil-sidebar {
+    flex: 0 0 300px;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Sombra profunda */
+    border-top: 4px solid #c5a880; /* Línea dorada superior */
+    overflow: hidden;
+}
+
+.perfil-header-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    border-bottom: 1px dashed #eee; /* Línea punteada como en reclamaciones */
+}
+
+.avatar-circulo {
+    width: 60px;
+    height: 60px;
+    background-color: #c5a880;
+    color: #121212;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-usuario .label-perfil {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.info-usuario h3 {
+    font-size: 1.5rem;
+    color: #121212;
+    margin: 0;
+    font-weight: 300; /* Tipografía más ligera y elegante */
+}
+
+.perfil-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.perfil-menu li {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.perfil-menu .menu-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 2rem;
+    color: #555; /* Gris más oscuro */
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+.perfil-menu .menu-link i {
+    color: #c5a880;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.perfil-menu .menu-link:hover,
+.perfil-menu .menu-link.activo {
+    background-color: #fdfdfd;
+    color: #c5a880; /* Resalte en dorado en lugar de negro */
+    font-weight: 500;
+}
+
+/* Área Principal (Adaptada al estilo de reclamaciones) */
+.perfil-contenido {
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Sombra profunda */
+    border-top: 4px solid #c5a880; /* Línea dorada superior */
+    padding: 3rem;
+}
+
+.perfil-contenido h2 {
+    font-size: 1.8rem; /* Más grande */
+    color: #121212;
+    margin-bottom: 0.5rem;
+    font-weight: 300; /* Tipografía ligera */
+}
+
+.subtitulo-perfil {
+    color: #777;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.linea-perfil {
+    border: 0;
+    height: 1px;
+    background: #eeeeee;
+    border-bottom: 1px dashed #eee; /* Estilo reclamaciones */
+    margin-bottom: 2rem;
+}
+
+/* Estilos Formulario (Idénticos a reclamaciones) */
+.form-ajustes-cuenta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-fila {
+    display: flex;
+    gap: 2rem;
+}
+
+.form-grupo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-grupo label {
+    font-size: 0.88rem;
+    font-weight: 500; /* Texto más marcado */
+    color: #333;
+}
+
+.form-grupo input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    border-radius: 4px; /* Bordes más rectos */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+}
+
+/* Efecto focus brillante de reclamaciones */
+.form-grupo input:focus {
+    border-color: #b3946b;
+    outline: none;
+    box-shadow: 0 0 8px rgba(197, 168, 128, 0.2);
+}
+
+.input-con-icono {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-con-icono input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.input-con-icono i {
+    position: absolute;
+    right: 15px;
+    color: #c5a880;
+}
+
+/* Botones */
+.perfil-botones {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn-actualizar {
+    padding: 1rem; /* Padding igual a btn-submit */
+    background-color: #121212;
+    color: #ffffff;
+    border: 1px solid #121212;
+    border-radius: 4px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+}
+
+/* Hover dorado de reclamaciones */
+.btn-actualizar:hover {
+    background-color: #c5a880;
+    border-color: #c5a880;
+    color: #121212;
+}
+
+/* Botones secundarios */
+.btn-cerrar-otras {
+    padding: 1rem;
+    background-color: transparent;
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cerrar-otras:hover {
+    background-color: #eafaf1;
+}
+
+.btn-eliminar-cuenta {
+    padding: 1rem;
+    background-color: transparent;
+    color: #ff4d4f;
+    border: 1px solid #ff4d4f;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-eliminar-cuenta:hover {
+    background-color: #fff1f0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .perfil-wrapper {
+        flex-direction: column;
+    }
+
+    .perfil-sidebar,
+    .secciones-contenedor {
+        width: 100%;
+        flex: none;
+    }
+
+    .form-fila {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .perfil-contenido {
+        padding: 2rem 1.5rem;
+    }
+}

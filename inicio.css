@@ -1,0 +1,659 @@
+/* ====================================================
+   RESET GENERAL Y BASE RESPONSIVE
+   ==================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333333;
+    background-color: #ffffff;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ====================================================
+   ESTILOS DEL HEADER GLOBAL Y HAMBURGUESA (CSS PURO)
+   ==================================================== */
+.main-header {
+    background-color: #080808;
+    padding: 0.5rem 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(197, 168, 128, 0.3);
+}
+
+.main-header .logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.main-header .logo-img {
+    height: 75px;
+    width: auto;
+    display: block;
+    transform: scaleX(1.15);
+    transform-origin: left center;
+}
+
+/* Ocultar elementos del menú móvil en PC */
+.menu-check {
+    display: none;
+}
+
+.menu-toggle {
+    background: transparent;
+    border: none;
+    display: none;
+    color: #c5a880;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    user-select: none;
+    line-height: 1;
+}
+
+.icon-close {
+    display: none;
+}
+
+/* Estilos de la navegación en PC */
+.nav-menu ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 1.2rem;
+
+}
+
+.nav-menu ul li a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 0.80rem;
+    font-weight: 300;
+    padding: 0.5rem;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active {
+    color: #c5a880;
+    border-bottom: 2px solid #c5a880;
+}
+
+.nav-menu ul li a i.fa-regular {
+    font-size: 1.5rem;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* ====================================================
+   MENÚ DESPLEGABLE DE USUARIO (KONOPA) - SIN !IMPORTANT
+   ==================================================== */
+.nav-menu .nav-user-item {
+    position: relative;
+}
+
+/* Al poner "ul.dropdown-content", el navegador sabe que esta regla 
+   es más fuerte que el "ul" genérico de tu nav-menu */
+.nav-menu ul.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Vence al gap de 1.2rem por especificidad */
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #121212;
+    min-width: 180px;
+    z-index: 1000;
+    border: 1px solid #c5a880;
+    border-radius: 4px;
+    padding: 0;
+    margin-top: 5px;
+    list-style: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.nav-menu ul.dropdown-content.mostrar-dropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contenedor del enlace sin espacios extra */
+.nav-menu ul.dropdown-content li {
+    width: 100%;
+    border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.nav-menu ul.dropdown-content li:last-child {
+    border-bottom: none;
+}
+
+/* Enlace que ocupa TODO el bloque */
+.nav-menu ul.dropdown-content li a {
+    color: #ffffff;
+    background-color: transparent; 
+    padding: 12px 20px; 
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box; 
+    font-size: 0.95rem; 
+    text-align: left; 
+    border-bottom: none; /* Vence al borde transparente del menú principal */
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* El efecto Hover que llena todo el cuadro */
+.nav-menu ul.dropdown-content li a:hover {
+    background-color: #ffffff;
+    color: #121212;
+    border-bottom: none; /* Vence al borde dorado del menú principal */
+}
+@keyframes fadeInHero {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================================
+   HERO SECTION (PORTADA)
+   ==================================================== */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+        url('https://static.wixstatic.com/media/9755d8_b2d98eade0814b17a67fdf7d95888fdc~mv2.png/v1/fill/w_1000,h_563,al_c,q_90,usm_0.66_1.00_0.01/9755d8_b2d98eade0814b17a67fdf7d95888fdc~mv2.png') no-repeat center center/cover;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 2rem 1.5rem;
+}
+
+.hero-section .hero-content {
+    max-width: 800px;
+    animation: fadeInHero 1.2s ease-out forwards;
+}
+
+.hero-section .hero-content h2 {
+    font-size: 2.8rem;
+    font-weight: 200;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.hero-section .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+}
+
+.hero-section .hero-content p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #e0e0e0;
+}
+
+/* ====================================================
+   CONTENEDOR PRINCIPAL Y SEPARADORES
+   ==================================================== */
+.main-content {
+    padding: 4rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-content .intro-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.main-content .intro-section h3 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.main-content .intro-section p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #666;
+}
+
+.main-content .intro-section p span {
+    color: #c5a880;
+    font-weight: bold;
+}
+
+.main-content .divider {
+    border: 0;
+    height: 1px;
+    background: rgba(197, 168, 128, 0.3);
+    margin: 4rem auto;
+    width: 80%;
+}
+
+/* ====================================================
+   TARJETAS DE LAS REGIONES (GRID)
+   ==================================================== */
+.regions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.region-card {
+    background: #f9f9f9;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.region-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.region-card:hover .card-image-wrapper img {
+    transform: scale(1.08);
+}
+
+.region-card .card-image-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.region-card .card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: bottom center;
+    transition: transform 0.5s ease;
+}
+
+.region-card .card-text-wrapper {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.region-card h4 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: #121212;
+}
+
+.region-card p {
+    font-size: 0.95rem;
+    color: #555;
+    text-align: justify;
+}
+
+/* ====================================================
+   TARJETAS PLATOS ESTRELLA (GRID)
+   ==================================================== */
+.star-dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 2.5rem;
+}
+
+.star-card {
+    background-color: #f9f9f9;
+    border: 1px solid rgba(197, 168, 128, 0.2);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.star-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+    border-color: #c5a880;
+}
+
+.star-card:hover .star-img-wrapper img {
+    transform: scale(1.08);
+}
+
+.star-card .star-img-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.star-card .star-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.star-card .star-info {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: flex-start;
+}
+
+.star-card .star-info h4 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #121212;
+    margin-bottom: 1rem;
+}
+
+.star-card .star-info p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+    text-align: justify;
+}
+
+.star-card .star-info .btn-star {
+    display: inline-block;
+    background: #121212;
+    border: 1px solid #c5a880;
+    color: #c5a880;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.star-card .star-info .btn-star:hover {
+    background-color: #c5a880;
+    color: #121212;
+    font-weight: 500;
+}
+
+/* ====================================================
+   PIE DE PÁGINA (FOOTER)
+   ==================================================== */
+.main-footer {
+    background-color: #121212;
+    color: #cccccc;
+    padding: 4rem 2rem 1.5rem 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(197, 168, 128, 0.2);
+}
+
+.main-footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    align-items: start;
+}
+
+.main-footer .footer-logo-col .footer-logo {
+    width: auto;
+    max-width: 180px;
+    transition: transform 0.3s ease;
+}
+
+.main-footer .footer-logo-col .footer-logo:hover {
+    transform: scale(1.05);
+}
+
+.main-footer h4 {
+    color: #c5a880;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+}
+
+.main-footer .footer-links-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.main-footer .footer-links-col ul li a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.main-footer .footer-links-col ul li a:hover {
+    color: #c5a880;
+}
+
+.main-footer .footer-info-col .reclamaciones-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #cccccc;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.main-footer .footer-info-col .reclamaciones-link:hover {
+    color: #c5a880;
+    transform: translateX(5px);
+}
+
+.main-footer .footer-info-col .reclamaciones-link .reclamaciones-img {
+    width: 55px;
+    background-color: #ffffff;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.main-footer .footer-social-col .social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.main-footer .footer-social-col .social-icons a {
+    color: #c5a880;
+    border: 1px solid #c5a880;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.main-footer .footer-social-col .social-icons a:hover {
+    background-color: #c5a880;
+    color: #121212;
+    transform: translateY(-3px);
+}
+
+.main-footer .footer-social-col .footer-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.main-footer .footer-social-col .footer-buttons .btn-footer {
+    border: 1px solid #c5a880;
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    color: #c5a880;
+}
+
+.main-footer .footer-social-col .footer-buttons .btn-footer:hover {
+    background-color: #c5a880;
+    color: #121212;
+}
+
+.main-footer .footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(197, 168, 128, 0.2);
+    color: #888888;
+}
+
+/* ====================================================
+   ESTRUCTURA RESPONSIVA INTEGRAL 
+   ==================================================== */
+
+@media (max-width: 1279px) {
+    .main-header {
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .logo-img {
+        height: 40px;
+    }
+
+    .menu-toggle {
+        display: block;
+        order: 2;
+    }
+
+    .main-header .nav-menu ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #080808;
+        padding: 2rem 0;
+        text-align: center;
+    }
+
+    /* LOGICA DEL MENU FUNCIONAL CON JAVASCRIPT */
+    .nav-menu.mostrar ul {
+        display: flex;
+    }
+
+    .menu-toggle.activo .icon-open {
+        display: none;
+    }
+
+    .menu-toggle.activo .icon-close {
+        display: inline-block;
+    }
+
+    .hero-section .hero-content h2 {
+        font-size: 2.2rem;
+    }
+
+    .hero-section .hero-content p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        padding: 0.5rem;
+    }
+
+    .logo-img {
+        height: 35px;
+    }
+
+    .hero-section .hero-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-section .hero-content p {
+        font-size: 1rem;
+    }
+
+    .main-content {
+        padding: 2rem 1rem;
+    }
+
+    .main-content .intro-section {
+        margin-bottom: 2rem;
+    }
+
+    .main-content .intro-section h3 {
+        font-size: 1.6rem;
+    }
+
+    .main-content .intro-section p {
+        font-size: 1rem;
+    }
+
+    .regions-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 400px) {
+
+    html,
+    body {
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    * {
+        max-width: 100%;
+    }
+}

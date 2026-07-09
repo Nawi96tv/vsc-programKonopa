@@ -1,0 +1,298 @@
+/* ====================================================
+   RESET TEMPORAL Y SCROLL SUAVE
+   ==================================================== */
+html {
+    scroll-behavior: smooth; /* Efecto elegante al hacer click en las categorías */
+}
+
+body {
+    background-color: #ffffff;
+}
+
+/* ====================================================
+   ANIMACIONES Y HERO
+   ==================================================== */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
+        url('https://www.peruinforma.com/wp-content/uploads/2025/06/juane-de-gallina.jpg') no-repeat center center/cover;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 2rem 1.5rem;
+}
+
+.menu-hero .hero-content {
+    animation: slideInUp 1s ease-out forwards;
+}
+
+.menu-hero .hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+.menu-hero .hero-content h2 span {
+    color: #c5a880;
+    font-weight: 400;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.menu-hero .hero-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #dddddd;
+    margin-top: 0.5rem;
+}
+
+/* ====================================================
+   CATEGORÍAS CIRCULARES
+   ==================================================== */
+.categories-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: -3rem auto 2rem auto;
+    position: relative;
+    z-index: 10;
+    padding: 0 1rem;
+}
+
+.categories-nav .cat-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #121212;
+    color: #c5a880;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 1rem;
+    border: 2px solid #c5a880;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.categories-nav .cat-circle:hover {
+    transform: translateY(-5px) scale(1.05);
+    background-color: #c5a880;
+    color: #121212;
+    font-weight: bold;
+}
+
+/* ====================================================
+   CONTENEDOR DE LA CARTA Y GRILLES
+   ==================================================== */
+.menu-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+.menu-region-section {
+    scroll-margin-top: 100px; /* Offset para que el header pegajoso no tape el título */
+}
+
+.menu-region-section .region-title {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #121212;
+    border-bottom: 1px solid rgba(197, 168, 128, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.menu-region-section .region-subtitle {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+}
+
+.menu-region-section .dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2.5rem;
+}
+
+/* ====================================================
+   CARDS DE LOS PLATOS
+   ==================================================== */
+.dish-card {
+    display: flex;
+    flex-direction: row;
+    background-color: #fcfcfc;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+}
+
+.dish-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(197, 168, 128, 0.15);
+    border-color: rgba(197, 168, 128, 0.4);
+}
+
+.dish-card:hover .dish-image-wrapper img {
+    transform: scale(1.06);
+}
+
+.dish-card:hover .dish-info .dish-header .price {
+    background-color: #121212;
+    color: #c5a880;
+}
+
+.dish-card .dish-image-wrapper {
+    flex: 1;
+    min-height: 180px;
+    overflow: hidden;
+}
+
+.dish-card .dish-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center left;
+    transition: transform 0.5s ease;
+}
+
+.dish-card .dish-info {
+    flex: 1.6;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #ffffff;
+}
+
+.dish-card .dish-info .dish-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    gap: 1rem;
+}
+
+.dish-card .dish-info .dish-header h4 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #121212;
+    line-height: 1.3;
+}
+
+.dish-card .dish-info .dish-header .price {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #121212;
+    background-color: rgba(197, 168, 128, 0.15);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.dish-card .dish-info .description {
+    font-size: 0.88rem;
+    color: #666;
+    text-align: justify;
+    line-height: 1.6;
+}
+
+/* ====================================================
+   EVALUACIÓN RESPONSIVA EXCLUSIVA DEL CONTENIDO
+   ==================================================== */
+@media (max-width: 768px) {
+    .menu-hero {
+        height: auto;
+        min-height: auto;
+        padding-top: 3rem;
+        padding-bottom: 4rem;
+    }
+
+    .menu-hero .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .categories-nav {
+        margin-top: -3rem;
+        gap: 1rem;
+    }
+
+    .categories-nav .cat-circle {
+        width: 80px;
+        height: 80px;
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
+
+    .menu-container {
+        padding: 2rem 1.5rem;
+        gap: 3.5rem;
+    }
+
+    /* Modifica el grid para que en celular pase a 1 columna pura */
+    .menu-region-section .dishes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Transforma las tarjetas de horizontal a vertical */
+    .dish-card {
+        flex-direction: column;
+    }
+
+    .dish-card .dish-image-wrapper {
+        flex: none; /* Quita el flex de ancho */
+        height: 220px; /* Le da una altura fija bonita */
+        width: 100%;
+    }
+
+    .dish-card .dish-info {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-nav {
+        gap: 0.8rem;
+    }
+
+    .categories-nav .cat-circle {
+        width: 70px;
+        height: 70px;
+        font-size: 0.65rem;
+    }
+
+    .dish-card .dish-image-wrapper {
+        height: 180px;
+    }
+}
