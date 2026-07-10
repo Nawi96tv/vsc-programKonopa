@@ -1,10 +1,100 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================================
-    // 1. MENÚ RESPONSIVO (Global)
+    // 1. SEGURIDAD: VERIFICAR SESIÓN
+    // ==========================================================
+    if (localStorage.getItem('konopa_logeado') !== 'true') {
+        alert("Acceso denegado. Debes iniciar sesión para realizar pagos.");
+        window.location.href = "../login/index.html";
+        return; // Detiene la ejecución para proteger la página
+    }
+
+    // ==========================================================
+    // 2. CARGAR DATOS DEL USUARIO (Dirección y Nombre)
+    // ==========================================================
+    const direccionGuardada = localStorage.getItem('konopa_usuario_direccion');
+    const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
+    
+    const displayDireccion = document.getElementById('display-direccion');
+    const displayNombre = document.getElementById('display-nombre-tarjeta');
+
+    if (displayDireccion) {
+        displayDireccion.textContent = direccionGuardada ? direccionGuardada : "Dirección no registrada";
+    }
+    if (displayNombre) {
+        displayNombre.textContent = nombreGuardado ? nombreGuardado : "USUARIO";
+    }
+
+    // ==========================================================
+    // 3. CARGAR EL PEDIDO TEMPORAL Y CALCULAR TOTALES
+    // ==========================================================
+    const pedidoTemporalStr = localStorage.getItem('konopa_pedido_temporal');
+    const listaResumen = document.getElementById('lista-resumen-items');
+    let pedidoPendiente = null;
+    
+    if (listaResumen && pedidoTemporalStr) {
+        pedidoPendiente = JSON.parse(pedidoTemporalStr); 
+        
+        let itemsHtml = '';
+        pedidoPendiente.items.forEach(item => {
+            // Diseño para la lista de resumen (1x Nombre ----- Precio)
+            itemsHtml += `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #555;">
+                    <span>1x ${item.nombre}</span>
+                    <span>${item.precio}</span>
+                </div>
+            `;
+        });
+        listaResumen.innerHTML = itemsHtml;
+
+        // MATEMÁTICA CORRECTA: Costo de platos + Envío (5.00)
+        const totalPlatos = parseFloat(pedidoPendiente.total);
+        const costoEnvio = 5.00;
+        const totalConEnvio = (totalPlatos + costoEnvio).toFixed(2);
+
+        // Actualizamos el total general del pedido internamente para guardarlo con el envío incluido
+        pedidoPendiente.total = totalConEnvio; 
+
+        const domCostoProductos = document.getElementById('costo-productos');
+        const domCostoTotal = document.getElementById('costo-total');
+
+        if (domCostoProductos) domCostoProductos.textContent = `S/ ${totalPlatos.toFixed(2)}`;
+        if (domCostoTotal) domCostoTotal.textContent = `S/ ${totalConEnvio}`;
+    } else if (listaResumen) {
+        listaResumen.innerHTML = '<p style="color: #888; font-style: italic;">No hay pedidos pendientes para pagar.</p>';
+    }
+
+    // ==========================================================
+    // 4. LÓGICA DEL BOTÓN FINAL "HACER PEDIDO"
+    // ==========================================================
+    const btnProcesar = document.getElementById('btn-procesar-pago');
+    
+    if (btnProcesar) {
+        btnProcesar.addEventListener('click', () => {
+            if (pedidoPendiente) {
+                // 1. Guardamos el pedido en el historial oficial
+                const misPedidos = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
+                misPedidos.push(pedidoPendiente);
+                localStorage.setItem('konopa_pedidos', JSON.stringify(misPedidos));
+
+                // 2. Destruimos la memoria temporal para que el carrito quede limpio
+                localStorage.removeItem('konopa_pedido_temporal');
+
+                // 3. Mensaje de éxito y redirección a Mi Perfil
+                alert("¡Pago procesado con éxito! Tu pedido está en camino a tu domicilio.");
+                window.location.href = "../perfil/index.html";
+            } else {
+                alert("No tienes ningún pedido pendiente por pagar.");
+            }
+        });
+    }
+
+    // ==========================================================
+    // 5. MENÚ RESPONSIVO Y SESIÓN EN EL HEADER
     // ==========================================================
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu');
+    
     if (btnMenu && navMenu) {
         btnMenu.addEventListener('click', () => {
             navMenu.classList.toggle('mostrar');
@@ -12,98 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================================
-    // 2. SEGURIDAD: VERIFICAR QUE ESTÉ LOGUEADO AL ENTRAR A PAGAR
-    // ==========================================================
-    if (localStorage.getItem('konopa_logeado') !== 'true') {
-        alert("Acceso denegado. Debes iniciar sesión para realizar pagos.");
-        window.location.href = "../login/index.html";
-        return; // Detiene la ejecución del resto del código de pago
-    }
-
-    // ==========================================================
-    // 3. CARGAR DATOS DEL USUARIO (Dirección y Nombre)
-    // ==========================================================
-    const direccionGuardada = localStorage.getItem('konopa_usuario_direccion');
-    const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
-    
-    const displayDireccion = document.getElementById('display-direccion');
-    const displayNombreTarjeta = document.getElementById('display-nombre-tarjeta');
-
-    if (displayDireccion) {
-        displayDireccion.textContent = direccionGuardada ? direccionGuardada : "Dirección no registrada";
-    }
-    if (displayNombreTarjeta) {
-        displayNombreTarjeta.textContent = nombreGuardado ? nombreGuardado : "USUARIO";
-    }
-
-    // ==========================================================
-    // 4. CARGAR EL ÚLTIMO PEDIDO PARA EL RESUMEN
-    // ==========================================================
-    const misPedidos = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
-    const listaResumen = document.getElementById('lista-resumen-items');
-    
-    if (listaResumen) {
-        if (misPedidos.length > 0) {
-            // Tomamos el último pedido de la lista
-            const ultimoPedido = misPedidos[misPedidos.length - 1]; 
-            
-            // Mostrar los platos en la lista
-            let itemsHtml = '';
-            ultimoPedido.items.forEach(item => {
-                itemsHtml += `
-                    <div class="summary-item-row">
-                        <span style="flex:1;">1x ${item.nombre}</span>
-                        <span>${item.precio}</span>
-                    </div>
-                `;
-            });
-            listaResumen.innerHTML = itemsHtml;
-
-            // Actualizar los totales
-            const costoProductos = document.getElementById('costo-productos');
-            const costoTotal = document.getElementById('costo-total');
-            
-            if (costoProductos) costoProductos.textContent = `S/ ${ultimoPedido.total}`;
-            if (costoTotal) costoTotal.textContent = `S/ ${ultimoPedido.total}`;
-        } else {
-            listaResumen.innerHTML = '<p>No hay pedidos pendientes.</p>';
-        }
-    }
-
-    // ==========================================================
-    // 5. LÓGICA DEL BOTÓN FINAL "HACER PEDIDO"
-    // ==========================================================
-    const btnProcesar = document.getElementById('btn-procesar-pago');
-    if (btnProcesar) {
-        btnProcesar.addEventListener('click', () => {
-            alert("¡Pago procesado con éxito! Tu pedido está en camino a tu domicilio. Gracias por elegir Konopa.");
-            // Una vez pagado, lo redirigimos a su perfil para que vea el estado
-            window.location.href = "../perfil/index.html";
-        });
-    }
-
-    // Lógica visual para seleccionar el método de pago (Efectivo o Tarjeta)
-    const opcionesPago = document.querySelectorAll('.payment-option');
-    opcionesPago.forEach(opcion => {
-        opcion.addEventListener('click', function() {
-            opcionesPago.forEach(opt => opt.classList.remove('selected'));
-            this.classList.add('selected');
-            const radioInput = this.querySelector('input[type="radio"]');
-            if(radioInput) radioInput.checked = true;
-        });
-    });
-
-    // ==========================================================
-    // 6. FUNCIÓN GLOBAL: SESIÓN ACTIVA (REEMPLAZO DE LOGIN A PERFIL)
-    // ==========================================================
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
         
         const navMenuUl = document.querySelector('.nav-menu ul');
         if (!navMenuUl) return;
-
+        
         const enlaceLogin = Array.from(navMenuUl.querySelectorAll('a')).find(a => a.textContent.includes('Login'));
 
         if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
@@ -119,27 +124,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             `;
 
-            document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation(); 
-                document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
-            });
+            const btnToggle = document.getElementById('btn-user-toggle');
+            const dropdown = document.getElementById('user-dropdown');
 
-            document.addEventListener('click', (e) => {
-                const userDropdown = document.getElementById('user-dropdown');
-                if (userDropdown && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.remove('mostrar-dropdown');
-                }
-            });
+            if (btnToggle && dropdown) {
+                btnToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); 
+                    dropdown.classList.toggle('mostrar-dropdown');
+                });
 
-            document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
-                e.preventDefault();
-                localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); 
-            });
+                document.addEventListener('click', (e) => {
+                    if (!dropdown.contains(e.target)) {
+                        dropdown.classList.remove('mostrar-dropdown');
+                    }
+                });
+            }
+
+            const btnCerrarSesion = document.getElementById('btn-cerrar-sesion-top');
+            if (btnCerrarSesion) {
+                btnCerrarSesion.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.setItem('konopa_logeado', 'false');
+                    window.location.href = '../login/index.html'; // Lo sacamos del pago al cerrar sesión
+                });
+            }
         }
     }
-
-    // Ejecutamos la validación de la barra de navegación superior
+    
     verificarSesionActivaGlobal();
 });

@@ -40,8 +40,9 @@
             </ul>
         </nav>
     </header>
-    <main class="checkout-container">
-        <!-- COLUMNA IZQUIERDA -->
+   <main class="checkout-container">
+        
+        <!-- COLUMNA IZQUIERDA: Dirección y Pagos -->
         <div class="checkout-left">
 
             <!-- Tarjeta Dirección -->
@@ -69,13 +70,12 @@
                 </div>
             </div>
 
+
             <div class="checkout-card">
                 <h3 style="display: flex; align-items: center; gap: 10px;">
                     <i class="fa-solid fa-credit-card" style="color: #c5a880;"></i> Método de pago
                 </h3>
                 <div class="payment-methods">
-
-                    <!-- 1. Opción de Efectivo (Seleccionada por defecto) -->
                     <label class="payment-option selected">
                         <div style="display: flex; align-items: center; gap: 15px;">
                             <i class="fa-solid fa-money-bill-wave" style="font-size: 1.5rem; color: #555;"></i>
@@ -86,49 +86,45 @@
                         <input type="radio" name="metodo_pago" checked>
                     </label>
 
-                    <!-- 2. Mensaje y Botón que redirige al Perfil -->
-                    <p style="font-size: 0.9rem; color: #666; margin: 15px 0 10px 0;">Aún no has agregado ninguna
-                        tarjeta.</p>
+                    <p style="font-size: 0.9rem; color: #666; margin: 15px 0 10px 0;">Aún no has agregado ninguna tarjeta.</p>
 
                     <button type="button" onclick="window.location.href='../perfil/index.html'"
                         style="background: transparent; border: 1px dashed #c5a880; color: #c5a880; padding: 12px; width: 100%; border-radius: 6px; font-weight: 600; cursor: pointer;">
                         + Agregar método de pago
                     </button>
-
-                    <!-- COLUMNA DERECHA -->
-                    <div class="checkout-right">
-                        <div class="checkout-card summary-card">
-                            <h3>Resumen</h3>
-
-                            <div id="lista-resumen-items" class="summary-items">
-                                <!-- Los items se cargarán con JS -->
-                            </div>
-
-                            <div class="summary-costs">
-                                <div class="cost-row">
-                                    <span>Costo de productos</span>
-                                    <span id="costo-productos">S/ 0.00</span>
-                                </div>
-                                <div class="cost-row">
-                                    <span>Costo de envío</span>
-                                    <span style="color: #c5a880;">S/ 5.00</span>
-                                </div>
-                            </div>
-
-                            <div class="total-row">
-                                <span>Total</span>
-                                <span id="costo-total">S/ 0.00</span>
-                            </div>
-
-                            <button class="btn-hacer-pedido" id="btn-procesar-pago">Hacer pedido</button>
-                        </div>
-                    </div>
-
-                    <button class="btn-hacer-pedido" id="btn-procesar-pago">Hacer pedido</button>
                 </div>
             </div>
-    </main>
+        </div> 
 
+        <div class="checkout-right">
+            <div class="checkout-card summary-card">
+                <h3>Resumen</h3>
+
+                <div id="lista-resumen-items"></div>
+
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                
+                <div class="summary-costs">
+                    <div class="cost-row">
+                        <span>Costo de productos</span>
+                        <span id="costo-productos">S/ 0.00</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Costo de envío</span>
+                        <span>S/ 5.00</span>
+                    </div>
+                </div>
+
+                <div class="total-row">
+                    <span>Total</span>
+                    <span id="costo-total">S/ 0.00</span>
+                </div>
+
+                <button id="btn-procesar-pago" class="btn-hacer-pedido">Hacer pedido</button>
+            </div>
+        </div> <!-- Fin de checkout-right -->
+
+    </main>
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-logo-col">

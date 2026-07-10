@@ -59,6 +59,8 @@
                         Métodos de pago</a></li>
                 <li><a href="#" class="menu-link" data-target="sec-pedidos"><i
                             class="fa-solid fa-clock-rotate-left"></i> Últimos pedidos</a></li>
+                <li><a href="#" class="menu-link" data-target="sec-mis-reclamos"><i class="fa-solid fa-folder-open"></i>
+                        Mis reclamos</a></li>
             </ul>
         </aside>
 
@@ -71,7 +73,7 @@
                     <div class="form-fila">
                         <div class="form-grupo">
                             <label>Nombre(s)</label>
-                            <input type="text" id="perfil-nombre">
+                            <input type="text" id="perfil-nombre" placeholder="Ej. Jose Leonel">
                         </div>
                         <div class="form-grupo">
                             <label>Celular</label>
@@ -91,7 +93,6 @@
                             <input type="text" id="perfil-direccion">
                         </div>
                     </div>
-
                     <div class="perfil-botones">
                         <button type="button" class="btn-actualizar" id="btn-actualizar-datos">Actualizar datos</button>
                         <button type="button" class="btn-eliminar-cuenta" id="btn-eliminar-cuenta">Eliminar mi
@@ -103,30 +104,52 @@
             <section id="sec-pagos" class="perfil-contenido" style="display: none;">
                 <h2>Métodos de pago</h2>
                 <hr class="linea-perfil">
-                <div style="text-align: center; padding: 2rem 0;">
-                    <i class="fa-regular fa-credit-card" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-                    <p style="color: #666;">Aún no tienes tarjetas guardadas.</p>
-                    <button class="btn-nueva-direccion" style="margin-top: 1rem; width: auto; padding: 10px 20px;">+
-                        Añadir nueva tarjeta</button>
+
+                <div id="contenedor-tarjetas"></div>
+
+                <div style="text-align: center; padding: 1rem 0;">
+                    <button id="btn-abrir-modal-tarjeta" class="btn-nueva-direccion"
+                        style="width: auto; padding: 10px 20px; cursor: pointer; border: 1px solid #111; background: #fff; border-radius: 4px; font-weight: 600;">
+                        + Añadir nueva tarjeta
+                    </button>
                 </div>
             </section>
 
             <section id="sec-pedidos" class="perfil-contenido" style="display: none;">
                 <div class="seccion-mis-pedidos">
                     <h3>Mis Últimos Pedidos</h3>
-                    <div id="lista-mis-pedidos"></div>
                 </div>
                 <p class="subtitulo-perfil">Hazle seguimiento al detalle a tus pedidos anteriores y solicita ayuda si
                     hay algún inconveniente.</p>
                 <hr class="linea-perfil">
-                <div id="historial-pedidos" style="text-align: center; padding: 2rem 0;">
-                    <i class="fa-solid fa-bag-shopping" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-                    <p class="mensaje-vacio">No tienes ningún pedido todavía.</p>
-                </div>
+
+                <div id="contenedor-mis-pedidos"></div>
             </section>
 
+            <section id="sec-mis-reclamos" class="perfil-contenido" style="display: none;">
+                <h2>Mi Historial de Reclamos</h2>
+                <p class="subtitulo-perfil">Revisa el estado de tus quejas y reclamos ingresados al sistema.</p>
+                <hr class="linea-perfil">
+
+                <div id="contenedor-mis-reclamos"></div> <!-- Aquí JS inyectará las tarjetas -->
+            </section>
         </div>
+
+        <section id="sec-pagos" class="perfil-contenido" style="display: none;">
+            <h2>Métodos de pago</h2>
+            <hr class="linea-perfil">
+
+            <div id="contenedor-tarjetas"></div>
+
+            <div style="text-align: center; padding: 1rem 0;">
+                <button id="btn-abrir-modal-tarjeta" class="btn-nueva-direccion"
+                    style="width: auto; padding: 10px 20px; cursor: pointer; border: 1px solid #111; background: #fff; border-radius: 4px; font-weight: 600;">
+                    + Añadir nueva tarjeta
+                </button>
+            </div>
+        </section>
     </main>
+
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-logo-col">

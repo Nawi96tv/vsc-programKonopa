@@ -1,4 +1,6 @@
-/* Contenedor Principal */
+/* ==========================================================
+   1. CONTENEDORES PRINCIPALES Y ESTRUCTURA
+   ========================================================== */
 .perfil-wrapper {
     max-width: 1200px;
     margin: 4rem auto;
@@ -13,8 +15,8 @@
     flex: 0 0 300px;
     background: #ffffff;
     border-radius: 6px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Sombra profunda */
-    border-top: 4px solid #c5a880; /* Línea dorada superior */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #c5a880;
     overflow: hidden;
 }
 
@@ -23,7 +25,7 @@
     align-items: center;
     gap: 1rem;
     padding: 2rem;
-    border-bottom: 1px dashed #eee; /* Línea punteada como en reclamaciones */
+    border-bottom: 1px dashed #eee;
 }
 
 .avatar-circulo {
@@ -48,7 +50,7 @@
     font-size: 1.5rem;
     color: #121212;
     margin: 0;
-    font-weight: 300; /* Tipografía más ligera y elegante */
+    font-weight: 300;
 }
 
 .perfil-menu {
@@ -66,7 +68,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1.2rem 2rem;
-    color: #555; /* Gris más oscuro */
+    color: #555;
     text-decoration: none;
     font-size: 0.95rem;
     transition: background 0.3s, color 0.3s;
@@ -82,24 +84,26 @@
 .perfil-menu .menu-link:hover,
 .perfil-menu .menu-link.activo {
     background-color: #fdfdfd;
-    color: #c5a880; /* Resalte en dorado en lugar de negro */
+    color: #c5a880;
     font-weight: 500;
 }
 
-/* Área Principal (Adaptada al estilo de reclamaciones) */
+/* ==========================================================
+   2. ÁREA PRINCIPAL Y CONTENIDOS DE PANELES
+   ========================================================== */
 .perfil-contenido {
     background: #ffffff;
     border-radius: 6px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Sombra profunda */
-    border-top: 4px solid #c5a880; /* Línea dorada superior */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #c5a880;
     padding: 3rem;
 }
 
 .perfil-contenido h2 {
-    font-size: 1.8rem; /* Más grande */
+    font-size: 1.8rem;
     color: #121212;
     margin-bottom: 0.5rem;
-    font-weight: 300; /* Tipografía ligera */
+    font-weight: 300;
 }
 
 .subtitulo-perfil {
@@ -112,11 +116,13 @@
     border: 0;
     height: 1px;
     background: #eeeeee;
-    border-bottom: 1px dashed #eee; /* Estilo reclamaciones */
+    border-bottom: 1px dashed #eee;
     margin-bottom: 2rem;
 }
 
-/* Estilos Formulario (Idénticos a reclamaciones) */
+/* ==========================================================
+   3. ESTILOS DE FORMULARIOS Y AJUSTES
+   ========================================================== */
 .form-ajustes-cuenta {
     display: flex;
     flex-direction: column;
@@ -137,23 +143,26 @@
 
 .form-grupo label {
     font-size: 0.88rem;
-    font-weight: 500; /* Texto más marcado */
+    font-weight: 500;
     color: #333;
 }
 
-.form-grupo input {
+.form-grupo input,
+.form-grupo select,
+.form-grupo textarea {
     width: 100%;
     padding: 0.8rem 1rem;
     border: 1px solid #ddd;
     background-color: #ffffff;
-    border-radius: 4px; /* Bordes más rectos */
+    border-radius: 4px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
     transition: all 0.25s ease;
 }
 
-/* Efecto focus brillante de reclamaciones */
-.form-grupo input:focus {
+.form-grupo input:focus,
+.form-grupo select:focus,
+.form-grupo textarea:focus {
     border-color: #b3946b;
     outline: none;
     box-shadow: 0 0 8px rgba(197, 168, 128, 0.2);
@@ -176,7 +185,9 @@
     color: #c5a880;
 }
 
-/* Botones */
+/* ==========================================================
+   4. BOTONES DEL PERFIL
+   ========================================================== */
 .perfil-botones {
     display: flex;
     gap: 1rem;
@@ -185,7 +196,7 @@
 }
 
 .btn-actualizar {
-    padding: 1rem; /* Padding igual a btn-submit */
+    padding: 1rem;
     background-color: #121212;
     color: #ffffff;
     border: 1px solid #121212;
@@ -197,14 +208,12 @@
     transition: all 0.3s ease;
 }
 
-/* Hover dorado de reclamaciones */
 .btn-actualizar:hover {
     background-color: #c5a880;
     border-color: #c5a880;
     color: #121212;
 }
 
-/* Botones secundarios */
 .btn-cerrar-otras {
     padding: 1rem;
     background-color: transparent;
@@ -237,7 +246,231 @@
     background-color: #fff1f0;
 }
 
-/* Responsive */
+.btn-nueva-direccion {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #121212;
+    border: 1px dashed #121212;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-nueva-direccion:hover {
+    background-color: #121212;
+    color: #ffffff;
+    border-style: solid;
+}
+
+/* ==========================================================
+   5. HISTORIAL DE PEDIDOS Y RECLAMOS
+   ========================================================== */
+.historial-vacio-box {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.historial-vacio-box i {
+    font-size: 3rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+}
+
+.mensaje-vacio {
+    color: #666;
+    margin-top: 1rem;
+}
+
+.titulo-fecha-pedidos {
+    margin: 20px 0 10px 0;
+    color: #c5a880;
+    font-weight: 600;
+}
+
+.grid-tarjetas-pedidos {
+    display: grid;
+    gap: 15px;
+}
+
+.tarjeta-historial-box {
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.tarjeta-historial-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.id-pedido {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.id-pedido i {
+    color: #c5a880;
+    margin-right: 5px;
+}
+
+.total-pedido {
+    font-weight: bold;
+    color: #111111;
+}
+
+.hora-pedido {
+    font-size: 0.85rem;
+    color: #888888;
+    margin-bottom: 10px;
+}
+
+.lista-platos-pedido {
+    margin-bottom: 15px;
+}
+
+.fila-plato-historial {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #eeeeee;
+    padding: 4px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.badge-estado-proceso {
+    background-color: #fdfbf7;
+    color: #b3956d;
+    border: 1px solid #c5a880;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.detalle-reclamo {
+    color: #555555;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+/* ==========================================================
+   6. MÉTODOS DE PAGO: TARJETAS GUARDADAS
+   ========================================================== */
+.tarjeta-guardada-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #eee;
+    border-left: 4px solid #c5a880;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: #fdfbf7;
+}
+
+/* ==========================================================
+   7. MODAL DE NUEVA TARJETA
+   ========================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-overlay.mostrar-modal {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: subirModal 0.3s ease;
+}
+
+@keyframes subirModal {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #111;
+}
+
+.btn-close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.btn-close-modal:hover {
+    color: #f00;
+}
+
+.input-modal {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.input-modal:focus {
+    border-color: #c5a880;
+    outline: none;
+}
+
+.btn-guardar-modal {
+    width: 100%;
+    padding: 14px;
+    background: #c5a880;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.btn-guardar-modal:hover {
+    background: #b3956d;
+}
+
+/* ==========================================================
+   8. RESPONSIVE (MÓVILES Y TABLETS)
+   ========================================================== */
 @media (max-width: 768px) {
     .perfil-wrapper {
         flex-direction: column;

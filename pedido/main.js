@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnFinalizar = document.querySelector('#btn-finalizar');
     let total = 0;
 
-    // RENDERIZAR PLATOS
+    // ==========================================================
+    // 3. RENDERIZAR PLATOS
+    // ==========================================================
     if (contenedorCarta) {
         const categorias = [...new Set(productos.map(p => p.categoria))];
         categorias.forEach(cat => {
@@ -54,7 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // LÓGICA CARRITO
+    // ==========================================================
+    // 4. LÓGICA CARRITO
+    // ==========================================================
     window.agregarItem = (nombre, precio) => {
         const li = document.createElement('li');
         li.className = 'cart-item';
@@ -71,49 +75,98 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ==========================================================
-    // 5. MODAL (CORREGIDO)
+    // 5. MODAL Y PAGO
     // ==========================================================
     const modalPedido = document.querySelector('#modal-pedido');
     const btnCerrar = document.querySelector('#btn-cerrar-modal-pedido');
     const resumenPedidoDiv = document.querySelector('#datos-resumen-pedido');
+    const btnIrPagar = document.querySelector('#btn-ir-pagar');
+
+    let pedidoActual = null; // Variable para sostener el pedido sin guardarlo aún
 
     if (btnFinalizar) {
         btnFinalizar.addEventListener('click', () => {
             if (total > 0) {
-                // Generar Ticket
                 const items = document.querySelectorAll('#items-pedido .cart-item');
-                let resumenHTML = '<ul>';
+                let resumenHTML = '';
+                const itemsParaGuardar = [];
+
                 items.forEach(item => {
-                    resumenHTML += `<li>${item.querySelector('span').textContent} - ${item.querySelector('div span').textContent}</li>`;
+                    // Seleccionamos estrictamente el primer elemento (nombre) y el último (precio)
+                    const nombre = item.firstElementChild.textContent.trim();
+                    const precioTexto = item.querySelector('div > span').textContent.trim();
+
+                    // Diseño tipo ticket sin puntos negros
+                    resumenHTML += `
+                        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #ddd; font-size: 0.95rem;">
+                            <span>${nombre}</span>
+                            <strong>${precioTexto}</strong>
+                        </div>`;
+
+                    itemsParaGuardar.push({ nombre: nombre, precio: precioTexto });
                 });
-                resumenHTML += `</ul><strong>Total: S/. ${total}</strong>`;
-                
+
+                resumenHTML += `
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 1.15rem; border-top: 2px solid #c5a880; padding-top: 10px;">
+                        <strong>Total a Pagar:</strong>
+                        <strong>S/. ${total.toFixed(2)}</strong>
+                    </div>`;
+
                 if (resumenPedidoDiv) resumenPedidoDiv.innerHTML = resumenHTML;
-                
-                // ABRIR MODAL USANDO CLASE (CSS)
+
+                // Preparamos el pedido temporalmente
+                pedidoActual = {
+                    id: 'PED-' + Math.floor(Math.random() * 1000000),
+                    items: itemsParaGuardar,
+                    total: total.toFixed(2),
+                    fecha: new Date().toLocaleDateString('es-PE'),
+                    hora: new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })
+                };
+
                 if (modalPedido) {
                     modalPedido.classList.add('mostrar');
                     document.body.style.overflow = 'hidden';
                 }
             } else {
-                alert("Carrito vacío");
+                alert("Tu carrito está vacío. Agrega al menos un plato.");
             }
         });
     }
 
     if (btnCerrar) {
         btnCerrar.addEventListener('click', () => {
-            modalPedido.classList.remove('mostrar');
-            document.body.style.overflow = 'auto';
+            if (modalPedido) {
+                modalPedido.classList.remove('mostrar');
+                document.body.style.overflow = 'auto';
+                pedidoActual = null; // Cancelamos el pedido
+            }
         });
     }
+
+    if (btnIrPagar) {
+        btnIrPagar.addEventListener('click', () => {
+            const sesionIniciada = localStorage.getItem('konopa_logeado') === 'true';
+
+            if (!sesionIniciada) {
+                alert("Para procesar tu pago y confirmar el envío, por favor inicia sesión o regístrate.");
+                window.location.href = '../login/index.html';
+            } else {
+                // Como 'pedidoActual' fue declarado arriba, este botón sí puede leerlo sin que el código explote
+                if (pedidoActual) {
+                    localStorage.setItem('konopa_pedido_temporal', JSON.stringify(pedidoActual));
+                }
+                window.location.href = '../pago/index.html';
+            }
+        });
+    }
+
     // ==========================================================
-    // 6. FUNCIÓN GLOBAL: SESIÓN ACTIVA (REEMPLAZO DE LOGIN A PERFIL)
+    // 6. FUNCIÓN GLOBAL: SESIÓN ACTIVA
     // ==========================================================
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
-        
+
         const navMenuUl = document.querySelector('.nav-menu ul');
         if (!navMenuUl) return;
 
@@ -122,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
-            
+
             liPadre.innerHTML = `
                 <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
                 <ul class="dropdown-content" id="user-dropdown">
@@ -134,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); 
+                e.stopPropagation();
                 document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
             });
 
@@ -148,30 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); 
+                window.location.reload();
             });
         }
     }
 
-    // ==========================================================
-    // LÓGICA DEL BOTÓN "IR A PAGAR" (Validación de Sesión)
-    // ==========================================================
-    const btnIrPagar = document.getElementById('btn-ir-pagar');
-    
-    if (btnIrPagar) {
-        btnIrPagar.addEventListener('click', () => {
-            const sesionIniciada = localStorage.getItem('konopa_logeado') === 'true';
-            
-            if (!sesionIniciada) {
-                // Si NO está logueado, lo mandamos al login
-                alert("Para procesar tu pago y confirmar el envío, por favor inicia sesión o regístrate.");
-                window.location.href = '../login/index.html';
-            } else {
-                // Si SÍ está logueado, lo mandamos a la nueva página de pagos
-                window.location.href = '../pago/index.html';
-            }
-        });
-    }
-
+    // Ejecutamos la función al final de todo
     verificarSesionActivaGlobal();
 });

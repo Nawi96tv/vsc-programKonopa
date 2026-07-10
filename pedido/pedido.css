@@ -304,8 +304,11 @@ body {
 }
 
 .modal-icon {
-    font-size: 2rem; /* Icono grande */
+    font-size: 5rem; /* Icono grande */
     color: #c5a880;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .close-btn {
@@ -316,7 +319,7 @@ body {
 }
 
 .btn-ir-pagar-modal {
-    background: #c5a880;
+    background: #000000;
     color: #fff;
     border: none;
     padding: 12px 20px;
@@ -326,6 +329,13 @@ body {
     cursor: pointer;
     margin-top: 20px;
     font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.btn-ir-pagar-modal:hover {
+    background-color: #b3956d; 
+    box-shadow: 0 5px 15px rgba(197, 168, 128, 0.4); 
+    transform: translateY(-2px);
 }
 /* ====================================================
    EVALUACIÓN RESPONSIVA
