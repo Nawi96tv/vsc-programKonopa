@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     const direccionGuardada = localStorage.getItem('konopa_usuario_direccion');
     const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
-    
+
     const displayDireccion = document.getElementById('display-direccion');
     const displayNombre = document.getElementById('display-nombre-tarjeta');
 
@@ -25,21 +25,47 @@ document.addEventListener('DOMContentLoaded', () => {
         displayNombre.textContent = nombreGuardado ? nombreGuardado : "USUARIO";
     }
 
+    // 2. CARGA DE TARJETAS (Lo que necesitábamos para que aparezcan)
+    const contenedorPagoTarjetas = document.getElementById('contenedor-pago-tarjetas');
+
+    if (contenedorPagoTarjetas) {
+        const tarjetas = JSON.parse(localStorage.getItem('konopa_tarjetas')) || [];
+
+        if (tarjetas.length === 0) {
+            contenedorPagoTarjetas.innerHTML = '<p>No tienes tarjetas guardadas. <a href="../perfil/index.html?seccion=pagos">Añadir una aquí</a></p>';
+        } else {
+            let html = '';
+            tarjetas.forEach((tarjeta, index) => {
+                const ultimos4 = tarjeta.numero.slice(-4);
+                html += `
+                    <div class="tarjeta-opcion">
+                        <input type="radio" name="metodo-pago" id="tarjeta-${index}" value="${index}">
+                        <label for="tarjeta-${index}">
+                            <i class="fa-brands fa-cc-visa"></i> **** **** **** ${ultimos4} - ${tarjeta.titular}
+                        </label>
+                    </div>
+                `;
+            });
+            contenedorPagoTarjetas.innerHTML = html;
+        }
+    }
+
+
     // ==========================================================
     // 3. CARGAR EL PEDIDO TEMPORAL Y CALCULAR TOTALES
     // ==========================================================
     const pedidoTemporalStr = localStorage.getItem('konopa_pedido_temporal');
     const listaResumen = document.getElementById('lista-resumen-items');
     let pedidoPendiente = null;
-    
+
     if (listaResumen && pedidoTemporalStr) {
-        pedidoPendiente = JSON.parse(pedidoTemporalStr); 
-        
+        pedidoPendiente = JSON.parse(pedidoTemporalStr);
+
         let itemsHtml = '';
         pedidoPendiente.items.forEach(item => {
             // Diseño para la lista de resumen (1x Nombre ----- Precio)
             itemsHtml += `
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #555;">
+                <div>
                     <span>1x ${item.nombre}</span>
                     <span>${item.precio}</span>
                 </div>
@@ -53,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalConEnvio = (totalPlatos + costoEnvio).toFixed(2);
 
         // Actualizamos el total general del pedido internamente para guardarlo con el envío incluido
-        pedidoPendiente.total = totalConEnvio; 
+        pedidoPendiente.total = totalConEnvio;
 
         const domCostoProductos = document.getElementById('costo-productos');
         const domCostoTotal = document.getElementById('costo-total');
@@ -61,14 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (domCostoProductos) domCostoProductos.textContent = `S/ ${totalPlatos.toFixed(2)}`;
         if (domCostoTotal) domCostoTotal.textContent = `S/ ${totalConEnvio}`;
     } else if (listaResumen) {
-        listaResumen.innerHTML = '<p style="color: #888; font-style: italic;">No hay pedidos pendientes para pagar.</p>';
+        listaResumen.innerHTML = '<p>No hay pedidos pendientes para pagar.</p>';
     }
 
     // ==========================================================
     // 4. LÓGICA DEL BOTÓN FINAL "HACER PEDIDO"
     // ==========================================================
     const btnProcesar = document.getElementById('btn-procesar-pago');
-    
+
     if (btnProcesar) {
         btnProcesar.addEventListener('click', () => {
             if (pedidoPendiente) {
@@ -82,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 3. Mensaje de éxito y redirección a Mi Perfil
                 alert("¡Pago procesado con éxito! Tu pedido está en camino a tu domicilio.");
-                window.location.href = "../perfil/index.html";
+                window.location.href = "../index.html";
             } else {
                 alert("No tienes ningún pedido pendiente por pagar.");
             }
@@ -94,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu');
-    
+
     if (btnMenu && navMenu) {
         btnMenu.addEventListener('click', () => {
             navMenu.classList.toggle('mostrar');
@@ -105,16 +131,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
-        
+
         const navMenuUl = document.querySelector('.nav-menu ul');
         if (!navMenuUl) return;
-        
+
         const enlaceLogin = Array.from(navMenuUl.querySelectorAll('a')).find(a => a.textContent.includes('Login'));
 
         if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
-            
+
             liPadre.innerHTML = `
                 <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
                 <ul class="dropdown-content" id="user-dropdown">
@@ -130,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (btnToggle && dropdown) {
                 btnToggle.addEventListener('click', (e) => {
                     e.preventDefault();
-                    e.stopPropagation(); 
+                    e.stopPropagation();
                     dropdown.classList.toggle('mostrar-dropdown');
                 });
 
@@ -151,6 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    
+
     verificarSesionActivaGlobal();
 });

@@ -42,7 +42,7 @@
 }
 
 .link-cambiar:hover {
-    color: #b3956d;
+    color: #000000;
 }
 
 .input-instrucciones {
@@ -74,44 +74,73 @@
 }
 
 /* Efecto de selección en dorado elegante */
-.payment-option.selected {
-    border: 2px solid #c5a880;
-    background-color: #fdfbf7;
+.payment-methods {
+    margin-top: 15px;
 }
 
-.card-icon.visa {
-    background: #1a1f71;
-    color: white;
-    font-size: 0.7rem;
-    font-weight: bold;
-    padding: 4px 8px;
-    border-radius: 4px;
+.tarjeta-opcion {
+    background: #ffffff;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
 }
 
-/* Enlace/Botón para ir a añadir tarjeta al perfil */
-.btn-agregar-metodo {
+.tarjeta-opcion:hover {
+    border-color: #c5a880;
+    background: #fdfbf7;
+}
+
+.tarjeta-opcion label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.tarjeta-opcion i {
+    font-size: 1.2rem;
+    color: #1a1f71; /* Color tipo Visa/Mastercard */
+}
+
+/* El botón para agregar */
+.btn-add-payment {
     display: block;
     width: 100%;
     padding: 15px;
     text-align: center;
-    border: 2px dashed #c5a880;
-    color: #c5a880;
+    border: 2px dashed #000000;
+    color: #000000;
     text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
     margin-top: 15px;
     transition: all 0.3s ease;
+    background: transparent;
+    cursor: pointer;
 }
 
-.btn-agregar-metodo:hover {
+.btn-add-payment:hover {
     background-color: #fdfbf7;
-    color: #b3956d;
+    color: #c5a880;
     border-color: #b3956d;
 }
 
 /* ==========================================================
    5. COLUMNA DERECHA (RESUMEN EN TICKET)
    ========================================================== */
+#lista-resumen-items {
+    margin: 15px 0;
+    padding: 10px 0;
+}
 .summary-card {
     position: sticky;
     top: 20px; /* Se ancla arriba al hacer scroll */
@@ -123,27 +152,6 @@
     margin-bottom: 15px;
     max-height: 250px;
     overflow-y: auto;
-}
-
-/* Filas del listado inyectado por JS */
-.summary-item-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.95rem;
-    margin-bottom: 12px;
-}
-
-.summary-item-row .item-name {
-    flex: 1;
-    padding-right: 15px;
-    color: #555555;
-}
-
-.summary-item-row .item-price {
-    white-space: nowrap; /* Evita roturas del prefijo S/. */
-    font-weight: 600;
-    color: #333333;
 }
 
 /* Zona de Subtotales y Desgloses */

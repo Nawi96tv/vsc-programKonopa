@@ -53,7 +53,7 @@
                 </div>
                 <div class="direccion-box">
                     <p id="display-direccion" style="font-weight: 500; margin-bottom: 5px;">Cargando dirección...</p>
-                    <p style="font-size: 0.85rem; color: #888;">Instrucciones de entrega (opcional)</p>
+                    <p>Instrucciones de entrega (opcional)</p>
                     <input type="text" placeholder="Ej. Dejar en portería" class="input-instrucciones">
                 </div>
             </div>
@@ -61,7 +61,7 @@
             <!-- Tarjeta Tiempo de Entrega -->
             <div class="checkout-card delivery-time-card">
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fa-solid fa-motorcycle" style="color: #c5a880; font-size: 1.5rem;"></i>
+                    <i class="fa-solid fa-motorcycle"></i>
                     <span style="font-weight: 600;">Delivery Konopa</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 0.95rem;">
@@ -73,11 +73,11 @@
 
             <div class="checkout-card">
                 <h3 style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fa-solid fa-credit-card" style="color: #c5a880;"></i> Método de pago
+                    <i class="fa-solid fa-credit-card"></i> Método de pago
                 </h3>
                 <div class="payment-methods">
                     <label class="payment-option selected">
-                        <div style="display: flex; align-items: center; gap: 15px;">
+                        <div>
                             <i class="fa-solid fa-money-bill-wave" style="font-size: 1.5rem; color: #555;"></i>
                             <div>
                                 <p style="font-weight: 500; margin:0;">Efectivo al recibir</p>
@@ -86,11 +86,10 @@
                         <input type="radio" name="metodo_pago" checked>
                     </label>
 
-                    <p style="font-size: 0.9rem; color: #666; margin: 15px 0 10px 0;">Aún no has agregado ninguna tarjeta.</p>
+                    <div id="contenedor-pago-tarjetas"></div>
 
-                    <button type="button" onclick="window.location.href='../perfil/index.html'"
-                        style="background: transparent; border: 1px dashed #c5a880; color: #c5a880; padding: 12px; width: 100%; border-radius: 6px; font-weight: 600; cursor: pointer;">
-                        + Agregar método de pago
+                    <button class="btn-add-payment" type="button" onclick="window.location.href='../perfil/index.html'">
+                        + Agregar otro método de pago
                     </button>
                 </div>
             </div>
@@ -101,8 +100,6 @@
                 <h3>Resumen</h3>
 
                 <div id="lista-resumen-items"></div>
-
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
                 
                 <div class="summary-costs">
                     <div class="cost-row">
