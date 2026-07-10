@@ -180,7 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
-                    <li><a href="../perfil/index.html">Mis pedidos</a></li>
+                    <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>
+                    <li><a href="../perfil/index.html?seccion=reclamos">Mis reclamos</a></li>
+                    <li><a href="../perfil/index.html?seccion=reservas">Mis reservas</a></li>
                     <li><a href="#" id="btn-cerrar-sesion-top">Cerrar sesión</a></li>
                 </ul>
             `;

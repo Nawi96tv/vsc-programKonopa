@@ -53,11 +53,40 @@
             </div>
 
             <ul class="perfil-menu">
-                <li><a href="#" class="menu-link activo" data-target="sec-ajustes"><i class="fa-solid fa-gear"></i> Ajustes de cuenta</a></li>
-                <li><a href="#" class="menu-link" data-target="sec-pagos"><i class="fa-solid fa-credit-card"></i> Métodos de pago</a></li>
-                <li><a href="#" class="menu-link" data-target="sec-pedidos"><i class="fa-solid fa-clock-rotate-left"></i> Últimos pedidos</a></li>
-                <li><hr style="border: 0; border-top: 1px dashed #ccc; margin: 10px 0;"></li>
-                <li><a href="#" class="menu-link" data-target="sec-mis-reclamos"><i class="fa-solid fa-folder-open"></i> Mis reclamos</a></li>
+                <li>
+                    <a href="#cuenta" class="menu-link activo" data-target="sec-ajustes">
+                        <i class="fa-solid fa-gear"></i> Ajustes de cuenta
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#pagos" class="menu-link" data-target="sec-pagos">
+                        <i class="fa-solid fa-credit-card"></i> Métodos de pago
+                    </a>
+                </li>
+
+                <!-- Línea separadora con sus etiquetas correctamente cerradas -->
+                <li>
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 10px 0;">
+                </li>
+
+                <li>
+                    <a href="#pedidos" class="menu-link" data-target="sec-pedidos">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Últimos pedidos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#reclamos" class="menu-link" data-target="sec-mis-reclamos">
+                        <i class="fa-solid fa-folder-open"></i> Mis reclamos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#reservas" class="menu-link" data-target="sec-mis-reservas">
+                        <i class="fa-solid fa-calendar-check"></i> Mis Reservas
+                    </a>
+                </li>
             </ul>
         </aside>
 
@@ -66,7 +95,7 @@
             <section id="sec-ajustes" class="perfil-contenido" style="display: block;">
                 <h2>Información de tu cuenta</h2>
                 <hr class="linea-perfil">
-                
+
                 <form class="form-ajustes-cuenta">
                     <div class="form-fila">
                         <div class="form-grupo">
@@ -78,7 +107,7 @@
                             <input type="text" id="perfil-telefono">
                         </div>
                     </div>
-                    
+
                     <div class="form-fila">
                         <div class="form-grupo">
                             <label>Correo Electrónico (No modificable)</label>
@@ -92,10 +121,11 @@
                             <input type="text" id="perfil-direccion">
                         </div>
                     </div>
-                    
+
                     <div class="perfil-botones">
                         <button type="button" class="btn-actualizar" id="btn-actualizar-datos">Actualizar datos</button>
-                        <button type="button" class="btn-eliminar-cuenta" id="btn-eliminar-cuenta">Eliminar mi cuenta</button>
+                        <button type="button" class="btn-eliminar-cuenta" id="btn-eliminar-cuenta">Eliminar mi
+                            cuenta</button>
                     </div>
                 </form>
             </section>
@@ -103,8 +133,8 @@
             <section id="sec-pagos" class="perfil-contenido" style="display: none;">
                 <h2>Métodos de pago</h2>
                 <hr class="linea-perfil">
-                
-                <div id="contenedor-tarjetas"></div> 
+
+                <div id="contenedor-tarjetas"></div>
 
                 <div style="text-align: center; padding: 1rem 0;">
                     <button id="btn-abrir-modal-tarjeta" class="btn-nueva-direccion">+ Añadir nueva tarjeta</button>
@@ -113,14 +143,15 @@
 
             <section id="sec-pedidos" class="perfil-contenido" style="display: none;">
                 <h2>Mis Últimos Pedidos</h2>
-                <p class="subtitulo-perfil">Hazle seguimiento al detalle a tus pedidos anteriores y solicita ayuda si hay algún inconveniente.</p>
+                <p class="subtitulo-perfil">Hazle seguimiento al detalle a tus pedidos anteriores y solicita ayuda si
+                    hay algún inconveniente.</p>
                 <hr class="linea-perfil">
-                
+
                 <div id="historial-pedidos" style="text-align: center; padding: 2rem 0; display: none;">
                     <i class="fa-solid fa-bag-shopping" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
                     <p class="mensaje-vacio">No tienes ningún pedido todavía.</p>
                 </div>
-                
+
                 <div id="lista-mis-pedidos"></div>
             </section>
 
@@ -128,10 +159,20 @@
                 <h2>Mi Historial de Reclamos</h2>
                 <p class="subtitulo-perfil">Revisa el estado de tus quejas y reclamos ingresados al sistema.</p>
                 <hr class="linea-perfil">
-                
-                <div id="contenedor-mis-reclamos"></div> 
-            </section>
 
+                <div id="contenedor-mis-reclamos"></div>
+            </section>
+            
+            <section id="sec-mis-reservas" class="perfil-contenido" style="display: none;">
+                <h2>Mis Reservas</h2>
+                <p class="subtitulo-perfil">Historial y estado de tus reservaciones de mesa en Konopa.</p>
+                <hr class="linea-perfil">
+
+                <div id="contenedor-mis-reservas">
+                    <!-- El JS inyectará las reservas aquí -->
+                </div>
+            </section>
+            
         </div>
     </main>
 
@@ -141,16 +182,19 @@
                 <h3>Agregar Nueva Tarjeta</h3>
                 <button id="btn-cerrar-modal" class="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
+
             <form id="form-nueva-tarjeta">
-                <input type="text" id="input-num-tarjeta" placeholder="Número de Tarjeta (Ej. 4111 2222 3333 4444)" required class="input-modal" maxlength="19">
+                <input type="text" id="input-num-tarjeta" placeholder="Número de Tarjeta (Ej. 4111 2222 3333 4444)"
+                    required class="input-modal" maxlength="19">
                 <input type="text" id="input-nom-titular" placeholder="Nombre del Titular" required class="input-modal">
-                
+
                 <div style="display: flex; gap: 10px;">
-                    <input type="text" id="input-exp-tarjeta" placeholder="MM/AA" required class="input-modal" maxlength="5">
-                    <input type="text" id="input-cvv-tarjeta" placeholder="CVV" required class="input-modal" maxlength="4">
+                    <input type="text" id="input-exp-tarjeta" placeholder="MM/AA" required class="input-modal"
+                        maxlength="5">
+                    <input type="text" id="input-cvv-tarjeta" placeholder="CVV" required class="input-modal"
+                        maxlength="4">
                 </div>
-                
+
                 <button type="submit" class="btn-guardar-modal">Guardar Tarjeta</button>
             </form>
         </div>

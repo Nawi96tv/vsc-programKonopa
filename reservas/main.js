@@ -105,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
-                    <li><a href="../perfil/index.html">Mis pedidos</a></li>
                     <li><a href="#" id="btn-cerrar-sesion-top">Cerrar sesión</a></li>
                 </ul>
             `;
@@ -136,4 +135,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ejecutar la función al cargar la página
     verificarSesionActivaGlobal();
+    // 1. Buscamos el botón o el formulario de reservas
+    const btnReservar = document.getElementById('btn-confirmar-reserva'); // Cambia este ID por el de tu botón
+
+    if (btnReservar) {
+        btnReservar.addEventListener('click', (evento) => {
+            evento.preventDefault(); // Evita que la página se recargue
+
+            // 2. Capturamos los datos que el usuario llenó en el formulario
+            // (Asegúrate de que estos IDs coincidan con tu HTML)
+            const inputFecha = document.getElementById('res-fecha').value;
+            const inputHora = document.getElementById('res-hora').value;
+            const inputPersonas = document.getElementById('res-personas').value;
+
+            // Validación simple
+            if (!inputFecha || !inputHora || !inputPersonas) {
+                alert('Por favor, completa todos los datos para tu reserva.');
+                return;
+            }
+
+            // 3. Verificamos si el usuario inició sesión (Opcional, pero recomendado)
+            const logeado = localStorage.getItem('konopa_logeado') === 'true';
+            if (!logeado) {
+                alert("Debes iniciar sesión para realizar una reserva.");
+                window.location.href = '../login/index.html';
+                return;
+            }
+
+            // 4. Creamos el objeto de la nueva reserva
+            const nuevaReserva = {
+                id: 'RES-' + Math.floor(Math.random() * 10000), // Genera un ID como RES-4829
+                fecha: inputFecha,
+                hora: inputHora,
+                personas: inputPersonas,
+                estado: 'Pendiente' // Estado inicial
+            };
+
+            // 5. Guardamos en el localStorage (LA CLAVE DEBE SER 'konopa_reservas')
+            const reservasGuardadas = JSON.parse(localStorage.getItem('konopa_reservas')) || [];
+            reservasGuardadas.push(nuevaReserva);
+            localStorage.setItem('konopa_reservas', JSON.stringify(reservasGuardadas));
+
+            // 6. Mensaje de éxito y redirección al perfil
+            alert(`¡Tu reserva ha sido confirmada con el código ${nuevaReserva.id}!`);
+
+            // Lo enviamos directo a la pestaña de reservas de su perfil
+            window.location.href = '../perfil/index.html?seccion=reservas';
+        });
+    }
 });

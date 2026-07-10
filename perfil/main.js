@@ -33,14 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
-                    <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>
                     <li><a href="#" id="btn-cerrar-sesion-top">Cerrar sesión</a></li>
                 </ul>
             `;
 
             document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); 
+                e.stopPropagation();
                 document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
             });
 
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); 
+                window.location.reload();
             });
         }
     }
@@ -91,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('seccion') === 'pedidos') {
             const btnUltimosPedidos = document.querySelector('.menu-link[data-target="sec-pedidos"]');
-            if(btnUltimosPedidos) btnUltimosPedidos.click(); 
+            if (btnUltimosPedidos) btnUltimosPedidos.click();
         }
 
     } else {
@@ -110,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('konopa_usuario_direccion', document.getElementById('perfil-direccion').value);
 
             document.getElementById('nombre-perfil-sidebar').textContent = document.getElementById('perfil-nombre').value.split(' ')[0];
-            
+
             // Actualizar el header también
             const btnUserToggle = document.getElementById('btn-user-toggle');
             if (btnUserToggle) {
@@ -143,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. MOSTRAR PEDIDOS GUARDADOS (CON EL CSS NUEVO)
     // ==========================================================
     const contenedorPedidos = document.getElementById('lista-mis-pedidos');
-    const mensajeVacio = document.getElementById('historial-pedidos'); 
+    const mensajeVacio = document.getElementById('historial-pedidos');
 
     if (contenedorPedidos) {
         const misPedidos = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
@@ -269,10 +268,10 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjetas.push(nuevaTarjeta);
             localStorage.setItem('konopa_tarjetas', JSON.stringify(tarjetas));
 
-            formTarjeta.reset(); 
-            modalTarjeta.classList.remove('mostrar-modal'); 
-            renderizarTarjetas(); 
-            
+            formTarjeta.reset();
+            modalTarjeta.classList.remove('mostrar-modal');
+            renderizarTarjetas();
+
             alert("Tarjeta agregada exitosamente.");
         });
     }
@@ -285,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderizarReclamos() {
         if (!contenedorMisReclamos) return;
         const reclamosGuardados = JSON.parse(localStorage.getItem('konopa_reclamos')) || [];
-        
+
         if (reclamosGuardados.length === 0) {
             contenedorMisReclamos.innerHTML = `
                 <div class="historial-vacio-box">
@@ -311,4 +310,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderizarReclamos();
 
+    // ==========================================================
+    // CARGAR MIS RESERVAS
+    // ==========================================================
+    function cargarReservas() {
+        const contenedor = document.getElementById('contenedor-mis-reservas');
+        
+        if (!contenedor) {
+            console.error("Error: No se encontró el contenedor de reservas en el HTML.");
+            return;
+        }
+
+        // Leemos las reservas guardadas
+        const reservas = JSON.parse(localStorage.getItem('konopa_reservas')) || [];
+        console.log("Reservas encontradas:", reservas); // Presiona F12 en tu navegador para ver esto
+
+        // Si no hay reservas, mostramos el mensaje vacío
+        if (reservas.length === 0) {
+            contenedor.innerHTML = `
+                <div style="text-align: center; padding: 2rem 0;">
+                    <i class="fa-solid fa-calendar-xmark" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 15px;">No tienes ninguna reserva todavía.</p>
+                    <a href="../reservas/index.html" style="background-color: #c5a880; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">Hacer una reserva</a>
+                </div>
+            `;
+            return;
+        }
+
+        // Si hay reservas, dibujamos las tarjetas
+        let html = '';
+        reservas.reverse().forEach(reserva => {
+            // Colores dinámicos según el estado
+            let colorEstado = reserva.estado === 'Confirmada' ? '#2ecc71' : (reserva.estado === 'Cancelada' ? '#e74c3c' : '#f39c12');
+            
+            html += `
+                <div style="border: 1px solid #eee; border-left: 4px solid ${colorEstado}; border-radius: 6px; padding: 15px; margin-bottom: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #f5f5f5; padding-bottom: 10px;">
+                        <strong style="color: #333; font-size: 1.1rem;"><i class="fa-solid fa-hashtag" style="color: #c5a880;"></i> ${reserva.id || 'RES-0000'}</strong>
+                        <span style="background-color: ${colorEstado}; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: bold;">
+                            ${reserva.estado || 'Pendiente'}
+                        </span>
+                    </div>
+                    <div style="color: #555; line-height: 1.6;">
+                        <p style="margin: 5px 0;"><i class="fa-regular fa-calendar" style="color: #c5a880; width: 20px;"></i> <strong>Fecha:</strong> ${reserva.fecha}</p>
+                        <p style="margin: 5px 0;"><i class="fa-regular fa-clock" style="color: #c5a880; width: 20px;"></i> <strong>Hora:</strong> ${reserva.hora}</p>
+                        <p style="margin: 5px 0;"><i class="fa-solid fa-user-group" style="color: #c5a880; width: 20px;"></i> <strong>Personas:</strong> ${reserva.personas}</p>
+                    </div>
+                </div>
+            `;
+        });
+        
+        contenedor.innerHTML = html;
+    }
+
+    // ¡ESTA LÍNEA ES LA QUE HACE QUE TODO FUNCIONE!
+    cargarReservas();
 });
