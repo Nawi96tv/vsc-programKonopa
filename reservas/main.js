@@ -1,60 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
-    // 0. MENÚ RESPONSIVO (NUEVO MOTOR JS)
+    // 1. MENÚ RESPONSIVO
     // ==========================================
     const btnMenu = document.querySelector('#btn-menu');
-    // Seleccionamos la etiqueta <nav> usando su clase original
     const navMenu = document.querySelector('.nav-menu');
 
     if (btnMenu && navMenu) {
         btnMenu.addEventListener('click', () => {
-            // "Prende o apaga" la visualización de los enlaces
             navMenu.classList.toggle('mostrar');
-            // "Prende o apaga" el ícono de la X
             btnMenu.classList.toggle('activo');
         });
     }
 
-    // 2. VENTANA FLOTANTE / MODAL PARA FORMULARIOS
+    // ==========================================
+    // 2. LÓGICA DE RESERVAS (Formulario -> Modal -> Guardado)
+    // ==========================================
     const btnEnviar = document.getElementById('btn-enviar-formulario');
+    const btnGuardarFinal = document.getElementById('btn-guardar-reserva-final'); 
     const modal = document.getElementById('modal-confirmacion');
     const btnCerrar = document.getElementById('btn-cerrar-modal');
     const resumenDiv = document.getElementById('datos-resumen');
 
+    // Captura de elementos del formulario
+    const inputNombre = document.getElementById('res-nombre');
+    const inputCorreo = document.getElementById('res-correo');
+    const inputTelefono = document.getElementById('res-telefono');
+    const inputSede = document.getElementById('res-sede');
+    const inputFecha = document.getElementById('res-fecha');
+    const inputHora = document.getElementById('res-hora');
+    const inputPersonas = document.getElementById('res-personas');
+    const inputNotas = document.getElementById('res-notas');
+
+    // PASO 1: Mostrar el resumen en el modal
     if (btnEnviar) {
         btnEnviar.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // 1. CAPTURAR ELEMENTOS EXACTOS DEL HTML (Usando tus IDs reales)
-            const inputNombre = document.getElementById('res-nombre');
-            const inputCorreo = document.getElementById('res-correo');
-            const inputTelefono = document.getElementById('res-telefono');
-            const inputSede = document.getElementById('res-sede');
-            const inputFecha = document.getElementById('res-fecha');
-            const inputHora = document.getElementById('res-hora');
-            const inputPersonas = document.getElementById('res-personas');
-            const inputNotas = document.getElementById('res-notas');
-
-            // 2. VALIDACIÓN ESTRICTA (Las notas son opcionales, así que no las validamos)
             if (!inputNombre.value || !inputCorreo.value || !inputTelefono.value ||
                 !inputSede.value || !inputFecha.value || !inputHora.value || !inputPersonas.value) {
-
-                alert("¡Atención! Por favor completa todos los campos obligatorios (*) antes de confirmar tu reserva.");
-                return; // Bloquea el proceso, no abre el modal
+                alert("¡Atención! Por favor completa todos los campos obligatorios (*) antes de confirmar.");
+                return;
             }
 
-            // 3. EXTRAER LOS TEXTOS BONITOS DE LOS SELECTS Y LAS NOTAS
             const textoSede = inputSede.options[inputSede.selectedIndex].text;
             const textoHora = inputHora.options[inputHora.selectedIndex].text;
             const textoNotas = inputNotas.value ? inputNotas.value : "Ninguna";
 
-            // 4. INYECTAR LOS DATOS CAPTURADOS
             if (resumenDiv) {
                 resumenDiv.innerHTML = `
                     <ul style="list-style: none; padding: 0; margin: 0; color: #333; font-size: 0.95rem;">
                         <li style="margin-bottom: 8px;"><strong>Cliente:</strong> ${inputNombre.value}</li>
-                        <li style="margin-bottom: 8px;"><strong>Correo:</strong> ${inputCorreo.value}</li>
-                        <li style="margin-bottom: 8px;"><strong>Teléfono:</strong> ${inputTelefono.value}</li>
                         <li style="margin-bottom: 8px;"><strong>Sede:</strong> ${textoSede}</li>
                         <li style="margin-bottom: 8px;"><strong>Fecha:</strong> ${inputFecha.value}</li>
                         <li style="margin-bottom: 8px;"><strong>Hora:</strong> ${textoHora}</li>
@@ -64,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            // 5. MOSTRAR EL MODAL
             if (modal) {
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -72,7 +66,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. CERRAR EL MODAL CON LA "X"
+    // PASO 2: Guardar realmente en localStorage al confirmar en el modal
+    if (btnGuardarFinal) {
+        btnGuardarFinal.addEventListener('click', () => {
+            const logeado = localStorage.getItem('konopa_logeado') === 'true';
+            if (!logeado) {
+                alert("Debes iniciar sesión para realizar una reserva.");
+                window.location.href = '../login/index.html';
+                return;
+            }
+
+            const nuevaReserva = {
+                id: 'RES-' + Math.floor(Math.random() * 10000),
+                fecha: inputFecha.value,
+                hora: inputHora.options[inputHora.selectedIndex].text,
+                personas: inputPersonas.value,
+                notas: inputNotas.value, // Guardamos las notas también
+                estado: 'Confirmada'
+            };
+
+            const reservasGuardadas = JSON.parse(localStorage.getItem('konopa_reservas')) || [];
+            reservasGuardadas.push(nuevaReserva);
+            localStorage.setItem('konopa_reservas', JSON.stringify(reservasGuardadas));
+
+            alert(`¡Reserva confirmada! Código: ${nuevaReserva.id}`);
+            window.location.href = '../perfil/index.html?seccion=reservas';
+        });
+    }
+
+    // Cerrar modal
     if (btnCerrar) {
         btnCerrar.addEventListener('click', () => {
             if (modal) {
@@ -81,42 +103,44 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
     // ==========================================================
-    // FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
+    // 3. FUNCIÓN GLOBAL: Menú de Usuario Desplegable
     // ==========================================================
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
-
-        // Buscar el menú principal
         const navMenuUl = document.querySelector('.nav-menu ul');
+
         if (!navMenuUl) return;
 
-        // Buscar el enlace de Login
         const enlaceLogin = Array.from(navMenuUl.querySelectorAll('a')).find(a => a.textContent.includes('Login'));
 
         if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
 
-            // Inyectamos el HTML del menú desplegable
-            // NOTA: Ajusta los "../perfil/index.html" si estás en la raíz del proyecto a "./perfil/index.html"
+            // Ahora muestra el nombre completo como pediste
             liPadre.innerHTML = `
-                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
+                <a href="#" id="btn-user-toggle">
+                    <i class="fa-regular fa-circle-user"></i> ${nombreCompleto} 
+                    <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>
+                </a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
+                    <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>
+                    <li><a href="../perfil/index.html?seccion=reclamos">Mis reclamos</a></li>
+                    <li><a href="../perfil/index.html?seccion=reservas">Mis reservas</a></li>
                     <li><a href="#" id="btn-cerrar-sesion-top">Cerrar sesión</a></li>
                 </ul>
             `;
 
-            // Lógica para abrir y cerrar el menú al hacer clic en el nombre
             document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); // Evita que el clic se propague al documento
+                e.stopPropagation();
                 document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
             });
 
-            // Lógica para cerrar el menú si haces clic en otra parte de la pantalla
             document.addEventListener('click', (e) => {
                 const userDropdown = document.getElementById('user-dropdown');
                 if (userDropdown && !userDropdown.contains(e.target)) {
@@ -124,63 +148,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Lógica para Cerrar Sesión desde este menú
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); // Recarga la página para volver a mostrar "Login"
+                window.location.reload(); 
             });
         }
     }
-
-    // Ejecutar la función al cargar la página
     verificarSesionActivaGlobal();
-    // 1. Buscamos el botón o el formulario de reservas
-    const btnReservar = document.getElementById('btn-confirmar-reserva'); // Cambia este ID por el de tu botón
-
-    if (btnReservar) {
-        btnReservar.addEventListener('click', (evento) => {
-            evento.preventDefault(); // Evita que la página se recargue
-
-            // 2. Capturamos los datos que el usuario llenó en el formulario
-            // (Asegúrate de que estos IDs coincidan con tu HTML)
-            const inputFecha = document.getElementById('res-fecha').value;
-            const inputHora = document.getElementById('res-hora').value;
-            const inputPersonas = document.getElementById('res-personas').value;
-
-            // Validación simple
-            if (!inputFecha || !inputHora || !inputPersonas) {
-                alert('Por favor, completa todos los datos para tu reserva.');
-                return;
-            }
-
-            // 3. Verificamos si el usuario inició sesión (Opcional, pero recomendado)
-            const logeado = localStorage.getItem('konopa_logeado') === 'true';
-            if (!logeado) {
-                alert("Debes iniciar sesión para realizar una reserva.");
-                window.location.href = '../login/index.html';
-                return;
-            }
-
-            // 4. Creamos el objeto de la nueva reserva
-            const nuevaReserva = {
-                id: 'RES-' + Math.floor(Math.random() * 10000), // Genera un ID como RES-4829
-                fecha: inputFecha,
-                hora: inputHora,
-                personas: inputPersonas,
-                estado: 'Pendiente' // Estado inicial
-            };
-
-            // 5. Guardamos en el localStorage (LA CLAVE DEBE SER 'konopa_reservas')
-            const reservasGuardadas = JSON.parse(localStorage.getItem('konopa_reservas')) || [];
-            reservasGuardadas.push(nuevaReserva);
-            localStorage.setItem('konopa_reservas', JSON.stringify(reservasGuardadas));
-
-            // 6. Mensaje de éxito y redirección al perfil
-            alert(`¡Tu reserva ha sido confirmada con el código ${nuevaReserva.id}!`);
-
-            // Lo enviamos directo a la pestaña de reservas de su perfil
-            window.location.href = '../perfil/index.html?seccion=reservas';
-        });
-    }
 });

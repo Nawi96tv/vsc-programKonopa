@@ -469,6 +469,40 @@
 }
 
 /* ==========================================================
+   NUEVAS CLASES DINÁMICAS (REMPLAZO DE INLINE STYLES)
+   ========================================================== */
+
+/* Dropdown Navbar */
+.icon-chevron { font-size: 0.7rem; margin-left: 5px; }
+.separador-menu { border: 0; border-top: 1px solid #333; margin: 5px 0; }
+
+/* Tarjetas de Pago */
+.tarjeta-info-flex { display: flex; align-items: center; gap: 15px; }
+.icon-tarjeta { font-size: 2rem; color: #1a1f71; }
+.tarjeta-numero { display: block; font-size: 1.1rem; color: #111; }
+.tarjeta-titular { font-size: 0.85rem; color: #666; }
+.btn-eliminar-tarjeta { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 1.2rem; }
+
+/* Separaciones y Cajas */
+.box-espaciado { margin-bottom: 15px; }
+.con-borde { border-bottom: 1px solid #f5f5f5; padding-bottom: 10px; margin-bottom: 10px; }
+.btn-enlace-reserva { display: inline-block; margin-top: 15px; text-decoration: none; }
+
+/* Reservas - Detalles */
+.resumen-body { color: #555; line-height: 1.6; }
+.fila-detalle-reserva { margin: 5px 0; }
+.fila-detalle-reserva i { color: #c5a880; width: 20px; }
+
+/* Reservas - Estados Dinámicos */
+.badge-estado { color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; }
+.border-estado-confirmada { border-left: 4px solid #2ecc71; }
+.badge-estado-confirmada { background-color: #2ecc71; }
+.border-estado-cancelada { border-left: 4px solid #e74c3c; }
+.badge-estado-cancelada { background-color: #e74c3c; }
+.border-estado-pendiente { border-left: 4px solid #f39c12; }
+.badge-estado-pendiente { background-color: #f39c12; }
+
+/* ==========================================================
    8. RESPONSIVE (MÓVILES Y TABLETS)
    ========================================================== */
 @media (max-width: 768px) {
