@@ -28,23 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputCorreo = document.getElementById('res-correo');
     const inputTelefono = document.getElementById('res-telefono');
     const inputSede = document.getElementById('res-sede');
-    const inputFecha = document.getElementById('res-fecha');
     const inputHora = document.getElementById('res-hora');
     const inputPersonas = document.getElementById('res-personas');
     const inputNotas = document.getElementById('res-notas');
     const inputFecha = document.getElementById('res-fecha');
 
     if (inputFecha) {
-        // 1. Calculamos la fecha exacta de hoy
+        // 1. Calculamos la fecha exacta de hoy ajustada a la zona horaria
         const hoy = new Date();
-        const year = hoy.getFullYear();
-        const month = String(hoy.getMonth() + 1).padStart(2, '0');
-        const day = String(hoy.getDate()).padStart(2, '0');
-        const fechaHoy = `${year}-${month}-${day}`;
+        const offset = hoy.getTimezoneOffset();
+        const fechaLocal = new Date(hoy.getTime() - (offset * 60 * 1000));
+        const fechaMinima = fechaLocal.toISOString().split('T')[0];
 
-        // 2. Le pasamos el límite al HTML. 
-        // El navegador bloqueará los días anteriores y aplicará tu CSS de forma nativa.
-        inputFecha.min = fechaHoy;
+        // 2. Asignamos el límite al HTML. 
+        // El navegador bloqueará los días anteriores y el CSS se aplicará automáticamente.
+        inputFecha.min = fechaMinima;
     }
 
     if (btnEnviar) {
