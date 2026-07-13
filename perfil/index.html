@@ -41,7 +41,7 @@
         </nav>
     </header>
 
-<main class="perfil-wrapper">
+    <main class="perfil-wrapper">
 
         <aside class="perfil-sidebar">
             <div class="perfil-header-box">
@@ -53,12 +53,19 @@
             </div>
 
             <ul class="perfil-menu">
-               <li><a href="#cuenta" class="menu-link activo" data-target="sec-ajustes"><i class="fa-solid fa-gear"></i> Ajustes de cuenta</a></li>
-               <li><a href="#pagos" class="menu-link" data-target="sec-pagos"><i class="fa-solid fa-credit-card"></i> Métodos de pago</a></li>
-               <li><hr style="border: 0; border-top: 1px dashed #ccc; margin: 10px 0;"></li>
-               <li><a href="#pedidos" class="menu-link" data-target="sec-pedidos"><i class="fa-solid fa-clock-rotate-left"></i> Últimos pedidos</a></li>
-               <li><a href="#reclamos" class="menu-link" data-target="sec-mis-reclamos"><i class="fa-solid fa-folder-open"></i> Mis reclamos</a></li>
-               <li><a href="#reservas" class="menu-link" data-target="sec-mis-reservas"><i class="fa-solid fa-calendar-check"></i> Mis Reservas</a></li>
+                <li><a href="#cuenta" class="menu-link activo" data-target="sec-ajustes"><i
+                            class="fa-solid fa-gear"></i> Ajustes de cuenta</a></li>
+                <li><a href="#pagos" class="menu-link" data-target="sec-pagos"><i class="fa-solid fa-credit-card"></i>
+                        Métodos de pago</a></li>
+                <li>
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 10px 0;">
+                </li>
+                <li><a href="#pedidos" class="menu-link" data-target="sec-pedidos"><i
+                            class="fa-solid fa-clock-rotate-left"></i> Últimos pedidos</a></li>
+                <li><a href="#reclamos" class="menu-link" data-target="sec-mis-reclamos"><i
+                            class="fa-solid fa-folder-open"></i> Mis reclamos</a></li>
+                <li><a href="#reservas" class="menu-link" data-target="sec-mis-reservas"><i
+                            class="fa-solid fa-calendar-check"></i> Mis Reservas</a></li>
             </ul>
         </aside>
 
@@ -134,7 +141,7 @@
 
                 <div id="contenedor-mis-reclamos"></div>
             </section>
-            
+
             <section id="sec-mis-reservas" class="perfil-contenido" style="display: none;">
                 <h2>Mis Reservas</h2>
                 <p class="subtitulo-perfil">Historial y estado de tus reservaciones de mesa en Konopa.</p>
@@ -144,7 +151,7 @@
                     <!-- El JS inyectará las reservas aquí -->
                 </div>
             </section>
-            
+
         </div>
     </main>
 
@@ -156,17 +163,21 @@
             </div>
 
             <form id="form-nueva-tarjeta">
-                <input type="text" id="input-num-tarjeta" placeholder="Número de Tarjeta (Ej. 4111 2222 3333 4444)"
-                    required class="input-modal" maxlength="19">
-                <input type="text" id="input-nom-titular" placeholder="Nombre del Titular" required class="input-modal">
+                <!-- El patrón obliga a 16 dígitos y que empiece por 4 -->
+                <input type="text" id="input-num-tarjeta" placeholder="4xxx xxxx xxxx xxxx" pattern="^4[0-9]{15}$"
+                    maxlength="16" required class="input-modal">
+
+                <input type="text" id="input-nom-titular" placeholder="Nombre del Titular" required class="input-modal"
+                    minlength="3">
 
                 <div style="display: flex; gap: 10px;">
+                    <!-- El patrón obliga a formato MM/AA -->
                     <input type="text" id="input-exp-tarjeta" placeholder="MM/AA" required class="input-modal"
-                        maxlength="5">
-                    <input type="text" id="input-cvv-tarjeta" placeholder="CVV" required class="input-modal"
-                        maxlength="4">
-                </div>
+                        pattern="(0[1-9]|1[0-2])\/[0-9]{2}" maxlength="5">
 
+                    <input type="text" id="input-cvv-tarjeta" placeholder="CVV" required class="input-modal"
+                        pattern="[0-9]{3,4}" maxlength="4">
+                </div>
                 <button type="submit" class="btn-guardar-modal">Guardar Tarjeta</button>
             </form>
         </div>

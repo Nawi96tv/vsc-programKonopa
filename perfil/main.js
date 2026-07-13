@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); 
+                window.location.reload();
             });
         }
     }
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('activo'));
                 document.querySelectorAll('.perfil-contenido').forEach(s => s.style.display = 'none');
-                
+
                 link.classList.add('activo');
                 const targetId = link.getAttribute('data-target');
                 const targetSection = document.getElementById(targetId);
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (botonDestino) {
-                botonDestino.click(); 
+                botonDestino.click();
             }
         }
 
@@ -126,9 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('konopa_usuario_nombre', document.getElementById('perfil-nombre').value);
             localStorage.setItem('konopa_usuario_telefono', document.getElementById('perfil-telefono').value);
             localStorage.setItem('konopa_usuario_direccion', document.getElementById('perfil-direccion').value);
-            
+
             document.getElementById('nombre-perfil-sidebar').textContent = document.getElementById('perfil-nombre').value.split(' ')[0];
-            
+
             const btnUserToggle = document.getElementById('btn-user-toggle');
             if (btnUserToggle) {
                 btnUserToggle.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${document.getElementById('perfil-nombre').value.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i>`;
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (mensajeVacio) mensajeVacio.style.display = 'block';
         } else {
             if (mensajeVacio) mensajeVacio.style.display = 'none';
-            contenedorPedidos.innerHTML = ''; 
+            contenedorPedidos.innerHTML = '';
             const pedidosRecientes = [...misPedidos].reverse();
             const fechasUnicas = [...new Set(pedidosRecientes.map(p => p.fecha))];
 
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 contenedorPedidos.innerHTML += `<h4 class="titulo-fecha-pedidos">Pedidos del ${fecha}</h4>`;
                 const gridDiv = document.createElement('div');
                 gridDiv.className = 'grid-tarjetas-pedidos';
-                
+
                 pedidosRecientes.filter(p => p.fecha === fecha).forEach(pedido => {
                     let listaPlatos = '';
                     pedido.items.forEach(item => {
@@ -195,16 +195,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 6. LÓGICA DEL MODAL DE TARJETAS Y MÉTODOS DE PAGO
     // ==========================================================
+    // ==========================================================
+    // 6. LÓGICA DEL MODAL DE TARJETAS Y MÉTODOS DE PAGO
+    // ==========================================================
     const modalTarjeta = document.getElementById('modal-tarjeta');
     const btnAbrirModal = document.getElementById('btn-abrir-modal-tarjeta');
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
     const formTarjeta = document.getElementById('form-nueva-tarjeta');
     const contenedorTarjetas = document.getElementById('contenedor-tarjetas');
 
+    // Capturamos los inputs del modal
+    const inputNum = document.getElementById('input-num-tarjeta');
+    const inputNom = document.getElementById('input-nom-titular');
+    const inputExp = document.getElementById('input-exp-tarjeta');
+    const inputCvv = document.getElementById('input-cvv-tarjeta');
+
+    window.eliminarTarjeta = function (index) {
+        if (confirm("¿Seguro que deseas eliminar esta tarjeta de tu cuenta?")) {
+            const tarjetas = JSON.parse(localStorage.getItem('konopa_tarjetas')) || [];
+            tarjetas.splice(index, 1);
+            localStorage.setItem('konopa_tarjetas', JSON.stringify(tarjetas));
+            renderizarTarjetas();
+        }
+    };
+
     function renderizarTarjetas() {
         if (!contenedorTarjetas) return;
         const tarjetasGuardadas = JSON.parse(localStorage.getItem('konopa_tarjetas')) || [];
-        
+
         if (tarjetasGuardadas.length === 0) {
             contenedorTarjetas.innerHTML = `
                 <div class="historial-vacio-box">
@@ -214,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         } else {
             let html = '';
-            tarjetasGuardadas.forEach(tarjeta => {
+            tarjetasGuardadas.forEach((tarjeta, index) => {
                 const ultimos4 = tarjeta.numero.slice(-4);
                 html += `
                     <div class="tarjeta-guardada-box">
@@ -225,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span class="tarjeta-titular">${tarjeta.titular} - Exp: ${tarjeta.exp}</span>
                             </div>
                         </div>
-                        <button class="btn-eliminar-tarjeta" title="Eliminar tarjeta">
+                        <button class="btn-eliminar-tarjeta" onclick="eliminarTarjeta(${index})" title="Eliminar tarjeta">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </div>
@@ -236,6 +254,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderizarTarjetas();
 
+    // --- MANEJO DE COLORES VERDE/ROJO ---
+    function aplicarColor(input, esValido) {
+        if (esValido) {
+            input.classList.add('input-valido');
+            input.classList.remove('input-invalido');
+        } else {
+            input.classList.add('input-invalido');
+            input.classList.remove('input-valido');
+        }
+    }
+
+    function limpiarColores() {
+        [inputNum, inputNom, inputExp, inputCvv].forEach(inp => {
+            if (inp) inp.classList.remove('input-valido', 'input-invalido');
+        });
+    }
+
+    // --- VALIDACIÓN EN TIEMPO REAL ---
+    if (inputNum) {
+        inputNum.addEventListener('input', () => {
+            const num = inputNum.value.replace(/\s+/g, ''); // Ignora espacios en blanco
+            // Debe empezar en 4, tener exactamente 16 números y ser solo números
+            const esValido = num.startsWith('4') && num.length === 16 && /^\d+$/.test(num);
+            aplicarColor(inputNum, esValido);
+        });
+    }
+
+    if (inputNom) {
+        inputNom.addEventListener('input', () => {
+            const esValido = inputNom.value.trim().length >= 3; // Mínimo 3 letras
+            aplicarColor(inputNom, esValido);
+        });
+    }
+
+    if (inputExp) {
+
+        inputExp.addEventListener('input', () => {
+            const valor = inputExp.value;
+            const expRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+
+            if (expRegex.test(valor)) {
+                const [mes, anio] = valor.split('/');
+                const fechaActual = new Date();
+                const mesActual = fechaActual.getMonth() + 1;
+                const anioActual = parseInt(fechaActual.getFullYear().toString().slice(2));
+
+                const anioInput = parseInt(anio);
+                const mesInput = parseInt(mes);
+
+                // Si es mayor o igual a hoy, es VÁLIDO (se pinta verde)
+                if (anioInput > anioActual || (anioInput === anioActual && mesInput >= mesActual)) {
+                    inputExp.setCustomValidity("");
+                } else {
+                    // Si es antiguo, lo marcamos como INVÁLIDO (se pinta rojo)
+                    inputExp.setCustomValidity("Fecha vencida");
+                }
+            } else {
+                // Si el formato es incompleto, es INVÁLIDO
+                inputExp.setCustomValidity("Incompleto");
+            }
+        });
+    }
+
+    if (inputCvv) {
+        inputCvv.addEventListener('input', () => {
+            const esValido = /^\d{3,4}$/.test(inputCvv.value);
+            aplicarColor(inputCvv, esValido);
+        });
+    }
+
+    // --- ABRIR Y CERRAR MODAL ---
     if (btnAbrirModal && modalTarjeta) {
         btnAbrirModal.addEventListener('click', () => {
             modalTarjeta.classList.add('mostrar-modal');
@@ -245,6 +334,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCerrarModal && modalTarjeta) {
         btnCerrarModal.addEventListener('click', () => {
             modalTarjeta.classList.remove('mostrar-modal');
+            formTarjeta.reset();
+            limpiarColores();
         });
     }
 
@@ -252,28 +343,73 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTarjeta.addEventListener('click', (e) => {
             if (e.target === modalTarjeta) {
                 modalTarjeta.classList.remove('mostrar-modal');
+                formTarjeta.reset();
+                limpiarColores();
             }
         });
     }
 
+    // --- ENVÍO DEL FORMULARIO FINAL ---
     if (formTarjeta) {
         formTarjeta.addEventListener('submit', (e) => {
             e.preventDefault();
-            const inputNum = document.getElementById('input-num-tarjeta').value;
-            const inputNom = document.getElementById('input-nom-titular').value;
-            const inputExp = document.getElementById('input-exp-tarjeta').value;
-            
+
+            const num = inputNum.value.replace(/\s+/g, '');
+            const nom = inputNom.value.trim();
+            const exp = inputExp.value;
+            const cvv = inputCvv ? inputCvv.value : '000';
+
+            const numValido = num.startsWith('4') && num.length === 16 && /^\d+$/.test(num);
+            const nomValido = nom.length >= 3;
+            const cvvValido = /^\d{3,4}$/.test(cvv);
+
+            let expValida = false;
+            if (/^(0[1-9]|1[0-2])\/\d{2}$/.test(exp)) {
+                const [mes, anio] = exp.split('/');
+                const fechaActual = new Date();
+                const mesActual = fechaActual.getMonth() + 1;
+                const anioActual = parseInt(fechaActual.getFullYear().toString().slice(2));
+
+                if (parseInt(anio) > anioActual || (parseInt(anio) === anioActual && parseInt(mes) >= mesActual)) {
+                    expValida = true;
+                }
+            }
+
+            // Aplicamos colores finales por si le dio "enter" sin completar
+            aplicarColor(inputNum, numValido);
+            aplicarColor(inputNom, nomValido);
+            aplicarColor(inputExp, expValida);
+            if (inputCvv) aplicarColor(inputCvv, cvvValido);
+
+            if (!numValido) {
+                alert("El número de tarjeta debe tener exactamente 16 dígitos y empezar con 4 (Visa).");
+                return;
+            }
+            if (!nomValido) {
+                alert("Ingresa un nombre de titular válido.");
+                return;
+            }
+            if (!expValida) {
+                alert("La fecha de expiración es inválida o la tarjeta está vencida.");
+                return;
+            }
+            if (!cvvValido) {
+                alert("El CVV debe ser de 3 o 4 dígitos.");
+                return;
+            }
+
             const nuevaTarjeta = {
-                numero: inputNum,
-                titular: inputNom.toUpperCase(),
-                exp: inputExp
+                numero: num,
+                titular: nom.toUpperCase(),
+                exp: exp
             };
-            
+
             const tarjetas = JSON.parse(localStorage.getItem('konopa_tarjetas')) || [];
             tarjetas.push(nuevaTarjeta);
             localStorage.setItem('konopa_tarjetas', JSON.stringify(tarjetas));
-            
+
             formTarjeta.reset();
+            limpiarColores();
             modalTarjeta.classList.remove('mostrar-modal');
             renderizarTarjetas();
             alert("Tarjeta agregada exitosamente.");
@@ -287,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderizarReclamos() {
         if (!contenedorMisReclamos) return;
         const reclamosGuardados = JSON.parse(localStorage.getItem('konopa_reclamos')) || [];
-        
+
         if (reclamosGuardados.length === 0) {
             contenedorMisReclamos.innerHTML = `
                 <div class="historial-vacio-box">
@@ -318,11 +454,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     function cargarReservas() {
         const contenedor = document.getElementById('contenedor-mis-reservas');
-        
+
         if (!contenedor) return;
 
         const reservas = JSON.parse(localStorage.getItem('konopa_reservas')) || [];
-        
+
         if (reservas.length === 0) {
             contenedor.innerHTML = `
                 <div class="historial-vacio-box">
@@ -337,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let html = '';
         reservas.reverse().forEach(reserva => {
             const estadoClass = reserva.estado === 'Confirmada' ? 'estado-confirmada' : (reserva.estado === 'Cancelada' ? 'estado-cancelada' : 'estado-pendiente');
-            
+
             html += `
                 <div class="tarjeta-historial-box box-espaciado border-${estadoClass}">
                     <div class="tarjeta-historial-header con-borde">
@@ -354,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         });
-        
+
         contenedor.innerHTML = html;
     }
     cargarReservas();

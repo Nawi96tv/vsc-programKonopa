@@ -15,11 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 2. LÓGICA DE RESERVAS (Formulario -> Modal -> Guardado)
     // ==========================================
+
     const btnEnviar = document.getElementById('btn-enviar-formulario');
-    const btnGuardarFinal = document.getElementById('btn-guardar-reserva-final'); 
+    const btnGuardarFinal = document.getElementById('btn-guardar-reserva-final');
     const modal = document.getElementById('modal-confirmacion');
     const btnCerrar = document.getElementById('btn-cerrar-modal');
     const resumenDiv = document.getElementById('datos-resumen');
+
 
     // Captura de elementos del formulario
     const inputNombre = document.getElementById('res-nombre');
@@ -30,8 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputHora = document.getElementById('res-hora');
     const inputPersonas = document.getElementById('res-personas');
     const inputNotas = document.getElementById('res-notas');
+    const inputFecha = document.getElementById('res-fecha');
 
-    // PASO 1: Mostrar el resumen en el modal
+    if (inputFecha) {
+        // 1. Calculamos la fecha exacta de hoy
+        const hoy = new Date();
+        const year = hoy.getFullYear();
+        const month = String(hoy.getMonth() + 1).padStart(2, '0');
+        const day = String(hoy.getDate()).padStart(2, '0');
+        const fechaHoy = `${year}-${month}-${day}`;
+
+        // 2. Le pasamos el límite al HTML. 
+        // El navegador bloqueará los días anteriores y aplicará tu CSS de forma nativa.
+        inputFecha.min = fechaHoy;
+    }
+
     if (btnEnviar) {
         btnEnviar.addEventListener('click', (e) => {
             e.preventDefault();
@@ -45,6 +60,30 @@ document.addEventListener('DOMContentLoaded', () => {
             const textoSede = inputSede.options[inputSede.selectedIndex].text;
             const textoHora = inputHora.options[inputHora.selectedIndex].text;
             const textoNotas = inputNotas.value ? inputNotas.value : "Ninguna";
+            const inputFecha = document.getElementById('res-fecha');
+
+            if (inputFecha) {
+                inputFecha.addEventListener('input', () => {
+                    const fechaSeleccionada = new Date(inputFecha.value);
+                    const hoy = new Date();
+
+                    // Ponemos la hora a las 00:00:00 para comparar solo el día
+                    hoy.setHours(0, 0, 0, 0);
+
+                    if (inputFecha.value && fechaSeleccionada < hoy) {
+                        // Es fecha anterior -> Rojo
+                        inputFecha.classList.add('input-invalido');
+                        inputFecha.classList.remove('input-valido');
+                    } else if (inputFecha.value) {
+                        // Es hoy o fecha futura -> Verde
+                        inputFecha.classList.add('input-valido');
+                        inputFecha.classList.remove('input-invalido');
+                    } else {
+                        // Está vacío
+                        inputFecha.classList.remove('input-valido', 'input-invalido');
+                    }
+                });
+            }
 
             if (resumenDiv) {
                 resumenDiv.innerHTML = `
@@ -151,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); 
+                window.location.reload();
             });
         }
     }
