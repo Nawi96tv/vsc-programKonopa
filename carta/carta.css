@@ -70,22 +70,16 @@ body {
     text-align: center;
     background-color: #121212;
     color: #ffffff;
-    
-    /* Hacemos el botón compacto dándole solo el espacio interno necesario */
     padding: 0.6rem 1.5rem; 
     border-radius: 4px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    
-    /* MAGIA PARA SEPARARLO Y HACERLO COMPACTO */
-    width: fit-content;       /* Evita que ocupe el 100% del ancho */
-    align-self: flex-start;   /* Previene que flexbox lo estire hacia los lados */
-    margin-top: 1.8rem;       /* Aumenta la separación con la descripción */
-    
+    width: fit-content;     
+    align-self: flex-start;   
+    margin-top: 1.8rem;       
     transition: all 0.3s ease;
 }
 
-/* Efecto al pasar el mouse */
 .btn-add-dish:hover {
     background-color: #c5a880;
     color: #121212;

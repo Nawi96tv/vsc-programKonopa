@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 1. MENÚ RESPONSIVO
     // ==========================================
-    const btnMenu = document.querySelector('.menu-toggle'); 
+    const btnMenu = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
 
     if (btnMenu && navMenu) {
@@ -29,27 +29,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputDetalle = document.querySelector('#rec-detalle');
     const inputPedido = document.querySelector('#rec-pedido');
 
+   // ==========================================
+    // AUTOCOMPLETAR DATOS DEL USUARIO (INCLUIDA DIRECCIÓN)
+    // ==========================================
+    const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
+    const correoGuardado = localStorage.getItem('konopa_usuario_correo');
+    const telefonoGuardado = localStorage.getItem('konopa_usuario_telefono');
+    const direccionGuardada = localStorage.getItem('konopa_usuario_direccion');
+
+    if (nombreGuardado && inputNombre) inputNombre.value = nombreGuardado;
+    if (correoGuardado && inputCorreo) inputCorreo.value = correoGuardado;
+    if (telefonoGuardado && inputTelefono) inputTelefono.value = telefonoGuardado;
+    if (direccionGuardada && inputDomicilio) inputDomicilio.value = direccionGuardada;
+
     if (btnEnviar && formReclamaciones) {
         btnEnviar.addEventListener('click', (evento) => {
-            
+
             // Detenemos el envío automático del navegador
             evento.preventDefault();
 
             // Verificamos si algún campo obligatorio está vacío
-            if (inputNombre.value === '' || inputDni.value === '' || 
-                inputTelefono.value === '' || inputCorreo.value === '' || 
-                inputDomicilio.value === '' || inputTipoBien.value === '' || 
-                inputMonto.value === '' || inputDetalle.value === '' || 
+            if (inputNombre.value === '' || inputDni.value === '' ||
+                inputTelefono.value === '' || inputCorreo.value === '' ||
+                inputDomicilio.value === '' || inputTipoBien.value === '' ||
+                inputMonto.value === '' || inputDetalle.value === '' ||
                 inputPedido.value === '') {
-                
+
                 alert('Por favor, complete todos los campos obligatorios para registrar su reclamación.');
-            
+
             } else {
                 // 1. Verificamos si el usuario inició sesión
                 const logeado = localStorage.getItem('konopa_logeado') === 'true';
                 if (!logeado) {
                     alert("Por seguridad, debes iniciar sesión en tu cuenta para registrar un reclamo o queja.");
-                    window.location.href = '../login/index.html'; 
+                    window.location.href = '../login/index.html';
                     return;
                 }
 
@@ -72,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 5. Lanzamos la notificación de éxito
                 alert(`Su hoja de reclamación ha sido registrada formalmente, ${inputNombre.value}. Su código de seguimiento es ${nuevoReclamo.id}.`);
-                
+
                 formReclamaciones.reset();
 
                 // 6. Redirigimos al perfil para que vea su historial (Ajusta la ruta si es necesario)
@@ -80,14 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // ==========================================================
     // 3. FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
     // ==========================================================
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
-        
+
         // Buscar el menú principal
         const navMenuUl = document.querySelector('.nav-menu ul');
         if (!navMenuUl) return;
@@ -98,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
-            
+
             liPadre.innerHTML = `
                 <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
                 <ul class="dropdown-content" id="user-dropdown">
@@ -112,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); 
+                e.stopPropagation();
                 document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
             });
 
@@ -126,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); 
+                window.location.reload();
             });
         }
     }

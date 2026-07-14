@@ -121,19 +121,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. ACCIONES (Actualizar, Eliminar Cuenta)
     // ==========================================================
     const btnActualizar = document.getElementById('btn-actualizar-datos');
+
     if (btnActualizar) {
         btnActualizar.addEventListener('click', () => {
-            localStorage.setItem('konopa_usuario_nombre', document.getElementById('perfil-nombre').value);
-            localStorage.setItem('konopa_usuario_telefono', document.getElementById('perfil-telefono').value);
-            localStorage.setItem('konopa_usuario_direccion', document.getElementById('perfil-direccion').value);
+            const inputNombre = document.getElementById('perfil-nombre').value.trim();
+            const inputTelefono = document.getElementById('perfil-telefono').value.trim();
+            const inputDireccion = document.getElementById('perfil-direccion').value.trim();
 
-            document.getElementById('nombre-perfil-sidebar').textContent = document.getElementById('perfil-nombre').value.split(' ')[0];
+            
+            if (inputNombre.length < 10 || !inputNombre.includes(' ')) {
+                alert("Por favor, ingresa tu nombre completo (nombres y apellidos).");
+                document.getElementById('perfil-nombre').style.borderColor = 'red';
+                return;
+            } else {
+                document.getElementById('perfil-nombre').style.borderColor = '#ddd';
+            }
+
+            const regexTelefono = /^9[0-9]{8}$/;
+            if (!regexTelefono.test(inputTelefono)) {
+                alert("Por favor, ingresa un número de celular válido (9 dígitos, empezando con 9).");
+                document.getElementById('perfil-telefono').style.borderColor = 'red';
+                return;
+            } else {
+                document.getElementById('perfil-telefono').style.borderColor = '#ddd';
+            }
+
+            if (inputDireccion.length < 8) {
+                alert("La dirección de entrega es muy corta. Debe tener al menos 8 caracteres.");
+                document.getElementById('perfil-direccion').style.borderColor = 'red';
+                return;
+            } else {
+                document.getElementById('perfil-direccion').style.borderColor = '#ddd';
+            }
+
+            localStorage.setItem('konopa_usuario_nombre', inputNombre);
+            localStorage.setItem('konopa_usuario_telefono', inputTelefono);
+            localStorage.setItem('konopa_usuario_direccion', inputDireccion);
+
+            const primerNombre = inputNombre;
+            document.getElementById('nombre-perfil-sidebar').textContent = primerNombre;
 
             const btnUserToggle = document.getElementById('btn-user-toggle');
             if (btnUserToggle) {
-                btnUserToggle.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${document.getElementById('perfil-nombre').value.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i>`;
+                btnUserToggle.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${primerNombre} <i class="fa-solid fa-chevron-down icon-chevron"></i>`;
             }
-            alert('Datos actualizados exitosamente.');
+
+            alert('¡Datos actualizados exitosamente!');
         });
     }
 
@@ -195,9 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 6. LÓGICA DEL MODAL DE TARJETAS Y MÉTODOS DE PAGO
     // ==========================================================
-    // ==========================================================
-    // 6. LÓGICA DEL MODAL DE TARJETAS Y MÉTODOS DE PAGO
-    // ==========================================================
+
     const modalTarjeta = document.getElementById('modal-tarjeta');
     const btnAbrirModal = document.getElementById('btn-abrir-modal-tarjeta');
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
@@ -271,11 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- VALIDACIÓN EN TIEMPO REAL ---
     if (inputNum) {
         inputNum.addEventListener('input', () => {
-            const num = inputNum.value.replace(/\s+/g, ''); // Ignora espacios en blanco
-            // Debe empezar en 4, tener exactamente 16 números y ser solo números
+            const num = inputNum.value.replace(/\s+/g, '');
             const esValido = num.startsWith('4') && num.length === 16 && /^\d+$/.test(num);
             aplicarColor(inputNum, esValido);
         });
@@ -283,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (inputNom) {
         inputNom.addEventListener('input', () => {
-            const esValido = inputNom.value.trim().length >= 3; // Mínimo 3 letras
+            const esValido = inputNom.value.trim().length >= 3;
             aplicarColor(inputNom, esValido);
         });
     }

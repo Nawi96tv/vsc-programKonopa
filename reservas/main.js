@@ -33,6 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputNotas = document.getElementById('res-notas');
     const inputFecha = document.getElementById('res-fecha');
 
+    // ==========================================
+    // AUTOCOMPLETAR DATOS DEL USUARIO (INCLUIDA DIRECCIÓN)
+    // ==========================================
+    const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
+    const correoGuardado = localStorage.getItem('konopa_usuario_correo');
+    const telefonoGuardado = localStorage.getItem('konopa_usuario_telefono');
+
+    if (nombreGuardado && inputNombre) inputNombre.value = nombreGuardado;
+    if (correoGuardado && inputCorreo) inputCorreo.value = correoGuardado;
+    if (telefonoGuardado && inputTelefono) inputTelefono.value = telefonoGuardado;
+
+    
     if (inputFecha) {
         // 1. Calculamos la fecha exacta de hoy ajustada a la zona horaria
         const hoy = new Date();
@@ -40,8 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const fechaLocal = new Date(hoy.getTime() - (offset * 60 * 1000));
         const fechaMinima = fechaLocal.toISOString().split('T')[0];
 
-        // 2. Asignamos el límite al HTML. 
-        // El navegador bloqueará los días anteriores y el CSS se aplicará automáticamente.
         inputFecha.min = fechaMinima;
     }
 
@@ -51,14 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!inputNombre.value || !inputCorreo.value || !inputTelefono.value ||
                 !inputSede.value || !inputFecha.value || !inputHora.value || !inputPersonas.value) {
-                alert("¡Atención! Por favor completa todos los campos obligatorios (*) antes de confirmar.");
+                alert("¡Por favor completa todos los campos!");
                 return;
             }
 
             const textoSede = inputSede.options[inputSede.selectedIndex].text;
             const textoHora = inputHora.options[inputHora.selectedIndex].text;
             const textoNotas = inputNotas.value ? inputNotas.value : "Ninguna";
-            const inputFecha = document.getElementById('res-fecha');
 
             if (inputFecha) {
                 inputFecha.addEventListener('input', () => {
