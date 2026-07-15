@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // ==========================================
     // 1. MENÚ RESPONSIVO
     // ==========================================
@@ -29,18 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputDetalle = document.querySelector('#rec-detalle');
     const inputPedido = document.querySelector('#rec-pedido');
 
-   // ==========================================
-    // AUTOCOMPLETAR DATOS DEL USUARIO (INCLUIDA DIRECCIÓN)
-    // ==========================================
-    const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
-    const correoGuardado = localStorage.getItem('konopa_usuario_correo');
-    const telefonoGuardado = localStorage.getItem('konopa_usuario_telefono');
-    const direccionGuardada = localStorage.getItem('konopa_usuario_direccion');
-
-    if (nombreGuardado && inputNombre) inputNombre.value = nombreGuardado;
-    if (correoGuardado && inputCorreo) inputCorreo.value = correoGuardado;
-    if (telefonoGuardado && inputTelefono) inputTelefono.value = telefonoGuardado;
-    if (direccionGuardada && inputDomicilio) inputDomicilio.value = direccionGuardada;
 
     if (btnEnviar && formReclamaciones) {
         btnEnviar.addEventListener('click', (evento) => {
@@ -68,6 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 2. Obtenemos si es Queja o Reclamo desde los Radio Buttons
                 const tipoSeleccionado = document.querySelector('input[name="rec_tipo"]:checked').value;
+
+                const inputMonto = document.getElementById('monto-reclamo');
+
+                if (inputMonto) {
+                    inputMonto.addEventListener('input', function (e) {
+                        let valor = e.target.value;
+
+                        if (valor.length > 1 && valor.startsWith('0') && valor[1] !== '.') {
+                            e.target.value = valor.replace(/^0+/, '');
+                        }
+                    });
+                }
 
                 // 3. Creamos el objeto del reclamo para guardarlo
                 const nuevoReclamo = {
@@ -113,7 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
             liPadre.classList.add('nav-user-item');
 
             liPadre.innerHTML = `
-                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
+                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto.split(' ')[0]}
+                <i class="fa-solid fa-chevron-down icon-chevron"></i></a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
                     <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>
@@ -144,6 +144,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Ejecutar la función al cargar la página
     verificarSesionActivaGlobal();
 });

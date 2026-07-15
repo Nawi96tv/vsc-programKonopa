@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCerrar = document.getElementById('btn-cerrar-modal');
     const resumenDiv = document.getElementById('datos-resumen');
 
-
     // Captura de elementos del formulario
     const inputNombre = document.getElementById('res-nombre');
     const inputCorreo = document.getElementById('res-correo');
@@ -33,65 +32,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputNotas = document.getElementById('res-notas');
     const inputFecha = document.getElementById('res-fecha');
 
-    // ==========================================
-    // AUTOCOMPLETAR DATOS DEL USUARIO (INCLUIDA DIRECCIÓN)
-    // ==========================================
-    const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
-    const correoGuardado = localStorage.getItem('konopa_usuario_correo');
-    const telefonoGuardado = localStorage.getItem('konopa_usuario_telefono');
-
-    if (nombreGuardado && inputNombre) inputNombre.value = nombreGuardado;
-    if (correoGuardado && inputCorreo) inputCorreo.value = correoGuardado;
-    if (telefonoGuardado && inputTelefono) inputTelefono.value = telefonoGuardado;
-
-    
+    // Configuración inicial de la fecha mínima
     if (inputFecha) {
-        // 1. Calculamos la fecha exacta de hoy ajustada a la zona horaria
         const hoy = new Date();
         const offset = hoy.getTimezoneOffset();
         const fechaLocal = new Date(hoy.getTime() - (offset * 60 * 1000));
         const fechaMinima = fechaLocal.toISOString().split('T')[0];
 
         inputFecha.min = fechaMinima;
+
+        // Validación visual de la fecha al escribir (Corregido: Ahora está fuera del botón click)
+        inputFecha.addEventListener('input', () => {
+            const fechaSeleccionada = new Date(inputFecha.value);
+            const diaActual = new Date();
+            diaActual.setHours(0, 0, 0, 0);
+
+            if (inputFecha.value && fechaSeleccionada < diaActual) {
+                inputFecha.classList.add('input-invalido');
+                inputFecha.classList.remove('input-valido');
+            } else if (inputFecha.value) {
+                inputFecha.classList.add('input-valido');
+                inputFecha.classList.remove('input-invalido');
+            } else {
+                inputFecha.classList.remove('input-valido', 'input-invalido');
+            }
+        });
     }
 
+    // Acción de enviar formulario (Abrir Modal)
     if (btnEnviar) {
         btnEnviar.addEventListener('click', (e) => {
             e.preventDefault();
 
+            // 1. Verificamos que no haya campos vacíos
             if (!inputNombre.value || !inputCorreo.value || !inputTelefono.value ||
                 !inputSede.value || !inputFecha.value || !inputHora.value || !inputPersonas.value) {
                 alert("¡Por favor completa todos los campos!");
                 return;
             }
 
+            // ==========================================
+            // 2. EL GUARDIA DE SEGURIDAD (Personas 1-12)
+            // ==========================================
+            const cantidadPersonas = parseInt(inputPersonas.value);
+            
+            if (isNaN(cantidadPersonas) || cantidadPersonas < 1 || cantidadPersonas > 12) {
+                alert("Error: El número de personas debe ser entre 1 y 12.");
+                return; // Corta la ejecución aquí, ¡el modal no se abre!
+            }
+            // ==========================================
+
+            // 3. Capturamos textos para el resumen
             const textoSede = inputSede.options[inputSede.selectedIndex].text;
             const textoHora = inputHora.options[inputHora.selectedIndex].text;
             const textoNotas = inputNotas.value ? inputNotas.value : "Ninguna";
 
-            if (inputFecha) {
-                inputFecha.addEventListener('input', () => {
-                    const fechaSeleccionada = new Date(inputFecha.value);
-                    const hoy = new Date();
-
-                    // Ponemos la hora a las 00:00:00 para comparar solo el día
-                    hoy.setHours(0, 0, 0, 0);
-
-                    if (inputFecha.value && fechaSeleccionada < hoy) {
-                        // Es fecha anterior -> Rojo
-                        inputFecha.classList.add('input-invalido');
-                        inputFecha.classList.remove('input-valido');
-                    } else if (inputFecha.value) {
-                        // Es hoy o fecha futura -> Verde
-                        inputFecha.classList.add('input-valido');
-                        inputFecha.classList.remove('input-invalido');
-                    } else {
-                        // Está vacío
-                        inputFecha.classList.remove('input-valido', 'input-invalido');
-                    }
-                });
-            }
-
+            // 4. Inyectamos el resumen en el HTML del modal
             if (resumenDiv) {
                 resumenDiv.innerHTML = `
                     <ul style="list-style: none; padding: 0; margin: 0; color: #333; font-size: 0.95rem;">
@@ -99,12 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         <li style="margin-bottom: 8px;"><strong>Sede:</strong> ${textoSede}</li>
                         <li style="margin-bottom: 8px;"><strong>Fecha:</strong> ${inputFecha.value}</li>
                         <li style="margin-bottom: 8px;"><strong>Hora:</strong> ${textoHora}</li>
-                        <li style="margin-bottom: 8px;"><strong>Personas:</strong> ${inputPersonas.value}</li>
+                        <li style="margin-bottom: 8px;"><strong>Personas:</strong> ${cantidadPersonas}</li>
                         <li style="margin-bottom: 8px;"><strong>Notas:</strong> ${textoNotas}</li>
                     </ul>
                 `;
             }
 
+            // 5. Mostramos el modal
             if (modal) {
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -112,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // PASO 2: Guardar realmente en localStorage al confirmar en el modal
+    // Acción de guardar la reserva final (Después del Modal)
     if (btnGuardarFinal) {
         btnGuardarFinal.addEventListener('click', () => {
             const logeado = localStorage.getItem('konopa_logeado') === 'true';
@@ -127,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fecha: inputFecha.value,
                 hora: inputHora.options[inputHora.selectedIndex].text,
                 personas: inputPersonas.value,
-                notas: inputNotas.value, // Guardamos las notas también
+                notas: inputNotas.value,
                 estado: 'Confirmada'
             };
 
@@ -140,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cerrar modal
+    // Cerrar Modal
     if (btnCerrar) {
         btnCerrar.addEventListener('click', () => {
             if (modal) {
@@ -153,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 3. FUNCIÓN GLOBAL: Menú de Usuario Desplegable
     // ==========================================================
+
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
@@ -166,12 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
 
-            // Ahora muestra el nombre completo como pediste
             liPadre.innerHTML = `
                 <a href="#" id="btn-user-toggle">
-                    <i class="fa-regular fa-circle-user"></i> ${nombreCompleto} 
-                    <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>
-                </a>
+                    <i class="fa-regular fa-circle-user"></i> ${nombreCompleto.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i></a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
                     <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>

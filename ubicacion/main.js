@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // ==========================================
     // 1. MENÚ RESPONSIVO 
     // ==========================================
+
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu'); 
 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             contenedorSedes.appendChild(divSede);
         }
     }
-        // ==========================================================
+    // ==========================================================
     // FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
     // ==========================================================
     function verificarSesionActivaGlobal() {
@@ -94,10 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
             
-            // Inyectamos el HTML del menú desplegable
-            // NOTA: Ajusta los "../perfil/index.html" si estás en la raíz del proyecto a "./perfil/index.html"
             liPadre.innerHTML = `
-                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
+                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i></a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
                     <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>
@@ -107,14 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             `;
 
-            // Lógica para abrir y cerrar el menú al hacer clic en el nombre
             document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); // Evita que el clic se propague al documento
+                e.stopPropagation();
                 document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
             });
 
-            // Lógica para cerrar el menú si haces clic en otra parte de la pantalla
             document.addEventListener('click', (e) => {
                 const userDropdown = document.getElementById('user-dropdown');
                 if (userDropdown && !userDropdown.contains(e.target)) {
@@ -122,15 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Lógica para Cerrar Sesión desde este menú
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); // Recarga la página para volver a mostrar "Login"
+                window.location.reload();
             });
         }
     }
-
-    // Ejecutar la función al cargar la página
     verificarSesionActivaGlobal();
 });

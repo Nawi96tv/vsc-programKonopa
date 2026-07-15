@@ -18,24 +18,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     function verificarSesionActiva() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
-        const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
+        const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
         
         const enlacesMenu = document.querySelectorAll('.nav-menu a');
         let enlaceLogin = null;
 
         enlacesMenu.forEach(enlace => {
-            if (enlace.textContent.includes('Login') || (nombreGuardado && enlace.textContent.includes(nombreGuardado.split(' ')[0]))) {
+            if (enlace.textContent.includes('Login') || (nombreCompleto && enlace.textContent.includes(nombreCompleto.split(' ')[0]))) {
                 enlaceLogin = enlace;
             }
         });
         
-        if (sesionIniciada === 'true' && enlaceLogin && nombreGuardado) {
-            const primerNombre = nombreGuardado;
+        if (sesionIniciada === 'true' && enlaceLogin && nombreCompleto) {
             const liPadre = enlaceLogin.parentElement;
             
             liPadre.classList.add('nav-user-item');
             liPadre.innerHTML = `
-                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${primerNombre} ▾</a>
+                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i></a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
                     <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>

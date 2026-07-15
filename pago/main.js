@@ -1,7 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ==========================================================
+    // 1. MENÚ RESPONSIVO Y SESIÓN EN EL HEADER
+    // ==========================================================
+    const btnMenu = document.querySelector('#btn-menu');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (btnMenu && navMenu) {
+        btnMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('mostrar');
+            btnMenu.classList.toggle('activo');
+        });
+    }
 
     // ==========================================================
-    // 1. SEGURIDAD: VERIFICAR SESIÓN
+    // 2. SEGURIDAD: VERIFICAR SESIÓN
     // ==========================================================
     if (localStorage.getItem('konopa_logeado') !== 'true') {
         alert("Acceso denegado. Debes iniciar sesión para realizar pagos.");
@@ -10,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================
-    // 2. CARGAR DATOS DEL USUARIO (Dirección y Nombre)
+    // 3. CARGAR DATOS DEL USUARIO (Dirección y Nombre)
     // ==========================================================
     const direccionGuardada = localStorage.getItem('konopa_usuario_direccion');
     const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
@@ -52,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==========================================================
-    // 3. CARGAR EL PEDIDO TEMPORAL Y CALCULAR TOTALES
+    // 4. CARGAR EL PEDIDO TEMPORAL Y CALCULAR TOTALES
     // ==========================================================
     const pedidoTemporalStr = localStorage.getItem('konopa_pedido_temporal');
     const listaResumen = document.getElementById('lista-resumen-items');
@@ -73,12 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         listaResumen.innerHTML = itemsHtml;
 
-        // MATEMÁTICA CORRECTA: Costo de platos + Envío (5.00)
         const totalPlatos = parseFloat(pedidoPendiente.total);
         const costoEnvio = 5.00;
         const totalConEnvio = (totalPlatos + costoEnvio).toFixed(2);
 
-        // Actualizamos el total general del pedido internamente para guardarlo con el envío incluido
         pedidoPendiente.total = totalConEnvio;
 
         const domCostoProductos = document.getElementById('costo-productos');
@@ -91,22 +101,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================
-    // 4. LÓGICA DEL BOTÓN FINAL "HACER PEDIDO"
+    // 5. LÓGICA DEL BOTÓN FINAL "HACER PEDIDO"
     // ==========================================================
     const btnProcesar = document.getElementById('btn-procesar-pago');
 
     if (btnProcesar) {
         btnProcesar.addEventListener('click', () => {
             if (pedidoPendiente) {
-                // 1. Guardamos el pedido en el historial oficial
+
                 const misPedidos = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
                 misPedidos.push(pedidoPendiente);
                 localStorage.setItem('konopa_pedidos', JSON.stringify(misPedidos));
 
-                // 2. Destruimos la memoria temporal para que el carrito quede limpio
                 localStorage.removeItem('konopa_pedido_temporal');
 
-                // 3. Mensaje de éxito y redirección a Mi Perfil
                 alert("¡Pago procesado con éxito! Tu pedido está en camino a tu domicilio.");
                 window.location.href = "../index.html";
             } else {
@@ -116,17 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================
-    // 5. MENÚ RESPONSIVO Y SESIÓN EN EL HEADER
+    // 6. Verificar sesión activa y actualizar menú de navegación
     // ==========================================================
-    const btnMenu = document.querySelector('#btn-menu');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (btnMenu && navMenu) {
-        btnMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('mostrar');
-            btnMenu.classList.toggle('activo');
-        });
-    }
 
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
@@ -142,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             liPadre.classList.add('nav-user-item');
 
             liPadre.innerHTML = `
-                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto} ▾</a>
+                <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i></a>
                 <ul class="dropdown-content" id="user-dropdown">
                     <li><a href="../perfil/index.html">Mi cuenta</a></li>
                     <li><a href="../perfil/index.html?seccion=pedidos">Mis pedidos</a></li>

@@ -3,14 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 0. MENÚ RESPONSIVO (NUEVO MOTOR JS)
     // ==========================================
     const btnMenu = document.querySelector('#btn-menu');
-    // Seleccionamos la etiqueta <nav> usando su clase original
     const navMenu = document.querySelector('.nav-menu');
 
     if (btnMenu && navMenu) {
         btnMenu.addEventListener('click', () => {
-            // "Prende o apaga" la visualización de los enlaces
             navMenu.classList.toggle('mostrar');
-            // "Prende o apaga" el ícono de la X
             btnMenu.classList.toggle('activo');
         });
     }
@@ -157,10 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sesionIniciada === 'true' && enlaceLogin && nombreGuardado) {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
-
-            // Inyectamos el HTML. Nota que NO tiene 'mostrar-dropdown' en el <ul>
             liPadre.innerHTML = `
-            <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreGuardado} ▾</a>
+            <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i>${nombreGuardado.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i></a>
 
             <ul class="dropdown-content" id="user-dropdown">
                 <li><a href="../perfil/index.html">Mi cuenta</a></li>
@@ -171,25 +166,21 @@ document.addEventListener('DOMContentLoaded', () => {
             </ul>
 `;
 
-            // Ahora buscamos los elementos recién creados
             const btnUserToggle = document.getElementById('btn-user-toggle');
             const userDropdown = document.getElementById('user-dropdown');
-
-            // Abrir/Cerrar
+            
             btnUserToggle.addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); // Evita que se cierre inmediatamente
+                e.stopPropagation();
                 userDropdown.classList.toggle('mostrar-dropdown');
             });
 
-            // Cerrar si haces clic en cualquier otro lado
             document.addEventListener('click', (e) => {
                 if (!userDropdown.contains(e.target) && e.target !== btnUserToggle) {
                     userDropdown.classList.remove('mostrar-dropdown');
                 }
             });
 
-            // Logout
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');

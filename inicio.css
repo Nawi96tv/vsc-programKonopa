@@ -8,16 +8,14 @@
 }
 
 html,
-body {
-    width: 100%;
-    overflow-x: hidden;
-}
 
 body {
     font-family: 'Montserrat', sans-serif;
     color: #333333;
     background-color: #ffffff;
     line-height: 1.6;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 img {
@@ -31,7 +29,7 @@ img {
    ==================================================== */
 .main-header {
     background-color: #080808;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 3.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -65,7 +63,7 @@ img {
     border: none;
     display: none;
     color: #c5a880;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     cursor: pointer;
     transition: transform 0.3s ease;
     user-select: none;
@@ -81,7 +79,7 @@ img {
     display: flex;
     flex-direction: row;
     list-style: none;
-    gap: 1.2rem;
+    gap: 2rem;
 
 }
 

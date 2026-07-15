@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             liPadre.innerHTML = `
                 <a href="#" id="btn-user-toggle">
-                    <i class="fa-regular fa-circle-user"></i> ${nombreCompleto} 
+                    <i class="fa-regular fa-circle-user"></i> ${nombreCompleto.split(' ')[0]} 
                     <i class="fa-solid fa-chevron-down icon-chevron"></i>
                 </a>
                 <ul class="dropdown-content" id="user-dropdown">
@@ -69,12 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. LÓGICA DEL PERFIL (Pestañas, Datos y Redirección)
     // ==========================================================
     const sesionIniciada = localStorage.getItem('konopa_logeado');
-    const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
+    const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
 
-    if (sesionIniciada === 'true' && nombreGuardado) {
-        document.getElementById('nombre-perfil-sidebar').textContent = nombreGuardado;
-        document.getElementById('avatar-inicial').textContent = nombreGuardado.charAt(0).toUpperCase();
-        document.getElementById('perfil-nombre').value = nombreGuardado;
+    if (sesionIniciada === 'true' && nombreCompleto) {
+        document.getElementById('nombre-perfil-sidebar').textContent = nombreCompleto.split(' ')[0];
+        document.getElementById('avatar-inicial').textContent = nombreCompleto.charAt(0).toUpperCase();
+        document.getElementById('perfil-nombre').value = nombreCompleto;
         document.getElementById('perfil-telefono').value = localStorage.getItem('konopa_usuario_telefono') || '';
         document.getElementById('perfil-correo').value = localStorage.getItem('konopa_usuario_correo') || '';
         document.getElementById('perfil-direccion').value = localStorage.getItem('konopa_usuario_direccion') || '';
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const inputTelefono = document.getElementById('perfil-telefono').value.trim();
             const inputDireccion = document.getElementById('perfil-direccion').value.trim();
 
-            
+
             if (inputNombre.length < 10 || !inputNombre.includes(' ')) {
                 alert("Por favor, ingresa tu nombre completo (nombres y apellidos).");
                 document.getElementById('perfil-nombre').style.borderColor = 'red';
@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const regexTelefono = /^9[0-9]{8}$/;
+
             if (!regexTelefono.test(inputTelefono)) {
                 alert("Por favor, ingresa un número de celular válido (9 dígitos, empezando con 9).");
                 document.getElementById('perfil-telefono').style.borderColor = 'red';
@@ -158,12 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('konopa_usuario_telefono', inputTelefono);
             localStorage.setItem('konopa_usuario_direccion', inputDireccion);
 
-            const primerNombre = inputNombre;
-            document.getElementById('nombre-perfil-sidebar').textContent = primerNombre;
+            const NombreActu = inputNombre;
+            document.getElementById('nombre-perfil-sidebar').textContent = NombreActu.split(' ')[0];
 
             const btnUserToggle = document.getElementById('btn-user-toggle');
             if (btnUserToggle) {
-                btnUserToggle.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${primerNombre} <i class="fa-solid fa-chevron-down icon-chevron"></i>`;
+                btnUserToggle.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${NombreActu.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i>`;
             }
 
             alert('¡Datos actualizados exitosamente!');
@@ -285,7 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderizarTarjetas();
 
-    // --- MANEJO DE COLORES VERDE/ROJO ---
     function aplicarColor(input, esValido) {
         if (esValido) {
             input.classList.add('input-valido');
@@ -318,9 +318,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (inputExp) {
+        inputExp.addEventListener('input', (e) => {
 
-        inputExp.addEventListener('input', () => {
-            const valor = inputExp.value;
+            let valorFormateado = e.target.value.replace(/\D/g, ''); // Elimina letras, deja solo números
+            if (valorFormateado.length > 2) {
+
+                valorFormateado = valorFormateado.substring(0, 2) + '/' + valorFormateado.substring(2, 4);
+            }
+
+            e.target.value = valorFormateado;
+
+            const valor = e.target.value;
             const expRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
 
             if (expRegex.test(valor)) {
@@ -332,23 +340,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const anioInput = parseInt(anio);
                 const mesInput = parseInt(mes);
 
-                // Si es mayor o igual a hoy, es VÁLIDO (se pinta verde)
                 if (anioInput > anioActual || (anioInput === anioActual && mesInput >= mesActual)) {
                     inputExp.setCustomValidity("");
                 } else {
-                    // Si es antiguo, lo marcamos como INVÁLIDO (se pinta rojo)
                     inputExp.setCustomValidity("Fecha vencida");
                 }
             } else {
-                // Si el formato es incompleto, es INVÁLIDO
                 inputExp.setCustomValidity("Incompleto");
             }
         });
     }
 
-    if (inputCvv) {
-        inputCvv.addEventListener('input', () => {
-            const esValido = /^\d{3,4}$/.test(inputCvv.value);
+   if (inputCvv) {
+        inputCvv.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
+
+            const esValido = /^\d{3}$/.test(inputCvv.value);
             aplicarColor(inputCvv, esValido);
         });
     }

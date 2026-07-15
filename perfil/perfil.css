@@ -10,7 +10,92 @@
     align-items: flex-start;
 }
 
-/* Sidebar (Adaptado al estilo de la tarjeta de reclamaciones) */
+.perfil-sidebar {
+    flex: 0 0 300px;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #c5a880;
+    overflow: hidden;
+}
+
+.perfil-header-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    border-bottom: 1px dashed #eee;
+}
+
+.avatar-circulo {
+    width: 60px;
+    height: 60px;
+    background-color: #c5a880;
+    color: #121212;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-usuario .label-perfil {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.info-usuario h3 {
+    font-size: 1.5rem;
+    color: #121212;
+    margin: 0;
+    font-weight: 300;
+}
+
+.perfil-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.perfil-menu li {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.perfil-menu .menu-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 2rem;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+.perfil-menu .menu-link i {
+    color: #c5a880;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.perfil-menu .menu-link:hover,
+.perfil-menu .menu-link.activo {
+    background-color: #fdfdfd;
+    color: #c5a880;
+    font-weight: 500;
+}
+
+.perfil-wrapper {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
 .perfil-sidebar {
     flex: 0 0 300px;
     background: #ffffff;
@@ -491,18 +576,6 @@
 /* ==========================================================
    NUEVAS CLASES DINÁMICAS (REMPLAZO DE INLINE STYLES)
    ========================================================== */
-
-/* Dropdown Navbar */
-.icon-chevron {
-    font-size: 0.7rem;
-    margin-left: 5px;
-}
-
-.separador-menu {
-    border: 0;
-    border-top: 1px solid #333;
-    margin: 5px 0;
-}
 
 /* Tarjetas de Pago */
 .tarjeta-info-flex {
