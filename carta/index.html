@@ -35,9 +35,10 @@
                 <li><a href="index.html" class="active">Carta</a></li>
                 <li><a href="../contacto/index.html">Contacto</a></li>
                 <li><a href="../eventos/index.html">Eventos</a></li>
-                <li><a href="../pedido/index.html">Realizar Pedido</a></li>
                 <li><a href="../login/index.html"><i class="fa-regular fa-circle-user"></i>Login / Registro</a></li>
+                 
             </ul>
+
         </nav>
     </header>
 
@@ -110,6 +111,31 @@
         </section>
 
     </main>
+
+    <button id="btn-flotante-carrito" class="btn-flotante">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="contador-carrito" class="badge-carrito">0</span>
+    </button>
+
+    <div id="modal-carrito" class="modal-overlay">
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h3>Tu Pedido</h3>
+                <span id="btn-cerrar-carrito" class="close-btn">&times;</span>
+            </div>
+            
+            <ul id="lista-carrito" class="cart-items">
+                <!-- Los platos se inyectarán aquí -->
+            </ul>
+            
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="price-total">S/. <span id="total-carrito">0.00</span></span>
+            </div>
+            
+            <button id="btn-ir-pagar" class="btn-submit-cart">Confirmar e ir a Pagar</button>
+        </div>
+    </div>
 
     <footer class="main-footer">
         <div class="footer-content">

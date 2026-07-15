@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h4>${plato.nombre}</h4><span class="price">S/ ${plato.precio}</span>
                     </div>
                     <p class="description">${plato.descripcion}</p>
-                    <a href="../pedido/index.html" class="btn-add-dish">Hacer Pedido</a>
+                    <button class="btn-add-dish" onclick="agregarAlCarrito('${plato.nombre}', ${plato.precio})">Agregar al Carrito</button>
                 </div>
             `;
 
@@ -140,6 +140,98 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarCategoria('fastfood');
     cargarCategoria('postres');
     cargarCategoria('bebidas');
+    
+
+    // ==========================================
+    // LÓGICA DEL CARRITO DE COMPRAS FLOTANTE
+    // ==========================================
+    let carrito = [];
+    let totalCarrito = 0;
+
+    // 1. Función para agregar platos
+    window.agregarAlCarrito = (nombre, precio) => {
+        carrito.push({ nombre, precio });
+        totalCarrito += precio;
+        actualizarCarritoUI();
+        
+        // Pequeña animación al botón flotante para avisar al usuario
+        const btnFlotante = document.getElementById('btn-flotante-carrito');
+        if(btnFlotante) {
+            btnFlotante.style.transform = 'scale(1.2)';
+            setTimeout(() => btnFlotante.style.transform = 'scale(1)', 200);
+        }
+    };
+
+    // 2. Función para quitar platos
+    window.quitarDelCarrito = (index) => {
+        totalCarrito -= carrito[index].precio;
+        carrito.splice(index, 1);
+        actualizarCarritoUI();
+    };
+
+    // 3. Refrescar la vista del modal y contador
+    function actualizarCarritoUI() {
+        document.getElementById('contador-carrito').textContent = carrito.length;
+        document.getElementById('total-carrito').textContent = totalCarrito.toFixed(2);
+        
+        const lista = document.getElementById('lista-carrito');
+        lista.innerHTML = '';
+        
+        if(carrito.length === 0) {
+            lista.innerHTML = '<p style="text-align:center; color:#888; padding:20px 0;">Tu carrito está vacío</p>';
+            return;
+        }
+
+        carrito.forEach((item, index) => {
+            lista.innerHTML += `
+                <li class="cart-item">
+                    <span>1x ${item.nombre}</span>
+                    <div>
+                        <span>S/. ${item.precio.toFixed(2)}</span>
+                        <button class="btn-remove-item" onclick="quitarDelCarrito(${index})">X</button>
+                    </div>
+                </li>
+            `;
+        });
+    }
+
+    // 4. Abrir y cerrar el modal
+    const btnFlotante = document.getElementById('btn-flotante-carrito');
+    const modalCarrito = document.getElementById('modal-carrito');
+    const btnCerrarCarrito = document.getElementById('btn-cerrar-carrito');
+
+    if(btnFlotante) btnFlotante.addEventListener('click', () => modalCarrito.classList.add('mostrar-modal'));
+    if(btnCerrarCarrito) btnCerrarCarrito.addEventListener('click', () => modalCarrito.classList.remove('mostrar-modal'));
+
+    // 5. Botón de Ir a Pagar (Conecta con pago/index.html)
+    const btnIrPagar = document.getElementById('btn-ir-pagar');
+    if(btnIrPagar) {
+        btnIrPagar.addEventListener('click', () => {
+            if(carrito.length === 0) {
+                alert("Debes agregar al menos un plato para continuar.");
+                return;
+            }
+            
+            if (localStorage.getItem('konopa_logeado') !== 'true') {
+                alert("Para procesar tu pago y envío, por favor inicia sesión.");
+                window.location.href = '../login/index.html';
+                return;
+            }
+
+            // Armamos el pedido como lo espera la página de pagos
+            const pedidoActual = {
+                id: 'PED-' + Math.floor(Math.random() * 1000000),
+                items: carrito.map(item => ({ nombre: item.nombre, precio: `S/. ${item.precio.toFixed(2)}` })),
+                total: totalCarrito.toFixed(2),
+                fecha: new Date().toLocaleDateString('es-PE'),
+                hora: new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            // Guardamos en memoria temporal y redirigimos a Pagar
+            localStorage.setItem('konopa_pedido_temporal', JSON.stringify(pedidoActual));
+            window.location.href = '../pago/index.html';
+        });
+    }
 
     // ==========================================================
     // FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
