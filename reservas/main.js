@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 1. MENÚ RESPONSIVO
     // ==========================================
+
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -32,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputNotas = document.getElementById('res-notas');
     const inputFecha = document.getElementById('res-fecha');
 
-    // Configuración inicial de la fecha mínima
     if (inputFecha) {
         const hoy = new Date();
         const offset = hoy.getTimezoneOffset();
@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         inputFecha.min = fechaMinima;
 
-        // Validación visual de la fecha al escribir (Corregido: Ahora está fuera del botón click)
         inputFecha.addEventListener('input', () => {
             const fechaSeleccionada = new Date(inputFecha.value);
             const diaActual = new Date();
@@ -59,35 +58,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Acción de enviar formulario (Abrir Modal)
     if (btnEnviar) {
         btnEnviar.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // 1. Verificamos que no haya campos vacíos
             if (!inputNombre.value || !inputCorreo.value || !inputTelefono.value ||
                 !inputSede.value || !inputFecha.value || !inputHora.value || !inputPersonas.value) {
                 alert("¡Por favor completa todos los campos!");
                 return;
             }
 
-            // ==========================================
-            // 2. EL GUARDIA DE SEGURIDAD (Personas 1-12)
-            // ==========================================
-            const cantidadPersonas = parseInt(inputPersonas.value);
-            
-            if (isNaN(cantidadPersonas) || cantidadPersonas < 1 || cantidadPersonas > 12) {
-                alert("Error: El número de personas debe ser entre 1 y 12.");
-                return; // Corta la ejecución aquí, ¡el modal no se abre!
-            }
-            // ==========================================
+            const cantidadPersonas = Number(inputPersonas.value);
 
-            // 3. Capturamos textos para el resumen
+
+            if (isNaN(cantidadPersonas) || cantidadPersonas < 1 || cantidadPersonas > 12 || !Number.isInteger(cantidadPersonas)) {
+                alert("Error: El número de personas debe ser un número entero entre 1 y 12.");
+                return;
+            }
+
             const textoSede = inputSede.options[inputSede.selectedIndex].text;
             const textoHora = inputHora.options[inputHora.selectedIndex].text;
             const textoNotas = inputNotas.value ? inputNotas.value : "Ninguna";
 
-            // 4. Inyectamos el resumen en el HTML del modal
             if (resumenDiv) {
                 resumenDiv.innerHTML = `
                     <ul style="list-style: none; padding: 0; margin: 0; color: #333; font-size: 0.95rem;">
@@ -101,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            // 5. Mostramos el modal
             if (modal) {
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -109,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Acción de guardar la reserva final (Después del Modal)
     if (btnGuardarFinal) {
         btnGuardarFinal.addEventListener('click', () => {
             const logeado = localStorage.getItem('konopa_logeado') === 'true';
@@ -137,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cerrar Modal
     if (btnCerrar) {
         btnCerrar.addEventListener('click', () => {
             if (modal) {
@@ -148,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================
-    // 3. FUNCIÓN GLOBAL: Menú de Usuario Desplegable
+    // 3. VERIFICACIÓN DE SESIÓN ACTIVA GLOBAL
     // ==========================================================
 
     function verificarSesionActivaGlobal() {

@@ -135,7 +135,7 @@ body {
 }
 
 /* ====================================================
-   DISEÑO DE SEDES: FLEXBOX (IMAGEN Y TEXTO)
+   DISEÑO DE SEDES
    ==================================================== */
 .branches-section h3 {
     font-size: 1.8rem;
@@ -211,7 +211,7 @@ body {
 }
 
 /* ====================================================
-   RESPONSIVE (SEDÉS EN CELULAR Y TABLET)
+   RESPONSIVA (SEDES EN CELULAR Y TABLET)
    ==================================================== */
 @media (max-width: 768px) {
     .locations-hero { height: 35vh; }

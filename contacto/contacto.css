@@ -19,6 +19,7 @@ body {
 /* ====================================================
    HERO SECTION
    ==================================================== */
+
 .contact-hero {
     background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
         url('img/FONDOCONTACTO.png') no-repeat center center/cover;
@@ -60,6 +61,7 @@ body {
 /* ====================================================
    CONTAINER PRINCIPAL (TARJETA DE CONTACTO)
    ==================================================== */
+
 .contact-container {
     max-width: 750px;
     margin: -50px auto 5rem auto;
@@ -96,8 +98,9 @@ body {
 }
 
 /* ====================================================
-   BLOQUE DE CANALES (FLEXBOX RESPONSIVO)
+   BLOQUE DE CANALES
    ==================================================== */
+
 .channels-wrapper {
     display: flex;
     flex-direction: column;
@@ -143,7 +146,7 @@ body {
 
 .channels-wrapper .contact-item .item-info {
     flex: 1;
-    min-width: 0; /* Evita que el contenido flex rompa el contenedor */
+    min-width: 0;
 }
 
 .channels-wrapper .contact-item .item-info h4 {
@@ -157,7 +160,7 @@ body {
     font-size: 1rem;
     font-weight: 500;
     color: #b3946b;
-    word-wrap: break-word; /* Forza el salto de línea si el correo es muy largo en móvil */
+    word-wrap: break-word;
     word-break: break-all;
 }
 
@@ -188,8 +191,9 @@ body {
 }
 
 /* ====================================================
-   EVALUACIÓN RESPONSIVA EXCLUSIVA DEL CONTENIDO
+   RESPONSIVO
    ==================================================== */
+
 @media (max-width: 768px) {
     .contact-hero {
         height: 35vh;
@@ -209,7 +213,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    /* En pantallas muy pequeñas, los iconos se alinean arriba del texto */
+
     .channels-wrapper .contact-item {
         flex-direction: column;
         align-items: flex-start;

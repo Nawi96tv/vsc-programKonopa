@@ -5,10 +5,9 @@
     display: grid;
     grid-template-columns: 1.8fr 1.2fr;
     gap: 2rem;
-    align-items: start; /* Ancla los elementos arriba para evitar que caigan */
+    align-items: start;
 }
 
-/* Tarjetas base de contenido */
 .checkout-card {
     background: #fff;
     border-radius: 8px;
@@ -32,7 +31,6 @@
     margin-bottom: 15px;
 }
 
-/* Enlaces de acción en dorado */
 .link-cambiar {
     color: #c5a880;
     text-decoration: none;
@@ -61,6 +59,7 @@
 /* ==========================================================
    4. SECCIÓN MÉTODOS DE PAGO
    ========================================================== */
+
 .payment-option {
     display: flex;
     justify-content: space-between;
@@ -73,7 +72,6 @@
     transition: all 0.2s;
 }
 
-/* Efecto de selección en dorado elegante */
 .payment-methods {
     margin-top: 15px;
 }
@@ -108,10 +106,9 @@
 
 .tarjeta-opcion i {
     font-size: 1.2rem;
-    color: #1a1f71; /* Color tipo Visa/Mastercard */
+    color: #1a1f71;
 }
 
-/* El botón para agregar */
 .btn-add-payment {
     display: block;
     width: 100%;
@@ -137,13 +134,14 @@
 /* ==========================================================
    5. COLUMNA DERECHA (RESUMEN EN TICKET)
    ========================================================== */
+
 #lista-resumen-items {
     margin: 15px 0;
     padding: 10px 0;
 }
 .summary-card {
     position: sticky;
-    top: 20px; /* Se ancla arriba al hacer scroll */
+    top: 20px;
 }
 
 .summary-items {
@@ -154,7 +152,6 @@
     overflow-y: auto;
 }
 
-/* Zona de Subtotales y Desgloses */
 .summary-costs {
     border-bottom: 1px solid #eee;
     padding-bottom: 15px;
@@ -169,7 +166,6 @@
     margin-bottom: 10px;
 }
 
-/* Fila de Total Destacado */
 .total-row {
     display: flex;
     justify-content: space-between;
@@ -182,6 +178,7 @@
 /* ==========================================================
    6. BOTÓN OFICIAL "HACER PEDIDO" (DORADO)
    ========================================================== */
+
 .btn-hacer-pedido {
     width: 100%;
     background-color: #c5a880 ;
@@ -206,12 +203,11 @@
 
 
 @media (max-width: 768px) {
-    /* La cuadrícula cambia de 2 a 1 columna automáticamente */
     .checkout-container {
         grid-template-columns: 1fr;
     }
     
     .summary-card {
-        position: static; /* Pierde el sticky en celulares */
+        position: static;
     }
 }

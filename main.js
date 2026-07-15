@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
-    // 0. MENÚ RESPONSIVO (NUEVO MOTOR JS)
+    // 1. MENÚ RESPONSIVO (NUEVO MOTOR JS)
     // ==========================================
+
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -12,8 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     // ==========================================
-    // 1. BASE DE DATOS DE REGIONES CULINARIAS
+    // 2. BASE DE DATOS DE REGIONES
     // ==========================================
+
     const regiones = [
         {
             enlace: "carta/index.html#costa",
@@ -60,8 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // ==========================================
-    // 2. BASE DE DATOS DE PLATOS ESTRELLA (Recomendados)
+    // 3. BASE DE DATOS DE PLATOS ESTRELLA
     // ==========================================
+
     const recomendados = [
         {
             nombre: "El Gran Cebiche Konopa",
@@ -84,8 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // ==========================================
-    // 3. RENDERIZAR REGIONES EN EL DOM
+    // 4. RENDERIZAR REGIONES EN EL DOM
     // ==========================================
+
     const contenedorRegiones = document.querySelector('#grid-regiones');
 
     if (contenedorRegiones) {
@@ -111,8 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 4. RENDERIZAR RECOMENDADOS EN EL DOM
+    // 5. RENDERIZAR RECOMENDADOS EN EL DOM
     // ==========================================
+
     const contenedorRecomendados = document.querySelector('#grid-recomendados');
 
     if (contenedorRecomendados) {
@@ -136,8 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     // ==========================================
-    // VERIFICACIÓN DE SESIÓN GLOBAL 
+    // 6.VERIFICACIÓN DE SESION ACTIVA GLOBAL
     // ==========================================
+    
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');

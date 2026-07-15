@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // ==========================================
     // 1. MENÚ RESPONSIVO
     // ==========================================
+
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu'); 
 
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // FUNCIÓN: CREAR EL MENÚ DESPLEGABLE (DROPDOWN)
     // ==========================================
+
     function verificarSesionActiva() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
         const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
@@ -71,8 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
     verificarSesionActiva();
 
     // ==========================================
-    // 2. VALIDACIÓN DE LOGIN AL ESTILO JOSE
+    // 2. VALIDACIÓN DEL LOGIN
     // ==========================================
+
     const btnLogin = document.querySelector('#btn-login');
     const inputUsuario = document.querySelector('#input-usuario');
     const inputClave = document.querySelector('#input-clave');
@@ -103,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 3. VALIDACIÓN DE REGISTRO
     // ==========================================
+
     const btnRegistro = document.querySelector('#btn-registro');
     const inputRegNombre = document.querySelector('#reg-nombre');
     const inputRegTelefono = document.querySelector('#reg-telefono');

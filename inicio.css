@@ -6,9 +6,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 html,
-
 body {
     font-family: 'Montserrat', sans-serif;
     color: #333333;
@@ -25,7 +23,7 @@ img {
 }
 
 /* ====================================================
-   ESTILOS DEL HEADER GLOBAL Y HAMBURGUESA (CSS PURO)
+   ESTILOS DEL HEADER GLOBAL Y HAMBURGUESA
    ==================================================== */
 .main-header {
     background-color: #080808;
@@ -53,7 +51,6 @@ img {
     transform-origin: left center;
 }
 
-/* Ocultar elementos del menú móvil en PC */
 .menu-check {
     display: none;
 }
@@ -74,7 +71,6 @@ img {
     display: none;
 }
 
-/* Estilos de la navegación en PC */
 .nav-menu ul {
     display: flex;
     flex-direction: row;
@@ -106,18 +102,16 @@ img {
 }
 
 /* ====================================================
-   MENÚ DESPLEGABLE DE USUARIO (KONOPA) - SIN !IMPORTANT
+   MENÚ DESPLEGABLE DE USUARIO
    ==================================================== */
 .nav-menu .nav-user-item {
     position: relative;
 }
 
-/* Al poner "ul.dropdown-content", el navegador sabe que esta regla 
-   es más fuerte que el "ul" genérico de tu nav-menu */
 .nav-menu ul.dropdown-content {
     display: flex;
     flex-direction: column;
-    gap: 0; /* Vence al gap de 1.2rem por especificidad */
+    gap: 0;
     opacity: 0;
     visibility: hidden;
     position: absolute;
@@ -139,7 +133,6 @@ img {
     visibility: visible;
 }
 
-/* Contenedor del enlace sin espacios extra */
 .nav-menu ul.dropdown-content li {
     width: 100%;
     border-bottom: 1px solid rgba(197, 168, 128, 0.2);
@@ -152,7 +145,6 @@ img {
     border-bottom: none;
 }
 
-/* Enlace que ocupa TODO el bloque */
 .nav-menu ul.dropdown-content li a {
     color: #ffffff;
     background-color: transparent; 
@@ -164,15 +156,14 @@ img {
     box-sizing: border-box; 
     font-size: 0.95rem; 
     text-align: left; 
-    border-bottom: none; /* Vence al borde transparente del menú principal */
+    border-bottom: none;
     transition: background 0.2s ease, color 0.2s ease;
 }
 
-/* El efecto Hover que llena todo el cuadro */
 .nav-menu ul.dropdown-content li a:hover {
     background-color: #ffffff;
     color: #121212;
-    border-bottom: none; /* Vence al borde dorado del menú principal */
+    border-bottom: none;
 }
 @keyframes fadeInHero {
     from {
@@ -330,7 +321,7 @@ img {
 }
 
 /* ====================================================
-   TARJETAS PLATOS ESTRELLA (GRID)
+   TARJETAS PLATOS ESTRELLA
    ==================================================== */
 .star-dishes-grid {
     display: grid;
@@ -582,7 +573,6 @@ img {
         text-align: center;
     }
 
-    /* LOGICA DEL MENU FUNCIONAL CON JAVASCRIPT */
     .nav-menu.mostrar ul {
         display: flex;
     }

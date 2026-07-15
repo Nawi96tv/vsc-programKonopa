@@ -116,7 +116,6 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* Ocultar flecha nativa en navegadores webkit */
 .faq-item summary::-webkit-details-marker {
     display: none;
 }
@@ -126,7 +125,7 @@ body {
     color: #b3946b;
 }
 
-/* ESTADO ABIERTO */
+
 .faq-item[open] {
     border-color: #c5a880;
     box-shadow: 0 4px 15px rgba(197, 168, 128, 0.12);
@@ -163,7 +162,7 @@ body {
 }
 
 /* ====================================================
-   EVALUACIÓN RESPONSIVA (SOLO CONTENIDO INTERNO)
+   RESPONSIVO
    ==================================================== */
 @media (max-width: 768px) {
     .faq-hero {

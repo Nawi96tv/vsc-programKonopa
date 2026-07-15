@@ -165,7 +165,6 @@ body {
     box-shadow: 0 0 8px rgba(197, 168, 128, 0.2);
 }
 
-/* Validación Visual */
 .form-group input:not(:placeholder-shown):invalid,
 .form-group textarea:not(:placeholder-shown):invalid {
     border-color: #e74c3c;
@@ -178,7 +177,6 @@ body {
     background-color: #f4fbf7;
 }
 
-/* Radio buttons específicos */
 .radio-group {
     margin-bottom: 1.2rem;
 }
@@ -210,7 +208,9 @@ body {
     line-height: 1.4;
 }
 
-/* BOTÓN DE ENVÍO */
+/* ====================================================
+   ESTILO DEL BOTÓN DE ENVÍO
+   ==================================================== */
 .form-submit .btn-submit {
     width: 100%;
     background-color: #121212;
@@ -232,7 +232,7 @@ body {
 }
 
 /* ====================================================
-   EVALUACIÓN RESPONSIVA (SOLO CONTENIDO INTERNO)
+   EVALUACIÓN RESPONSIVA
    ==================================================== */
 @media (max-width: 768px) {
     .reclamaciones-hero {

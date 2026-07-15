@@ -1,19 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
-    // MENÚ RESPONSIVO
+    // 1.MENÚ RESPONSIVO
     // ==========================================
+
     const btnMenu = document.querySelector('#btn-menu');
-    // Seleccionamos la etiqueta <nav> usando su clase original
+
     const navMenu = document.querySelector('.nav-menu');
     if (btnMenu && navMenu) {
         btnMenu.addEventListener('click', () => {
-            // "Prende o apaga" la visualización de los enlaces
+
             navMenu.classList.toggle('mostrar');
-            // "Prende o apaga" el ícono de la X
+
             btnMenu.classList.toggle('activo');
         });
     }
-    // NUESTRA "BASE DE DATOS" DE PLATOS
+    // ==========================================
+    // 2.BASE DE DATOS DE PLATOS
+    // ==========================================
+
     const platos = [
         // === LA COSTA ===
         { categoria: "costa", nombre: "Ceviche Konopa", precio: 48, descripcion: "Cubos de pesca del día marinados al momento en jugo de limón de Chulucanas, ají limo, cebolla roja y culantro fresco. Acompañado de camote glaseado y choclo.", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7D4MAcj6qnwBLZ4XLMQJQb6VApcYpNvxanA&s" },
@@ -96,23 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
         { categoria: "bebidas", nombre: "Jugo de Maracuyá (Jarra 1L)", precio: 18, descripcion: "Jugo natural de la fruta de la pasión, ligeramente endulzado y servido con abundante hielo.", imagen: "https://89acebichados.pe/55-home_default/1l-refresco-de-maracuya.jpg" }
     ];
 
-    // FUNCIÓN PARA RENDERIZAR LOS PLATOS EN SU CONTENEDOR
     function cargarCategoria(idCategoria) {
-        // Buscamos el contenedor por su ID (ej. #grid-costa)
         const contenedor = document.querySelector(`#grid-${idCategoria}`);
 
-        // Si el contenedor no existe en esta página, salimos de la función
         if (!contenedor) return;
 
-        // Filtramos solo los platos que pertenecen a la categoría actual
         const platosFiltrados = platos.filter(plato => plato.categoria === idCategoria);
 
-        // Recorremos los platos filtrados para inyectarlos en el HTML
         platosFiltrados.forEach(plato => {
             const article = document.createElement('article');
             article.classList.add('dish-card');
 
-            // Creamos la estructura HTML usando Backticks (comillas invertidas)
             article.innerHTML = `
                 <div class="dish-image-wrapper">
                     <img src="${plato.imagen}" alt="${plato.nombre}">
@@ -126,12 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            // Pegamos el plato completo dentro del contenedor
             contenedor.appendChild(article);
         });
     }
 
-    // EJECUTAMOS LA FUNCIÓN PARA CADA SECCIÓN DE LA CARTA
     cargarCategoria('costa');
     cargarCategoria('sierra');
     cargarCategoria('selva');
@@ -140,45 +136,42 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarCategoria('fastfood');
     cargarCategoria('postres');
     cargarCategoria('bebidas');
-    
+
 
     // ==========================================
     // LÓGICA DEL CARRITO DE COMPRAS FLOTANTE
     // ==========================================
+
     let carrito = [];
     let totalCarrito = 0;
 
-    // 1. Función para agregar platos
     window.agregarAlCarrito = (nombre, precio) => {
         carrito.push({ nombre, precio });
         totalCarrito += precio;
         actualizarCarritoUI();
-        
-        // Pequeña animación al botón flotante para avisar al usuario
+
         const btnFlotante = document.getElementById('btn-flotante-carrito');
-        if(btnFlotante) {
+        if (btnFlotante) {
             btnFlotante.style.transform = 'scale(1.2)';
             setTimeout(() => btnFlotante.style.transform = 'scale(1)', 200);
         }
     };
 
-    // 2. Función para quitar platos
     window.quitarDelCarrito = (index) => {
         totalCarrito -= carrito[index].precio;
         carrito.splice(index, 1);
         actualizarCarritoUI();
     };
 
-    // 3. Refrescar la vista del modal y contador
     function actualizarCarritoUI() {
         document.getElementById('contador-carrito').textContent = carrito.length;
         document.getElementById('total-carrito').textContent = totalCarrito.toFixed(2);
-        
+
         const lista = document.getElementById('lista-carrito');
         lista.innerHTML = '';
-        
-        if(carrito.length === 0) {
-            lista.innerHTML = '<p style="text-align:center; color:#888; padding:20px 0;">Tu carrito está vacío</p>';
+
+        if (carrito.length === 0) {
+            lista.innerHTML = '<p class="carrito-vacio-mensaje">Tu carrito está vacío</p>';
             return;
         }
 
@@ -195,30 +188,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Abrir y cerrar el modal
+    // ==========================================
+    // INICIALIZACIÓN DEL CARRITO
+    // ==========================================
+    actualizarCarritoUI();
+
     const btnFlotante = document.getElementById('btn-flotante-carrito');
     const modalCarrito = document.getElementById('modal-carrito');
     const btnCerrarCarrito = document.getElementById('btn-cerrar-carrito');
 
-    if(btnFlotante) btnFlotante.addEventListener('click', () => modalCarrito.classList.add('mostrar-modal'));
-    if(btnCerrarCarrito) btnCerrarCarrito.addEventListener('click', () => modalCarrito.classList.remove('mostrar-modal'));
+    if (btnFlotante) btnFlotante.addEventListener('click', () => modalCarrito.classList.add('mostrar-modal'));
+    if (btnCerrarCarrito) btnCerrarCarrito.addEventListener('click', () => modalCarrito.classList.remove('mostrar-modal'));
 
-    // 5. Botón de Ir a Pagar (Conecta con pago/index.html)
     const btnIrPagar = document.getElementById('btn-ir-pagar');
-    if(btnIrPagar) {
+    if (btnIrPagar) {
         btnIrPagar.addEventListener('click', () => {
-            if(carrito.length === 0) {
+            if (carrito.length === 0) {
                 alert("Debes agregar al menos un plato para continuar.");
                 return;
             }
-            
+
             if (localStorage.getItem('konopa_logeado') !== 'true') {
                 alert("Para procesar tu pago y envío, por favor inicia sesión.");
                 window.location.href = '../login/index.html';
                 return;
             }
 
-            // Armamos el pedido como lo espera la página de pagos
             const pedidoActual = {
                 id: 'PED-' + Math.floor(Math.random() * 1000000),
                 items: carrito.map(item => ({ nombre: item.nombre, precio: `S/. ${item.precio.toFixed(2)}` })),
@@ -227,32 +222,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 hora: new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })
             };
 
-            // Guardamos en memoria temporal y redirigimos a Pagar
             localStorage.setItem('konopa_pedido_temporal', JSON.stringify(pedidoActual));
             window.location.href = '../pago/index.html';
         });
     }
 
     // ==========================================================
-    // FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
+    // VERIFICACIÓN DE SESIÓN ACTIVA
     // ==========================================================
+
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
-        const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
-
-        // Buscar el menú principal
+        const nombreCompleto = localStorage.getItem('konopa_usuario_nombre')
+        
         const navMenuUl = document.querySelector('.nav-menu ul');
+
         if (!navMenuUl) return;
 
-        // Buscar el enlace de Login
         const enlaceLogin = Array.from(navMenuUl.querySelectorAll('a')).find(a => a.textContent.includes('Login'));
 
         if (sesionIniciada === 'true' && nombreCompleto && enlaceLogin) {
             const liPadre = enlaceLogin.parentElement;
             liPadre.classList.add('nav-user-item');
 
-            // Inyectamos el HTML del menú desplegable
-            // NOTA: Ajusta los "../perfil/index.html" si estás en la raíz del proyecto a "./perfil/index.html"
             liPadre.innerHTML = `
                 <a href="#" id="btn-user-toggle"><i class="fa-regular fa-circle-user"></i> ${nombreCompleto.split(' ')[0]} <i class="fa-solid fa-chevron-down icon-chevron"></i></a>
                 <ul class="dropdown-content" id="user-dropdown">
@@ -264,14 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             `;
 
-            // Lógica para abrir y cerrar el menú al hacer clic en el nombre
             document.getElementById('btn-user-toggle').addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); // Evita que el clic se propague al documento
+                e.stopPropagation();
                 document.getElementById('user-dropdown').classList.toggle('mostrar-dropdown');
             });
 
-            // Lógica para cerrar el menú si haces clic en otra parte de la pantalla
             document.addEventListener('click', (e) => {
                 const userDropdown = document.getElementById('user-dropdown');
                 if (userDropdown && !userDropdown.contains(e.target)) {
@@ -279,16 +269,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Lógica para Cerrar Sesión desde este menú
             document.getElementById('btn-cerrar-sesion-top').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('konopa_logeado', 'false');
-                window.location.reload(); // Recarga la página para volver a mostrar "Login"
+                window.location.reload(); 
             });
         }
     }
 
-    // Ejecutar la función al cargar la página
     verificarSesionActivaGlobal();
 
 });

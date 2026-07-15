@@ -53,10 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorSedes = document.querySelector('#contenedor-sedes');
 
     if (contenedorSedes) {
-        // Limpiamos el contenedor
+        
         contenedorSedes.innerHTML = ''; 
 
-        // Recorremos los arreglos paralelos usando el índice 'i'
         for (let i = 0; i < titulosSedes.length; i++) {
             
             const divSede = document.createElement('div');
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // ==========================================================
-    // FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
+    // VERIFICACIÓN DE SESIÓN ACTIVA GLOBAL
     // ==========================================================
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');

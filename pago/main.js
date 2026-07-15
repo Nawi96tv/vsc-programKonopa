@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
-    // 1. MENÚ RESPONSIVO Y SESIÓN EN EL HEADER
+    // 1. MENÚ RESPONSIVO
     // ==========================================================
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu');
@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         displayNombre.textContent = nombreGuardado ? nombreGuardado : "USUARIO";
     }
 
-    // 2. CARGA DE TARJETAS (Lo que necesitábamos para que aparezcan)
     const contenedorPagoTarjetas = document.getElementById('contenedor-pago-tarjetas');
 
     if (contenedorPagoTarjetas) {
@@ -75,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let itemsHtml = '';
         pedidoPendiente.items.forEach(item => {
-            // Diseño para la lista de resumen (1x Nombre ----- Precio)
+
             itemsHtml += `
                 <div>
                     <span>1x ${item.nombre}</span>
@@ -124,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================
-    // 6. Verificar sesión activa y actualizar menú de navegación
+    // 6. VERIFICAR SESIÓN ACTIVA GLOBAL
     // ==========================================================
 
     function verificarSesionActivaGlobal() {
@@ -173,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnCerrarSesion.addEventListener('click', (e) => {
                     e.preventDefault();
                     localStorage.setItem('konopa_logeado', 'false');
-                    window.location.href = '../login/index.html'; // Lo sacamos del pago al cerrar sesión
+                    window.location.href = '../login/index.html';
                 });
             }
         }

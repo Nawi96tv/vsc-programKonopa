@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // ==========================================================
-    // 1. MENÚ RESPONSIVO (Navegación móvil)
+    // 1. MENÚ RESPONSIVO
     // ==========================================================
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu');
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================
-    // 2. FUNCIÓN GLOBAL: Menú de Usuario Desplegable
+    // 2. VERIFICACIÓN DE SESIÓN ACTIVA
     // ==========================================================
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
@@ -68,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 3. LÓGICA DEL PERFIL (Pestañas, Datos y Redirección)
     // ==========================================================
+
     const sesionIniciada = localStorage.getItem('konopa_logeado');
     const nombreCompleto = localStorage.getItem('konopa_usuario_nombre');
 
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 4. ACCIONES (Actualizar, Eliminar Cuenta)
     // ==========================================================
+
     const btnActualizar = document.getElementById('btn-actualizar-datos');
 
     if (btnActualizar) {
@@ -184,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 5. MOSTRAR PEDIDOS GUARDADOS
     // ==========================================================
+
     const contenedorPedidos = document.getElementById('lista-mis-pedidos');
     const mensajeVacio = document.getElementById('historial-pedidos');
 
@@ -235,8 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
     const formTarjeta = document.getElementById('form-nueva-tarjeta');
     const contenedorTarjetas = document.getElementById('contenedor-tarjetas');
-
-    // Capturamos los inputs del modal
     const inputNum = document.getElementById('input-num-tarjeta');
     const inputNom = document.getElementById('input-nom-titular');
     const inputExp = document.getElementById('input-exp-tarjeta');
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inputExp) {
         inputExp.addEventListener('input', (e) => {
 
-            let valorFormateado = e.target.value.replace(/\D/g, ''); // Elimina letras, deja solo números
+            let valorFormateado = e.target.value.replace(/\D/g, '');
             if (valorFormateado.length > 2) {
 
                 valorFormateado = valorFormateado.substring(0, 2) + '/' + valorFormateado.substring(2, 4);
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-   if (inputCvv) {
+    if (inputCvv) {
         inputCvv.addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
 
@@ -360,7 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- ABRIR Y CERRAR MODAL ---
     if (btnAbrirModal && modalTarjeta) {
         btnAbrirModal.addEventListener('click', () => {
             modalTarjeta.classList.add('mostrar-modal');
@@ -385,7 +384,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- ENVÍO DEL FORMULARIO FINAL ---
     if (formTarjeta) {
         formTarjeta.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -396,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cvv = inputCvv ? inputCvv.value : '000';
 
             const numValido = num.startsWith('4') && num.length === 16 && /^\d+$/.test(num);
-            const nomValido = nom.length >= 3;
+            const nomValido = nom.length >= 10;
             const cvvValido = /^\d{3,4}$/.test(cvv);
 
             let expValida = false;
@@ -411,10 +409,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Aplicamos colores finales por si le dio "enter" sin completar
             aplicarColor(inputNum, numValido);
             aplicarColor(inputNom, nomValido);
             aplicarColor(inputExp, expValida);
+
             if (inputCvv) aplicarColor(inputCvv, cvvValido);
 
             if (!numValido) {
@@ -455,6 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // 7. DIBUJAR RECLAMOS GUARDADOS
     // ==========================================================
+
     const contenedorMisReclamos = document.getElementById('contenedor-mis-reclamos');
     function renderizarReclamos() {
         if (!contenedorMisReclamos) return;
@@ -467,6 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="mensaje-vacio">No tienes reclamos ni quejas registradas.</p>
                 </div>`;
         } else {
+
             let html = '';
             [...reclamosGuardados].reverse().forEach(r => {
                 html += `
@@ -475,6 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <strong class="id-pedido"><i class="fa-solid fa-file-signature"></i> ${r.id} - ${r.tipo.toUpperCase()}</strong>
                             <span class="hora-pedido">${r.fecha}</span>
                         </div>
+                        <p class="detalle-reclamo" style="margin-bottom: 5px;"><strong>Monto Reclamado:</strong> S/ ${r.monto}</p>
                         <p class="detalle-reclamo"><strong>Detalle:</strong> ${r.detalle}</p>
                         <span class="badge-estado-proceso"><i class="fa-solid fa-clock"></i> ${r.estado}</span>
                     </div>

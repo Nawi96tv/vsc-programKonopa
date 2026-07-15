@@ -37,16 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorFaq = document.querySelector('#contenedor-preguntas');
 
     if (contenedorFaq) {
-        // Limpiamos por si acaso
+
         contenedorFaq.innerHTML = ''; 
 
-        // Recorremos los arreglos paralelos usando el bucle 'for' y el índice 'i'
         for (let i = 0; i < preguntasArray.length; i++) {
             
             const detailsEstructura = document.createElement('details');
             detailsEstructura.classList.add('faq-item');
             
-            // Inyectamos el formato exacto usando el índice [i]
             detailsEstructura.innerHTML = `
                 <summary>${preguntasArray[i]}</summary>
                 <div class="faq-answer">
@@ -58,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-        // ==========================================================
-    // FUNCIÓN GLOBAL: Cambiar "Login" por Menú de Usuario
+    // ==========================================================
+    // VERIFICACIÓN DE SESIÓN ACTIVA
     // ==========================================================
     function verificarSesionActivaGlobal() {
         const sesionIniciada = localStorage.getItem('konopa_logeado');
@@ -107,6 +105,5 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-
     verificarSesionActivaGlobal();
 });
