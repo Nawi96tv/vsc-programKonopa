@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
-    // 1. MENÚ RESPONSIVO
+    // MENÚ RESPONSIVO
     // ==========================================
 
     const btnMenu = document.querySelector('#btn-menu');
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     verificarSesionActiva();
 
     // ==========================================
-    // 2. VALIDACIÓN DEL LOGIN
+    // VALIDACIÓN DEL LOGIN
     // ==========================================
 
     const btnLogin = document.querySelector('#btn-login');
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 3. VALIDACIÓN DE REGISTRO
+    // VALIDACIÓN DE REGISTRO
     // ==========================================
 
     const btnRegistro = document.querySelector('#btn-registro');

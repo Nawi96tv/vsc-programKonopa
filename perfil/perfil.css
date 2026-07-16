@@ -1,5 +1,5 @@
 /* ==========================================================
-   1. CONTENEDORES PRINCIPALES Y ESTRUCTURA
+   CONTENEDORES PRINCIPALES Y ESTRUCTURA
    ========================================================== */
 .perfil-wrapper {
     max-width: 1200px;
@@ -174,7 +174,7 @@
 }
 
 /* ==========================================================
-   2. ÁREA PRINCIPAL Y CONTENIDOS DE PANELES
+   ÁREA PRINCIPAL Y CONTENIDOS DE PANELES
    ========================================================== */
 .perfil-contenido {
     background: #ffffff;
@@ -206,7 +206,7 @@
 }
 
 /* ==========================================================
-   3. ESTILOS DE FORMULARIOS Y AJUSTES
+   ESTILOS DE FORMULARIOS Y AJUSTES
    ========================================================== */
 .form-ajustes-cuenta {
     display: flex;
@@ -271,7 +271,7 @@
 }
 
 /* ==========================================================
-   4. BOTONES DEL PERFIL
+   BOTONES DEL PERFIL
    ========================================================== */
 .perfil-botones {
     display: flex;
@@ -349,7 +349,7 @@
 }
 
 /* ==========================================================
-   5. HISTORIAL DE PEDIDOS Y RECLAMOS
+   HISTORIAL DE PEDIDOS Y RECLAMOS
    ========================================================== */
 .historial-vacio-box {
     text-align: center;
@@ -445,7 +445,7 @@
 }
 
 /* ==========================================================
-   6. MÉTODOS DE PAGO: TARJETAS GUARDADAS
+   MÉTODOS DE PAGO: TARJETAS GUARDADAS
    ========================================================== */
 .tarjeta-guardada-box {
     display: flex;
@@ -473,7 +473,7 @@
     background-color: #f4fbf7;
 }
 /* ==========================================================
-   7. MODAL DE NUEVA TARJETA
+   MODAL DE NUEVA TARJETA
    ========================================================== */
 .modal-overlay {
     position: fixed;
@@ -486,6 +486,7 @@
     justify-content: center;
     align-items: center;
     z-index: 2000;
+    animation: modalEntrada 0.3s ease-out forwards;
 }
 
 .modal-overlay.mostrar-modal {
@@ -608,7 +609,6 @@
     font-size: 1.2rem;
 }
 
-/* Separaciones y Cajas */
 .box-espaciado {
     margin-bottom: 15px;
 }
@@ -625,7 +625,6 @@
     text-decoration: none;
 }
 
-/* Reservas - Detalles */
 .resumen-body {
     color: #555;
     line-height: 1.6;
@@ -640,7 +639,6 @@
     width: 20px;
 }
 
-/* Reservas - Estados Dinámicos */
 .badge-estado {
     color: white;
     padding: 4px 10px;

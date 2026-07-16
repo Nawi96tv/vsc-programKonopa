@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ==========================================================
+    // ==========================================
     // 1. MENÚ RESPONSIVO
-    // ==========================================================
+    // ==========================================
     const btnMenu = document.querySelector('#btn-menu');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('konopa_logeado') !== 'true') {
         alert("Acceso denegado. Debes iniciar sesión para realizar pagos.");
         window.location.href = "../login/index.html";
-        return; // Detiene la ejecución para proteger la página
+        return;
     }
 
     // ==========================================================
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     const direccionGuardada = localStorage.getItem('konopa_usuario_direccion');
     const nombreGuardado = localStorage.getItem('konopa_usuario_nombre');
-
     const displayDireccion = document.getElementById('display-direccion');
     const displayNombre = document.getElementById('display-nombre-tarjeta');
 
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ultimos4 = tarjeta.numero.slice(-4);
                 html += `
                     <div class="tarjeta-opcion">
-                        <input type="radio" name="metodo-pago" id="tarjeta-${index}" value="${index}">
+                        <input type="radio" name="metodo-pago" id="tarjeta-${index}" value="${tarjeta.numero}">
                         <label for="tarjeta-${index}">
                             <i class="fa-brands fa-cc-visa"></i> **** **** **** ${ultimos4} - ${tarjeta.titular}
                         </label>
@@ -74,11 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let itemsHtml = '';
         pedidoPendiente.items.forEach(item => {
-
             itemsHtml += `
-                <div>
+                <div class="item-ticket">
                     <span>1x ${item.nombre}</span>
-                    <span>${item.precio}</span>
+                    <span class="precio-ticket">${item.precio}</span>
                 </div>
             `;
         });
@@ -103,22 +101,54 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. LÓGICA DEL BOTÓN FINAL "HACER PEDIDO"
     // ==========================================================
     const btnProcesar = document.getElementById('btn-procesar-pago');
+    const modalResumen = document.getElementById('modal-resumen-pago');
+    const btnConfirmarFinal = document.getElementById('btn-confirmar-final');
 
     if (btnProcesar) {
         btnProcesar.addEventListener('click', () => {
+
             if (pedidoPendiente) {
 
-                const misPedidos = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
-                misPedidos.push(pedidoPendiente);
-                localStorage.setItem('konopa_pedidos', JSON.stringify(misPedidos));
+                let metodoTexto = "Efectivo al recibir";
+                const metodoSeleccionado = document.querySelector('input[name="metodo-pago"]:checked');
 
-                localStorage.removeItem('konopa_pedido_temporal');
+                // Si seleccionó una tarjeta, el input SÍ tiene un texto al lado
+                if (metodoSeleccionado && metodoSeleccionado.nextElementSibling) {
+                    metodoTexto = metodoSeleccionado.nextElementSibling.textContent;
+                }
 
-                alert("¡Pago procesado con éxito! Tu pedido está en camino a tu domicilio.");
-                window.location.href = "../index.html";
+                const resumenContenido = document.getElementById('resumen-contenido');
+                const resumenTotal = document.getElementById('resumen-total');
+
+                if (resumenContenido) {
+                    resumenContenido.innerHTML = `
+                        <p><strong>Dirección:</strong> ${direccionGuardada}</p>
+                        <p><strong>Pago:</strong> ${metodoTexto}</p>
+                        <ul>${pedidoPendiente.items.map(i => `<li class="item-ticket"><span>1x ${i.nombre}</span> <span class="precio-ticket">${i.precio}</span></li>`).join('')}</ul>
+                    `;
+                }
+
+                if (resumenTotal) {
+                    resumenTotal.textContent = `S/ ${pedidoPendiente.total}`;
+                }
+
+                if (modalResumen) {
+                    modalResumen.classList.add('mostrar-modal');
+                }
             } else {
                 alert("No tienes ningún pedido pendiente por pagar.");
             }
+        });
+    }
+
+    if (btnConfirmarFinal) {
+        btnConfirmarFinal.addEventListener('click', () => {
+            const misPedidos = JSON.parse(localStorage.getItem('konopa_pedidos')) || [];
+            misPedidos.push(pedidoPendiente);
+            localStorage.setItem('konopa_pedidos', JSON.stringify(misPedidos));
+            localStorage.removeItem('konopa_pedido_temporal');
+            alert("¡Pago procesado con éxito! Tu pedido está en camino a tu domicilio.");
+            window.location.href = "../index.html";
         });
     }
 

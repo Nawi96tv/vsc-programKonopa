@@ -95,26 +95,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const seccionSolicitada = urlParams.get('seccion');
 
-        if (seccionSolicitada) {
-            let botonDestino = null;
-            if (seccionSolicitada === 'pedidos') {
-                botonDestino = document.querySelector('.menu-link[data-target="sec-pedidos"]');
-            } else if (seccionSolicitada === 'pagos') {
-                botonDestino = document.querySelector('.menu-link[data-target="sec-pagos"]');
-            } else if (seccionSolicitada === 'reclamos') {
-                botonDestino = document.querySelector('.menu-link[data-target="sec-mis-reclamos"]');
-            } else if (seccionSolicitada === 'reservas') {
-                botonDestino = document.querySelector('.menu-link[data-target="sec-mis-reservas"]');
-            }
+        if (localStorage.getItem('konopa_logeado') === 'true') {
+            if (seccionSolicitada) {
+                let botonDestino = null;
 
-            if (botonDestino) {
-                botonDestino.click();
+                if (seccionSolicitada === 'pedidos') {
+                    botonDestino = document.querySelector('.menu-link[data-target="sec-pedidos"]');
+                } else if (seccionSolicitada === 'pagos' || seccionSolicitada === 'tarjetas') {
+                    botonDestino = document.querySelector('.menu-link[data-target="sec-pagos"]');
+                } else if (seccionSolicitada === 'reclamos') {
+                    botonDestino = document.querySelector('.menu-link[data-target="sec-mis-reclamos"]');
+                } else if (seccionSolicitada === 'reservas') {
+                    botonDestino = document.querySelector('.menu-link[data-target="sec-mis-reservas"]');
+                }
+
+                if (botonDestino) {
+                    setTimeout(() => {
+                        botonDestino.click();
+                    }, 100);
+                }
             }
+        } else {
+            alert("Debes iniciar sesión para ver tu perfil.");
+            window.location.href = "../login/index.html";
         }
-
-    } else {
-        alert("Debes iniciar sesión para ver tu perfil.");
-        window.location.href = "../login/index.html";
     }
 
     // ==========================================================

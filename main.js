@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
-    // 1. MENÚ RESPONSIVO (NUEVO MOTOR JS)
+    // MENÚ RESPONSIVO (NUEVO MOTOR JS)
     // ==========================================
 
     const btnMenu = document.querySelector('#btn-menu');
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     // ==========================================
-    // 2. BASE DE DATOS DE REGIONES
+    // BASE DE DATOS DE REGIONES
     // ==========================================
 
     const regiones = [
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // ==========================================
-    // 3. BASE DE DATOS DE PLATOS ESTRELLA
+    // BASE DE DATOS DE PLATOS ESTRELLA
     // ==========================================
 
     const recomendados = [
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // ==========================================
-    // 4. RENDERIZAR REGIONES EN EL DOM
+    // RENDERIZAR REGIONES EN EL DOM
     // ==========================================
 
     const contenedorRegiones = document.querySelector('#grid-regiones');
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. RENDERIZAR RECOMENDADOS EN EL DOM
+    // RENDERIZAR RECOMENDADOS EN EL DOM
     // ==========================================
 
     const contenedorRecomendados = document.querySelector('#grid-recomendados');
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     // ==========================================
-    // 6.VERIFICACIÓN DE SESION ACTIVA GLOBAL
+    // VERIFICACIÓN DE SESION ACTIVA GLOBAL
     // ==========================================
     
     function verificarSesionActivaGlobal() {

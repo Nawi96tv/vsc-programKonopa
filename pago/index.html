@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 </head>
-<body">
+<body>
     <header class="main-header">
         <div class="logo-container">
             <a href="../index.html">
@@ -39,8 +39,8 @@
             </ul>
         </nav>
     </header>
-   <main class="checkout-container">
-        
+    <main class="checkout-container">
+
         <div class="checkout-left">
 
             <div class="checkout-card">
@@ -83,19 +83,20 @@
 
                     <div id="contenedor-pago-tarjetas"></div>
 
-                    <button class="btn-add-payment" type="button" onclick="window.location.href='../perfil/index.html'">
+                    <button class="btn-add-payment" type="button"
+                        onclick="window.location.href='../perfil/index.html?seccion=tarjetas'">
                         + Agregar otro método de pago
                     </button>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="checkout-right">
             <div class="checkout-card summary-card">
                 <h3>Resumen</h3>
 
                 <div id="lista-resumen-items"></div>
-                
+
                 <div class="summary-costs">
                     <div class="cost-row">
                         <span>Costo de productos</span>
@@ -117,6 +118,18 @@
         </div>
 
     </main>
+
+    <div id="modal-resumen-pago" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Resumen de tu Pedido</h3>
+            <div id="resumen-contenido"></div>
+            <p><strong>Total final (incluye envío):</strong> <span id="resumen-total"></span></p>
+            <button id="btn-confirmar-final">Confirmar Pedido</button>
+            <button
+                onclick="document.getElementById('modal-resumen-pago').classList.remove('mostrar-modal')">Volver</button>
+        </div>
+    </div>
+
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-logo-col">
@@ -158,7 +171,7 @@
     </footer>
 
     <script src="main.js"></script>
-    
+
     </body>
 
 </html>

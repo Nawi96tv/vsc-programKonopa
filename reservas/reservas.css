@@ -183,7 +183,7 @@ body {
 }
 
 /* ====================================================
-   DISEÑO DE LA VENTANA FLOTANTE (MODAL)
+   MODAL DE CONFIRMACIÓN
    ==================================================== */
 .modal-overlay {
     display: none; 
@@ -196,6 +196,7 @@ body {
     z-index: 9999; 
     justify-content: center;
     align-items: center;
+    animation: modalEntrada 0.3s ease-out forwards;
 }
 
 .modal-content {

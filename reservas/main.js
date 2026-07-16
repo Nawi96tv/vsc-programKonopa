@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('konopa_reservas', JSON.stringify(reservasGuardadas));
 
             alert(`¡Reserva confirmada! Código: ${nuevaReserva.id}`);
-            window.location.href = '../perfil/index.html?seccion=reservas';
+            window.location.href = '../index.html';
         });
     }
 
